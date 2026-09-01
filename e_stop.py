@@ -1,0 +1,160 @@
+from waveshare import PLC
+import time
+import simpleio
+
+# initilise
+print (" ---------------------------- Starting...")
+IO = PLC()
+IO.init_all()
+#time.sleep(0.01)
+
+# states
+#STOPPED_STATE = 0
+#RUN_STATE = 1
+#E_STOP = 2
+# default state
+#state = STOPPED_STATE
+
+COUNT = 0
+
+# switches
+E_STOP_SWITCH = False # for emergency stop
+RUN_STATE = False # to check if "start" was pressed
+
+
+# led colours - GRB
+#OFF = IO.RGB_LED.fill(())
+GREEN = [255,0,0]
+RED = [0,255,0]
+BLACK = [0, 255, 255] # purple
+BLUE = [0,0,255]
+YELLOW = [255,170,0]
+
+RAINBOW = [RED, YELLOW, GREEN, BLUE, BLACK]
+
+# Temperature control
+
+TEMP = 0
+EMERGENCY_TEMP = 180 #( - 20 = 160 for the "emergency threshold" sensor)
+
+# functions
+    
+def change_LED(colour:list):
+    IO.RGB_LED.fill(colour)
+
+
+while True:
+    # inputs
+    START_BTN = IO.IX0.value
+    STOP_BTN = IO.IX1.value
+    E_STOP = IO.IX2.value
+    UP_BTN = IO.IX3.value
+    DOWN_BTN = IO.IX4.value
+
+    """
+    task list:
+        
+        - buttons should only take input if E_STOP is off (wrap in if statement)
+        - start button will activate RUN_STATE which will allow the other buttons to take input (wrap in if statement)
+        
+    """
+
+    # if emergency stop is active, you can press e stop again to turn it back off
+    
+    #if E_STOP_SWITCH and not E_STOP:
+    #    change_LED(BLACK) # to show the device is currently paused
+
+    # only allow the green button to be pressed IF not pressed once before (OR stop button was pressed)
+    
+    # --- for some reason breaks if you pressed emergency stop and then pressed start again
+    if not START_BTN and not RUN_STATE:
+        time.sleep(0.2)
+        print("green")
+        change_LED(GREEN)
+
+        # output :
+        #IO.QX0.value = not IO.QX0.value
+        #IO.QX1.value = not IO.QX0.value
+
+        # rainbow LED!!!
+        """
+        while STOP_BTN:
+            for colour in RAINBOW:
+                time.sleep(1)
+                change_LED(colour)
+        """
+        E_STOP_SWITCH = False
+        RUN_STATE = True
+        
+    # allow the other buttons to be pressed ONLY if ESTOP is FALSE and runstate is active
+    if not E_STOP_SWITCH and RUN_STATE:
+        if not STOP_BTN:
+            """test code
+            time.sleep(0.2)
+            print("red")
+            change_LED(RED)
+            """
+            time.sleep(0.2)
+            print("red")
+            
+            # just to check temperature
+            print(TEMP)
+            
+            #change_LED(RED)
+            # run state is disabled and will need to be turned on again with the green button
+            #RUN_STATE = False
+    
+        if not E_STOP:
+            """test
+            time.sleep(0.2)
+            print("black")
+            change_LED(BLACK)
+            """
+            time.sleep(0.2)
+            #print("black")
+            change_LED(BLACK)
+            
+            
+            
+            # if you press emergency stop everything will stop working
+            E_STOP_SWITCH = True
+            RUN_STATE = False
+            
+            # and also reset temperature (or just go down)
+            while TEMP != 0:
+                time.sleep(0.1)
+                TEMP -= 1
+                print(TEMP)
+                
+            
+            
+        # as long as the temperature is below the threshold, you can press the blue and yellow buttons
+        if TEMP < EMERGENCY_TEMP:
+            
+            if not UP_BTN and DOWN_BTN: # "and DOWNBTN": to stop people from pressing both buttons at the same time
+                """test
+                time.sleep(0.2)
+                print("blue")
+                change_LED(BLUE)
+                """
+                time.sleep(0.2)
+                print("blue")
+                change_LED(BLUE)
+                TEMP += 10
+                
+        
+            if not DOWN_BTN and UP_BTN: # "and UPBTN": to stop people from pressing both buttons at the same time
+                """test
+                time.sleep(0.2)
+                print("yellow")
+                change_LED(YELLOW)
+                """
+                time.sleep(0.2)
+                print("yellow")
+                change_LED(YELLOW)
+                
+                # update temperature
+                TEMP -= 10
+            
+    #time.sleep(0.01)
+    IO.RGB_LED.show()
