@@ -4,6 +4,9 @@
         - temperature control : update external value that will go to the GUI to show the temperature
         - ERROR checking : check every way which the code could be broken
             - should NOT be able to spam the buttons
+        - start : starts heating according to temperature set by the blue and yellow buttons
+            - temperature cannot be changed while the heating is on
+        - stop : stops heating, and allows the temperature to be changed
 """
 
 from waveshare import PLC
