@@ -1,3 +1,11 @@
+"""
+    task list:
+        - allow this to be used with the GUI
+        - temperature control : update external value that will go to the GUI to show the temperature
+        - ERROR checking : check every way which the code could be broken
+            - should NOT be able to spam the buttons
+"""
+
 from waveshare import PLC
 import time
 import simpleio
@@ -57,13 +65,7 @@ while True:
     E_STOP = IO.IX2.value
     UP_BTN = IO.IX3.value
     DOWN_BTN = IO.IX4.value
-
-    """
-    task list:
-        - allow this to be used with the GUI
-        - temperature control : update external value that will go to the GUI to show the temperature
-        
-    """
+    
     if not START_BTN and STOPPED_STATE:
         time.sleep(0.2)
         print("green")
