@@ -129,7 +129,7 @@ while True:
             
             
         # as long as the temperature is below the threshold, you can press the blue and yellow buttons
-        if TEMP < EMERGENCY_TEMP:
+        if TEMP < EMERGENCY_TEMP and TEMP > 0:
             
             if not UP_BTN and DOWN_BTN: # "and DOWNBTN": to stop people from pressing both buttons at the same time
                 """test
