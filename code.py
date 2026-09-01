@@ -109,7 +109,7 @@ while True:
             time.sleep(0.2)
             print("black")
             change_LED(BLACK)
-            
+            boiler_TEMP_RESET()
             
             
             # if you press emergency stop everything will stop working
