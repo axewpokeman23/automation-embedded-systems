@@ -103,6 +103,7 @@ while True:
                         change_LED(colour)
             """
             print("powered on" if not E_STOP_SWITCH else "emergency stop disabled - powered on")
+            
             E_STOP_SWITCH = False
             STOPPED_STATE = False
         
