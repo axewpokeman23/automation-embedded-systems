@@ -4,10 +4,14 @@
 from waveshare import PLC
 import time
 import simpleio
+from lib.simple_pid import PID
 
 # initialise
 IO = PLC()
 IO.init_all()
+IO.setServo()
+# default angle of the servo
+IO.SERVO.angle = 0
 print("\n--------------------------------\nWaterBoiler3000 has powered on.\n--------------------------------\n\nINSTRUCTIONS:\nPlease select a temperature using the BLUE button for UP and the YELLOW button for DOWN.\nPress the GREEN button to start heating and the RED button to stop heating.\n\nIMPORTANT:\nIn case of an EMERGENCY, press the BLACK button to enable the EMERGENCY STOP.\nTo disable the EMERGENCY STOP, press the BLACK and RED button simultaneously.\n")
 
 #-----STATE-MACHINE-----#
@@ -23,7 +27,6 @@ state = STOPPED_STATE
 #------TEMPERATURE------#
 
 # default temperature = 80C
-ACTUAL_TEMPERATURE = 0
 SETPOINT = 80
 MIN_TEMP = 80
 MAX_TEMP = 180
@@ -76,22 +79,45 @@ SONG = [("C4",0.2),
         ("G4",0.2),
         ("C5",0.25)]
 
+
 def play_sound(note:str,duration:float):
-    tone = NOTES.get(note)
-    simpleio.tone(IO.BUZZER,tone,duration)
+    #tone = NOTES.get(note)
+    #simpleio.tone(IO.BUZZER,tone,duration)
+    return
 
 for x in range(1):
     for note, duration in SONG:
         # ringtone
         play_sound(note,duration)
 
+#----THERMISTER-ALT----#
+
+"""
+    v = input value: current voltage
+    
+    input range:
+    x = min volt
+    y = max volt
+    
+    output range:
+    a = min temp
+    b = max temp
+    """
+def mapto(v, x, y, a, b):
+	return (v-x) / (y-x) * (b-a) + a
+
 #---------LATCH--------#
+
 latch = False
 emergency_latch = False
 
-# loop
-while True:
 
+#------SUPER-LOOP------#
+
+count = 0
+while True:
+    count+=1
+    
 #---------GPIO---------#
 
     # inputs
@@ -111,8 +137,6 @@ while True:
     LED5 = IO.QX5
     LED6 = IO.QX6
     E_LED = IO.QX7
-    #47 servo
-    #DH11
 
     # STOPPED (DEFAULT STATE)
     if state == STOPPED_STATE:
@@ -120,7 +144,7 @@ while True:
         HEATER.value = False
         E_LED.value = False
             
-        #(BLUE BUTTON)
+        # TEMPERATURE UP(BLUE BUTTON)
         # TEMP_UP_BTN counts temp up (MAX: 180C)
         if (TEMP_UP_BTN
             and not START_BTN
@@ -181,7 +205,7 @@ while True:
             time.sleep(0.2)
             
             
-        #(YELLOW BUTTON)
+        # TEMPERATURE DOWN (YELLOW BUTTON)
         # TEMP_DOWN_BTN counts temp down (MIN: 80C)
         if (TEMP_DOWN_BTN
             and not START_BTN
@@ -245,7 +269,7 @@ while True:
             time.sleep(0.2)
             
             
-        # (GREEN BUTTON)
+        # START HEATING / SETPOINT TEMPERATURE (GREEN BUTTON)
         # START_BTN pressed, sets target temperature, disabling temperature controls and starts heating process
         if (START_BTN
             and not STOP_BTN
@@ -253,29 +277,62 @@ while True:
             and not TEMP_UP_BTN
             and not TEMP_DOWN_BTN
             and not latch):
+            # -------------------  PID stuff
+            pid = PID(5, 0.01, 0.1, setpoint=SETPOINT)
+            pid.output_limits = (0, 100)
+            
             E_LED.value = False
             latch = True
             state = RUN_STATE
             print(f"\nTarget temperature: {SETPOINT}°C.\nHeating started...")
             
-    # RUNNING = heating in progress
+    # RUNNING STATE = heating in progress
     elif state == RUN_STATE:
-        LED_colour(GREEN)
-        HEATER.value = True
+        
+        if count % 60 == 0:
+            value = (IO.IW0.value * 3.3) / 65536
+            #power = pid(SETPOINT)
+            # 20C MIN ROOM TEMP SIM, 200C MAX TEMP SIM
+            ACTUAL_TEMPERATURE = mapto(value,0.0, 3.3, 20, 200)
+            servo_angle = mapto(ACTUAL_TEMPERATURE, 80, 180, 0, 180)
+            IO.SERVO.angle = int(servo_angle)
+            print(f"temp{ACTUAL_TEMPERATURE:0.2f}")
+                
+            # BANG BANG
+            if ACTUAL_TEMPERATURE >= SETPOINT+2:
+                HEATER.value = False
+                LED_colour(BLACK)
+                ACTUAL_TEMPERATURE <= SETPOINT+2:
+                HEATER.value = True
+                LED_colour(GREEN)
+            print(f"Temperature set at: {SETPOINT}C. Actual Temperature is: {ACTUAL_TEMPERATURE}C.")
+            
+            
+            #thermister = pid(thermister)
+            
+            # boiler temperature
+            print(f"Voltage = {value}")
+            #print(f"Current temperature = {ACTUAL_TEMPERATURE:0.2f}")
+            #print(pid(thermister))
+
+
         
             
-        # (RED BUTTON)
+        # STOP HEATING (RED BUTTON)
         # STOP_BTN pressed, heating process stops and enables temperature controls
         if (STOP_BTN
             and not START_BTN
             and not E_STOP
             and not TEMP_UP_BTN
             and not TEMP_DOWN_BTN):
+            
+            # reset PID?
+            pid = ''
             state = STOPPED_STATE
             latch = False
             print("\nHeating stopped...")
             
-        # (BLACK BUTTON)
+        # EMERGENCY STOP (BLACK BUTTON)
         # E_STOP pressed while in RUN_STATE, switches to EMERGENCY_STATE
         if E_STOP or P_STOP:
             emergency_latch = True
@@ -309,3 +366,4 @@ while True:
             LED1.value = True
             
     IO.RGB_LED.show()
+    time.sleep(0.01)
