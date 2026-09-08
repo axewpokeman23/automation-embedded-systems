@@ -1,208 +1,423 @@
-"""
-    task list:
-        - allow this to be used with the GUI
-        - temperature control : update external value that will go to the GUI to show the temperature
-        
-        - ERROR checking : check every way which the code could be broken
-            - should NOT be able to spam the buttons
-            
-        - start : starts heating according to temperature set by the blue and yellow buttons
-            - temperature cannot be changed while the heating is on
-            
-        - stop : stops heating, and allows the temperature to be changed
-        
-        - use the temperature decrease and increase function inside the actual buttons
-            - maybe also turn the "if not button" lines into functions? - optional
-            
-        - holding the button down = passive temperature change while button is down
-        
-        - temperate going below zero for some reason when decrease_temp is ran (and also during the emergency stop temperature reset)
-"""
+# WATER BOILER PROJECT
+# BY MARAEA AND SARA
 
 from waveshare import PLC
 import time
 import simpleio
+from lib.simple_pid import PID
 
 # initialise
-print (" ---------------------------- Starting...")
 IO = PLC()
 IO.init_all()
-#time.sleep(0.01)
+IO.setServo()
+# default angle of the servo
+IO.SERVO.angle = 0
+print("\n--------------------------------\nWaterBoiler3000 has powered on.\n--------------------------------\n\nINSTRUCTIONS:\nPlease select a temperature using the BLUE button for UP and the YELLOW button for DOWN.\nPress the GREEN button to start heating and the RED button to stop heating.\n\nIMPORTANT:\nIn case of an EMERGENCY, press the BLACK button to enable the EMERGENCY STOP.\nTo disable the EMERGENCY STOP, press the BLACK and RED button simultaneously.\n")
+
+#-----STATE-MACHINE-----#
 
 # states
-#STOPPED_STATE = 0
-#RUN_STATE = 1
-#E_STOP = 2
+STOPPED_STATE = 0
+RUN_STATE = 1
+EMERGENCY_STATE = 2
+
 # default state
-#state = STOPPED_STATE
+state = STOPPED_STATE
 
-COUNT = 0
+#------TEMPERATURE------#
 
-# switches
-E_STOP_SWITCH = False # for emergency stop
-STOPPED_STATE = True # used to be RUN_STATE = False. stopped by default
-HEATING = False # heating switch
+# default temperature = 80C
+SETPOINT = 80
+MIN_TEMP = 80
+MAX_TEMP = 180
+# default LED = 80C
+IO.QX1.value = True
 
+#--------COLOURS--------#
 
-# led colours - GRB
-#OFF = IO.RGB_LED.fill(())
-GREEN = [255,0,0]
-RED = [0,255,0]
-BLACK = [0, 255, 255] # purple
-BLUE = [0,0,255]
-YELLOW = [255,170,0]
+# LED colours (GRB)
+BLACK = [0,0,0]     # STOPPED_STATE / STOP_BTN
+GREEN = [255,0,0]    # RUN_STATE / START_BTN
+RED = [0,255,0]      # EMERGENCY_STATE / E_STOP
+YELLOW = [234,255,0] # PRESSURE_SWITCH
+BLUE = [0,0,80]      # TEMP CHANGE INDICATION
+PURPLE = [0, 255, 255] # purple
 
-RAINBOW = [RED, YELLOW, GREEN, BLUE, BLACK]
-
-# Temperature control
-temp = 80 # default temp
-LOWEST_TEMP = 80
-EMERGENCY_TEMP = 180 # temperate functionally CANNOT go above this
-
-# functions
-def change_LED(colour:list):
+def LED_colour(colour:list):
     IO.RGB_LED.fill(colour)
-    
-# temperature control
-def increase_temp():
-    global temp
-    temp += 10
-    time.sleep(0.3)
-    print(temp)
-    
-def decrease_temp():
-    global temp
-    temp -= 10
-    time.sleep(0.3)
-    print(temp)
 
+RAINBOW = [RED, YELLOW, GREEN, BLUE, PURPLE]
+
+# rainbow LED - upon initialization
+for x in range(1):
+    for colour in RAINBOW:
+        
+        # rainbow
+        time.sleep(0.1)
+        LED_colour(colour)
+    x+=1
+
+#---------NOTES---------#
+
+#simpleio.tone(IO.BUZZER,261,0.25)
+
+NOTES = {
+    "C4": 261.63,
+    "D4": 293.66,
+    "E4": 329.63,
+    "F4": 349.23,
+    "G4": 392,
+    "A4": 440,
+    "B4": 493.88,
+    "C5": 523.25,
+    "D5": 587.33,
+    "E5": 659.25,
+    "F5": 698.46
+}
+
+SONG = [("C4",0.2),
+        ("G4",0.2),
+        ("C5",0.25)]
+
+
+# currently disabled
+def play_sound(note:str,duration:float):
+    #tone = NOTES.get(note)
+    #simpleio.tone(IO.BUZZER,tone,duration)
+    return
+
+
+# -------- plays upon being powered ------------
+
+for x in range(1):
+    for note, duration in SONG:
+        # ringtone
+        play_sound(note,duration)
+
+#----THERMISTER-ALT----#
+
+    """
+    v = input value: current voltage
+    
+    input range:
+    x = min volt
+    y = max volt
+    
+    output range:
+    a = min temp
+    b = max temp
+    """
+def mapto(v, x, y, a, b):
+"""
+    moves valve with the dial
+"""
+	return (v-x) / (y-x) * (b-a) + a
+	
+#def pressure_valve(angle):
+    """
+    # update and move servo angle / pressure valve
+        try:
+            IO.SERVO.angle = int(angle)
+        except:
+            print(f"error with angle {angle} = must be within 80-180")
+    """
+    
+def bang_bang(temp=0, setpoint=80, range=2):
+    #returns true or false if value is within a specified range
+    if temp in range(setpoint - range, setpoint + (range + 1))):
+        return True
+    else return False
+
+#---------LATCH--------#
+
+latch = False
+emergency_latch = False
+
+
+#------SUPER-LOOP------#
+
+count = 0
 while True:
+    count+=1
+    
+#---------GPIO---------#
+
     # inputs
-    START_BTN = IO.IX0.value
-    STOP_BTN = IO.IX1.value
-    E_STOP = IO.IX2.value
-    UP_BTN = IO.IX3.value
-    DOWN_BTN = IO.IX4.value
+    START_BTN = not IO.IX0.value
+    STOP_BTN = not IO.IX1.value
+    E_STOP = not IO.IX2.value
+    TEMP_UP_BTN = not IO.IX3.value
+    TEMP_DOWN_BTN = not IO.IX4.value
+    P_STOP = not IO.IX5.value
     
-    
-    # when you press the green button:
-    if not START_BTN:
-        time.sleep(0.2)
-        print("green")
-        change_LED(GREEN)
-        if STOPPED_STATE:
-            # output :
-            #IO.QX0.value = not IO.QX0.value
-            #IO.QX1.value = not IO.QX0.value
-        
-            # rainbow LED!!!
-            """
-            while STOP_BTN:
-                    for colour in RAINBOW:
-                        time.sleep(1)
-                        change_LED(colour)
-            """
-            print("powered on" if not E_STOP_SWITCH else "emergency stop disabled - powered on")
+    # outputs
+    HEATER = IO.QX0
+    LED1 = IO.QX1
+    LED2 = IO.QX2
+    LED3 = IO.QX3
+    LED4 = IO.QX4
+    LED5 = IO.QX5
+    LED6 = IO.QX6
+    E_LED = IO.QX7
+
+    # STOPPED (DEFAULT STATE)
+    if state == STOPPED_STATE:
+        LED_colour(BLACK)
+        HEATER.value = False
+        E_LED.value = False
             
-            E_STOP_SWITCH = False
-            STOPPED_STATE = False
-        
-        
-        else: # if person presses the button again and "STOPPED_STATE" is False (currently on), then 
-            # assume person wants the heating to start
-            if temp < EMERGENCY_TEMP:
-                print("heating start - temperature control disabled")
-                HEATING = True
-        
-    # allow the other buttons to be pressed ONLY if ESTOP is FALSE and runstate is active
-    if not E_STOP_SWITCH and not STOPPED_STATE:
-        if not STOP_BTN:
-            """test code
+        # TEMPERATURE UP(BLUE BUTTON)
+        # TEMP_UP_BTN counts temp up (MAX: 180C)
+        if (TEMP_UP_BTN
+            and not START_BTN
+            and not STOP_BTN
+            and not E_STOP
+            and not TEMP_DOWN_BTN):
+            if (SETPOINT < MAX_TEMP):
+                SETPOINT += 10
+                play_sound("C5",0.2)
+                print(f"Temperature set to {SETPOINT}°C.")
+                LED1.value = False
+                LED2.value = False
+                LED3.value = False
+                LED4.value = False
+                LED5.value = False
+                LED6.value = False
+                # LED1, LED2
+                if SETPOINT == 90:
+                    LED1.value = True
+                    LED2.value = True
+                # LED2
+                elif SETPOINT == 100:
+                    LED2.value = True
+                # LED2, LED3
+                elif SETPOINT == 110:
+                    LED2.value = True
+                    LED3.value = True
+                # LED3
+                elif SETPOINT == 120:
+                    LED3.value = True
+                # LED3, LED4
+                elif SETPOINT == 130:
+                    LED3.value = True
+                    LED4.value = True
+                # LED4
+                elif SETPOINT == 140:
+                    LED4.value = True
+                # LED4, LED5
+                elif SETPOINT == 150:
+                    LED4.value = True
+                    LED5.value = True
+                # LED5
+                elif SETPOINT == 160:
+                    LED5.value = True
+                # LED5, LED6
+                elif SETPOINT == 170:
+                    LED5.value = True
+                    LED6.value = True
+                # LED6
+                elif SETPOINT == 180:
+                    LED6.value = True
+                    
+            # MAX_TEMP REACHED
+            else:
+                play_sound("F5",0.2)
+                play_sound("C4",0.2)
+            LED_colour(BLUE)
             time.sleep(0.2)
-            print("red")
-            change_LED(RED)
-            """
+            
+            
+        # TEMPERATURE DOWN (YELLOW BUTTON)
+        # TEMP_DOWN_BTN counts temp down (MIN: 80C)
+        if (TEMP_DOWN_BTN
+            and not START_BTN
+            and not STOP_BTN
+            and not E_STOP
+            and not TEMP_UP_BTN):
+            if (SETPOINT > MIN_TEMP):
+                SETPOINT -= 10
+                play_sound("B4",0.2)
+                print(f"Temperate set to {SETPOINT}°C.")
+                # LEDs OFF
+                LED1.value = False
+                LED2.value = False
+                LED3.value = False
+                LED4.value = False
+                LED5.value = False
+                LED6.value = False
+                # LED6
+                if SETPOINT == 180:
+                    LED6.value = True
+                # LED5, LED6
+                elif SETPOINT == 170:
+                    LED6.value = True
+                    LED5.value = True
+                # LED5
+                elif SETPOINT == 160:
+                    LED5.value = True
+                # LED4, LED5
+                elif SETPOINT == 150:
+                    LED5.value = True
+                    LED4.value = True
+                # LED4
+                elif SETPOINT == 140:
+                    LED4.value = True
+                # LED3, LED4
+                elif SETPOINT == 130:
+                    LED4.value = True
+                    LED3.value = True
+                # LED3
+                elif SETPOINT == 120:
+                    LED3.value = True
+                # LED2, LED3
+                elif SETPOINT == 110:
+                    LED3.value = True
+                    LED2.value = True
+                # LED2
+                elif SETPOINT == 100:
+                    LED2.value = True
+                # LED1, LED2
+                elif SETPOINT == 90:
+                    LED2.value = True
+                    LED1.value = True
+                # LED1
+                elif SETPOINT == 80:
+                    LED1.value = True
+            # MIN_TEMP REACHED
+            else:
+                play_sound("F5",0.2)
+                play_sound("C4",0.2)
+            LED_colour(BLUE)
             time.sleep(0.2)
-            #print("red")
-            
-            # just to check temperature
-            print(temp)
-            
-            # heating is switched off and temperature changing can work
-            HEATING = False
-            print("heating has been switched off - temperature control enabled")
-            
-            #change_LED(RED)
-    
-        if not E_STOP: #emergency stop
-            """test
-            time.sleep(0.2)
-            print("black")
-            change_LED(BLACK)
-            """
-            time.sleep(0.2)
-            #print("black")
-            change_LED(BLACK)
             
             
-            while temp != LOWEST_TEMP:
-                # to simulate it going down progressively
-                time.sleep(0.1)
-                decrease_temp()
-                # to show the temperature going down in a cool way
-                print(temp)
-                
+        # START HEATING / SETPOINT TEMPERATURE (GREEN BUTTON)
+        # START_BTN pressed, sets target temperature, disabling temperature controls and starts heating process
+        if (START_BTN
+            and not STOP_BTN
+            and not E_STOP
+            and not TEMP_UP_BTN
+            and not TEMP_DOWN_BTN
+            and not latch):
+            # -------------------  PID stuff
+            pid = PID(5, 0.01, 0.1, setpoint=SETPOINT)
+            pid.output_limits = (0, 100)
             
-            # if you press emergency stop everything will stop working
-            E_STOP_SWITCH = True
-            STOPPED_STATE = True
-            #RUN_STATE = False
+            E_LED.value = False
+            latch = True
+            state = RUN_STATE
+            print(f"\nTarget temperature: {SETPOINT}°C.\nHeating started...")
             
-            
-            
-            
-            
-        # as long as the temperature is below 180 and above 0 you can press the blue and yellow buttons
-        if temp < EMERGENCY_TEMP and temp >= LOWEST_TEMP and not HEATING:
-            
-            if not UP_BTN and DOWN_BTN: # "and DOWNBTN": to stop people from pressing both buttons at the same time
-                """test
-                time.sleep(0.2)
-                print("blue")
-                change_LED(BLUE)
-                """
-                time.sleep(0.2)
-                #print("blue")
-                change_LED(BLUE)
-                increase_temp()
-                
+    # RUNNING STATE = heating in progress
+    elif state == RUN_STATE:
         
-            if not DOWN_BTN and UP_BTN: # "and UPBTN": to stop people from pressing both buttons at the same time
-                """test
-                time.sleep(0.2)
-                print("yellow")
-                change_LED(YELLOW)
-                """
-                time.sleep(0.2)
-                #print("yellow")
-                change_LED(YELLOW)
-                
-                # update temperature
-                decrease_temp()
-        elif not DOWN_BTN or not UP_BTN and not HEATING:
+        if count % 60 == 0:
             
-            if temp >= EMERGENCY_TEMP:
-                if not UP_BTN:
-                    time.sleep(1)
-                    print(f'{temp}: cannot go above this temperature! Heating has been switched off automatically.')
-                elif not DOWN_BTN:
-                    decrease_temp()
+            # value is recieved from thermister dial when you turn it
+            value = (IO.IW0.value * 3.3) / 65536
+            
+            # 20C MIN ROOM TEMP SIM, 200C MAX TEMP SIM
+            ACTUAL_TEMPERATURE = mapto(value,0.0, 3.3, 20, 200)
+            
+            if ACTUAL_TEMPERATURE in range(80, 180):
+                # if temp is in range 80 - 180, allow servo to move (to fix the angle issue)
                 
-            elif temp <= LOWEST_TEMP:
-                if not DOWN_BTN:
-                    time.sleep(1)
-                    print(f'{temp}: cannot go below this temperature.')
-                elif not UP_BTN:
-                    increase_temp()
-    #time.sleep(0.01)
+                # servo = pressure valve : 0 = closed 180 = fully open
+                servo_angle = mapto(ACTUAL_TEMPERATURE, 80, 180, 0, 180)
+            
+            print(f"temp{ACTUAL_TEMPERATURE:0.2f}")
+            
+            """ BANG BANG - 
+            turn off heater when temperature is in a specific range
+            
+            simulating "on start heating" :
+                when boiler is turned on, will "heat" to 80 and then stop,
+            and then wait for user to specify a temperature.
+            
+            disable
+            
+            """
+            if bang_bang(ACTUAL_TEMPERATURE, SETPOINT, 2): # 2 + 1 to account for 0 start
+                print('in range!')
+
+                # if over 180 or boiler is already heated to 80, then heater is switched off.
+                
+                if ACTUAL_TEMPERATURE > 180 or ACTUAL_TEMPERATURE > 80:
+                    # this controls the "boiler" output node (labelled by RO2)
+                    HEATER.value = False
+                    LED_colour(BLACK)
+                    
+                    #if under 80 or under 180:
+                else:
+                    # while the temp hasn't reached the "default" yet....:
+                    while ACTUAL_TEMPERATURE < 80:
+                        
+                        # heater is switched on to "heat"
+                        HEATER.value = True
+                        LED_colour(GREEN)
+                        
+            else:
+                raise Exception
+            
+            print(f"Temperature set at: {SETPOINT}C. Actual Temperature is: {ACTUAL_TEMPERATURE}C.")
+            
+            
+            #thermister = pid(thermister)
+            
+            # boiler temperature
+            print(f"Voltage = {value}")
+            #print(f"Current temperature = {ACTUAL_TEMPERATURE:0.2f}")
+            #print(pid(thermister))
+
+
+        
+            
+        # STOP HEATING (RED BUTTON)
+        # STOP_BTN pressed, heating process stops and enables temperature controls
+        if (STOP_BTN
+            and not START_BTN
+            and not E_STOP
+            and not TEMP_UP_BTN
+            and not TEMP_DOWN_BTN):
+            
+            # reset PID?
+            pid = ''
+            state = STOPPED_STATE
+            latch = False
+            print("\nHeating stopped...")
+            
+        # EMERGENCY STOP (BLACK BUTTON)
+        # E_STOP pressed while in RUN_STATE, switches to EMERGENCY_STATE
+        if E_STOP or P_STOP:
+            emergency_latch = True
+            state = EMERGENCY_STATE
+            print("\nEMERGENCY ALERT!")
+            
+    # EMERGENCY STATE disables all processes and buttons
+    elif state == EMERGENCY_STATE:
+        LED_colour(RED)
+        HEATER.value = False
+        LED1.value = False
+        LED2.value = False
+        LED3.value = False
+        LED4.value = False
+        LED5.value = False
+        LED6.value = False
+        simpleio.tone(IO.BUZZER,261,0.25)
+        E_LED.value = True
+        # E_STOP and STOP_BTN press disables EMERGENCY_STATE, unlatching the E_STOP and switches to STOPPED_STATE (default state)
+        if (E_STOP
+        and not START_BTN
+        and STOP_BTN
+        and not TEMP_UP_BTN
+        and not TEMP_DOWN_BTN):
+            emergency_latch = False
+            latch = False
+            state = STOPPED_STATE
+            SETPOINT = 80
+            print("End of emergency")
+            E_LED.value = False
+            LED1.value = True
+            
     IO.RGB_LED.show()
+    time.sleep(0.01)
