@@ -7,17 +7,30 @@ import time
 import simpleio
 from lib.simple_pid import PID
 
-# initialise
+#-----INITIALISATION-----#
+
 IO = PLC()
 IO.init_all()
 IO.setServo()
 # default angle of the servo
 IO.SERVO.angle = 0
-print("\n--------------------------------\nWaterBoiler3000 has powered on.\n--------------------------------\n\nINSTRUCTIONS:\nPlease select a temperature using the BLUE button for UP and the YELLOW button for DOWN.\nPress the GREEN button to start heating and the RED button to stop heating.\n\nIMPORTANT:\nIn case of an EMERGENCY, press the BLACK button to enable the EMERGENCY STOP.\nTo disable the EMERGENCY STOP, press the BLACK and RED button simultaneously.\n")
+start_time = time.monotonic()
+print("""
+--------------------------------
+WaterBoiler3000 has powered on.
+--------------------------------
 
-#-----STATE-MACHINE-----#
+INSTRUCTIONS:
+Please select a temperature using the BLUE button for UP and the YELLOW button for DOWN.
+Press the GREEN button to start heating and the RED button to stop heating.
 
-# states
+IMPORTANT:
+In case of an EMERGENCY, press the BLACK button to enable the EMERGENCY STOP.
+To disable the EMERGENCY STOP, press the BLACK and RED button simultaneously.
+""")
+
+#---------STATE---------#
+
 STOPPED_STATE = 0
 RUN_STATE = 1
 EMERGENCY_STATE = 2
@@ -27,12 +40,16 @@ state = STOPPED_STATE
 
 #------TEMPERATURE------#
 
-# default temperature = 80C
+# default setpoint temperature = 80C
 SETPOINT = 80
 MIN_TEMP = 80
 MAX_TEMP = 180
-# default LED = 80C
 IO.QX1.value = True
+# default water temp
+ACTUAL_TEMPERATURE = 20
+power = 0
+# water valve
+WATER_VALVE_CLOSED = 0
 
 #--------COLOURS--------#
 
@@ -52,15 +69,11 @@ RAINBOW = [RED, YELLOW, GREEN, BLUE, PURPLE]
 # rainbow LED - upon initialization
 for x in range(1):
     for colour in RAINBOW:
-        
-        # rainbow
         time.sleep(0.1)
         LED_colour(colour)
     x+=1
 
 #---------NOTES---------#
-
-#simpleio.tone(IO.BUZZER,261,0.25)
 
 NOTES = {
     "C4": 261.63,
@@ -73,30 +86,24 @@ NOTES = {
     "C5": 523.25,
     "D5": 587.33,
     "E5": 659.25,
-    "F5": 698.46
-}
+    "F5": 698.46 }
 
 SONG = [("C4",0.2),
         ("G4",0.2),
         ("C5",0.25)]
 
-
 # currently disabled
 def play_sound(note:str,duration:float):
-    #tone = NOTES.get(note)
-    #simpleio.tone(IO.BUZZER,tone,duration)
+    tone = NOTES.get(note)
+    simpleio.tone(IO.BUZZER,tone,duration)
     return
 
-
-# -------- plays upon being powered ------------
-
+# power on ringtone
 for x in range(1):
     for note, duration in SONG:
-        # ringtone
         play_sound(note,duration)
 
-#----THERMISTER-ALT----#
-
+#----TEMPERATURE-DIAL----#
     """
     v = input value: current voltage
     
@@ -121,8 +128,8 @@ def mapto(v, x, y, a, b):
             print(f"error with angle {angle} = must be within 80-180")
     """
     
-def range_check(temp=0, setpoint=80, r=2):
-    return (setpoint - (r + 1)) <= temp < (setpoint + r)
+#def range_check(temp=0, setpoint=80, r=2):
+    #return (setpoint - (r + 1)) <= temp < (setpoint + r)
     #returns true or false if value is within a specified range
     """
     if diff < r and diff >= 0:#temp in range(setpoint - r, setpoint                + (r + 1)):
@@ -140,13 +147,17 @@ def range_check(temp=0, setpoint=80, r=2):
 latch = False
 emergency_latch = False
 
+#---------PID----------#
+
+pid = PID(2, 0.001, 0.0, setpoint=SETPOINT)
+pid.output_limits = (0, 100)
 
 #------SUPER-LOOP------#
 
 count = 0
 while True:
     count+=1
-    
+
 #---------GPIO---------#
 
     # inputs
@@ -156,7 +167,7 @@ while True:
     TEMP_UP_BTN = not IO.IX3.value
     TEMP_DOWN_BTN = not IO.IX4.value
     P_STOP = not IO.IX5.value
-    
+
     # outputs
     HEATER = IO.QX0
     LED1 = IO.QX1
@@ -167,12 +178,15 @@ while True:
     LED6 = IO.QX6
     E_LED = IO.QX7
 
-    # STOPPED (DEFAULT STATE)
+
+# STOPPED (DEFAULT STATE)
     if state == STOPPED_STATE:
         LED_colour(BLACK)
         HEATER.value = False
         E_LED.value = False
-            
+        IO.SERVO.angle = WATER_VALVE_CLOSED
+
+
         # TEMPERATURE UP(BLUE BUTTON)
         # TEMP_UP_BTN counts temp up (MAX: 180C)
         if (TEMP_UP_BTN
@@ -225,15 +239,15 @@ while True:
                 # LED6
                 elif SETPOINT == 180:
                     LED6.value = True
-                    
             # MAX_TEMP REACHED
             else:
                 play_sound("F5",0.2)
                 play_sound("C4",0.2)
+                print("Error: Maximum setpoint of 180°C has been reached.\n")
             LED_colour(BLUE)
             time.sleep(0.2)
-            
-            
+
+
         # TEMPERATURE DOWN (YELLOW BUTTON)
         # TEMP_DOWN_BTN counts temp down (MIN: 80C)
         if (TEMP_DOWN_BTN
@@ -294,9 +308,12 @@ while True:
             else:
                 play_sound("F5",0.2)
                 play_sound("C4",0.2)
+                print("\nError: Minimum setpoint of 80°C has been reached.\n")
             LED_colour(BLUE)
             time.sleep(0.2)
-        # START HEATING / SETPOINT TEMPERATURE (GREEN BUTTON)
+
+
+        # START HEATING / SETPOINT (GREEN BUTTON)
         # START_BTN pressed, sets target temperature, disabling temperature controls and starts heating process
         if (START_BTN
             and not STOP_BTN
@@ -304,65 +321,71 @@ while True:
             and not TEMP_UP_BTN
             and not TEMP_DOWN_BTN
             and not latch):
-            # -------------------  PID stuff
-            pid = PID(5, 0.01, 0.1, setpoint=SETPOINT)
-            pid.output_limits = (0, 100)
-
             E_LED.value = False
             latch = True
             state = RUN_STATE
+            #PID
+            pid.setpoint = SETPOINT
+            pid.reset()
             print(f"\nTarget temperature: {SETPOINT}°C.\nHeating started...")
-            
-    # RUNNING STATE = heating in progress
+
+
+# RUNNING STATE = heating in progress
     elif state == RUN_STATE:
-        
-        if count % 60 == 0:
-            
-            # value is recieved from thermister dial when you turn it
+        if count % 100 == 0:
+            # read temperature
             value = (IO.IW0.value * 3.3) / 65536
+            # min = room temp (20C), max = 185C
+            ACTUAL_TEMPERATURE = mapto(value,0.0, 3.3, 20, 185)
+            # update servo
+            # servo controls simulated water valve
+            # valve opens progressively as temp increases
+            servo_angle = mapto (ACTUAL_TEMPERATURE, 20, 185, 15, 180)
+            IO.SERVO.angle = int(servo_angle)
             
-            # 20C MIN ROOM TEMP SIM, 200C MAX TEMP SIM
-            ACTUAL_TEMPERATURE = mapto(value,0.0, 3.3, 20, 200)
+            # PID
+            error = SETPOINT - ACTUAL_TEMPERATURE
+            power = pid(ACTUAL_TEMPERATURE)
             
-            if int(ACTUAL_TEMPERATURE) in range(80, 180):
+            # TIME
+            elapsed_time = time.monotonic() - start_time
+
+            #if int(ACTUAL_TEMPERATURE) in range(80, 180):
                 # if temp is in range 80 - 180, allow servo to move (to fix the angle issue)
                 
-                # servo = pressure valve : 0 = closed 180 = fully open
-                servo_angle = mapto(ACTUAL_TEMPERATURE, 80, 180, 0, 180)
-                try:
-                    IO.SERVO.angle = int(servo_angle)
-                except:
-                    print(f"error with angle {servo_angle} = must be within 80-180")
+                # servo = water valve : 0 = closed 180 = fully open
+                #servo_angle = mapto(ACTUAL_TEMPERATURE, 80, 180, 0, 180)
+                #try:
+                    #IO.SERVO.angle = int(servo_angle)
+                #except:
+                    #print(f"error with angle {servo_angle} = must be within 80-180")
             
-            print(f"temp{ACTUAL_TEMPERATURE:0.2f}")
-            in_range = range_check(ACTUAL_TEMPERATURE, SETPOINT)
+            #in_range = range_check(ACTUAL_TEMPERATURE, SETPOINT)
             
             # checks: temp above setpoint,
             # if the setpoint and actual temperature are "synchronized":
-            if (ACTUAL_TEMPERATURE >= SETPOINT+2) or (in_range and int(ACTUAL_TEMPERATURE)):
-                #state = STOPPED_STATE
+
+            # BANG BANG CONTROL
+            if (ACTUAL_TEMPERATURE >= SETPOINT+2): #or (in_range and int(ACTUAL_TEMPERATURE)):
                 HEATER.value = False
                 LED_colour(BLACK)
-                
                 # checks: if temp less than setpoint, and
                 # if temp is below 80... heating is turned on
-            elif ACTUAL_TEMPERATURE <= SETPOINT+2:
+            elif ACTUAL_TEMPERATURE <= SETPOINT-2:
                 HEATER.value = True
                 LED_colour(GREEN)
-                    
-            print(f"Temperature set at: {SETPOINT}C. Actual Temperature is: {ACTUAL_TEMPERATURE}C.")
-            
-            
-            #thermister = pid(thermister)
-            
-            # boiler temperature
-            print(f"Voltage = {value}")
-            #print(f"Current temperature = {ACTUAL_TEMPERATURE:0.2f}")
-            #print(pid(thermister))
+            print(f"""
+--------------------------------
+     HEATING CONTROL STATUS
+--------------------------------
+Uptime: {elapsed_time:0.02f}s
+Temperature setpoint: {SETPOINT}°C
+Current temperature: {ACTUAL_TEMPERATURE:0.2f}°C
+Temperature error: {error:.02f}°C
+Water valve angle: {servo_angle:0.2f}°
+PID/heating power output: {power:.02f}%""")
 
 
-        
-            
         # STOP HEATING (RED BUTTON)
         # STOP_BTN pressed, heating process stops and enables temperature controls
         if (STOP_BTN
@@ -370,21 +393,35 @@ while True:
             and not E_STOP
             and not TEMP_UP_BTN
             and not TEMP_DOWN_BTN):
-            
-            # reset PID?
-            pid = ''
+            # PID reset
+            pid.reset()
             state = STOPPED_STATE
             latch = False
-            print("\nHeating stopped...")
-            
+            print(f"\nHeating stopped...\nWater valve angle: {WATER_VALVE_CLOSED}°")
+
+
         # EMERGENCY STOP (BLACK BUTTON)
         # E_STOP pressed while in RUN_STATE, switches to EMERGENCY_STATE
         if E_STOP or P_STOP:
             emergency_latch = True
+            # PID reset
+            pid.reset()
             state = EMERGENCY_STATE
-            print("\nEMERGENCY ALERT!")
-            
-    # EMERGENCY STATE disables all processes and buttons
+            IO.SERVO.angle = WATER_VALVE_CLOSED
+            print(f"""
+--------------------------------
+       EMERGENCY ALERT!
+--------------------------------
+
+BOILER STATUS:
+Heating: Stopped
+Water valve angle: {WATER_VALVE_CLOSED}°.
+
+To disable EMERGENCY STOP:
+Press the BLACK button and RED button simultaneously.""")
+
+
+# EMERGENCY STATE disables all processes and buttons
     elif state == EMERGENCY_STATE:
         LED_colour(RED)
         HEATER.value = False
@@ -396,7 +433,7 @@ while True:
         LED6.value = False
         simpleio.tone(IO.BUZZER,261,0.25)
         E_LED.value = True
-        # E_STOP and STOP_BTN press disables EMERGENCY_STATE, unlatching the E_STOP and switches to STOPPED_STATE (default state)
+        # E_STOP and STOP_BTN press disables EMERGENCY_STATE, unlatching the E_STOP and switches to STOPPED_STATE
         if (E_STOP
         and not START_BTN
         and STOP_BTN
@@ -406,9 +443,9 @@ while True:
             latch = False
             state = STOPPED_STATE
             SETPOINT = 80
-            print("End of emergency")
+            print("End of emergency.")
             E_LED.value = False
             LED1.value = True
-            
+
     IO.RGB_LED.show()
     time.sleep(0.01)
