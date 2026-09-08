@@ -325,11 +325,14 @@ while True:
             ACTUAL_TEMPERATURE = mapto(value,0.0, 3.3, 20, 200)
             
             if ACTUAL_TEMPERATURE in range(80, 180):
-                print("1. in range.")
                 # if temp is in range 80 - 180, allow servo to move (to fix the angle issue)
                 
                 # servo = pressure valve : 0 = closed 180 = fully open
                 servo_angle = mapto(ACTUAL_TEMPERATURE, 80, 180, 0, 180)
+                try:
+                    IO.SERVO.angle = int(angle)
+                except:
+                    print(f"error with angle {angle} = must be within 80-180")
             
             print(f"temp{ACTUAL_TEMPERATURE:0.2f}")
             
@@ -343,30 +346,26 @@ while True:
             disable
             
             """
-            if range_check(ACTUAL_TEMPERATURE, SETPOINT): # 2 + 1 to account for 0 start
-                print('2. in range!')
-
-                # if over 180 or boiler is already heated to 80, then heater is switched off.
-                """
-                if ACTUAL_TEMPERATURE > 180 or ACTUAL_TEMPERATURE > 80:
-                    # this controls the "boiler" output node (labelled by RO2)
+            in_range = range_check(ACTUAL_TEMPERATURE, SETPOINT)
+            
+            # checks if the setpoint and actual temperature are "synchronized":
+            if in_range and int(ACTUAL_TEMPERATURE) in range(80, 180):
+                    # if over 180 or boiler is already heated to 80, then heater is switched off.
                     HEATER.value = False
                     LED_colour(BLACK)
-                    
-                    #if under 80 or under 180:
-                else:
-                    # while the temp hasn't reached the "default" yet....:
-                    while ACTUAL_TEMPERATURE < 80:
-                        
-                        # heater is switched on to "heat"
-                        HEATER.value = True
-                        LED_colour(GREEN)
-                """
-            else:
-                print(f"""
-                      not in range of setpoint.
-                      {range_check(ACTUAL_TEMPERATURE, SETPOINT)}
-                      """)
+                    print("appropriate boiler conditions")
+                # while the temp hasn't reached the "default" yet.... wait for temp to go back to above 80
+            elif int(ACTUAL_TEMPERATURE) not in range(80, 180):
+                if ACTUAL_TEMPERATURE < 80:
+                    print("less than 80")
+                    # heater is switched on to "heat"
+                    HEATER.value = True
+                    LED_colour(GREEN)
+                elif ACTUAL_TEMPERATURE > 180:
+                    # if over 180, heating switched off and temperature waits to reach below 180
+                    HEATER.value = False
+                    LED_colour(BLACK)
+                
             
             print(f"Temperature set at: {SETPOINT}C. Actual Temperature is: {ACTUAL_TEMPERATURE}C.")
             
