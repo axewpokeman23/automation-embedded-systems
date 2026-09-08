@@ -1,3 +1,4 @@
+#code.py
 # WATER BOILER PROJECT
 # BY MARAEA AND SARA
 
@@ -108,13 +109,11 @@ for x in range(1):
     b = max temp
     """
 def mapto(v, x, y, a, b):
-"""
-    moves valve with the dial
-"""
-	return (v-x) / (y-x) * (b-a) + a
-	
-#def pressure_valve(angle):
+    #moves valve with the dial
+    return (v-x) / (y-x) * (b-a) + a
+
     """
+    def pressure_valve(angle):
     # update and move servo angle / pressure valve
         try:
             IO.SERVO.angle = int(angle)
@@ -122,11 +121,22 @@ def mapto(v, x, y, a, b):
             print(f"error with angle {angle} = must be within 80-180")
     """
     
-def bang_bang(temp=0, setpoint=80, range=2):
+def bang_bang(temp=0, setpoint=80, r=2):
+    
+    diff = temp - setpoint
+    print(f'''{diff, temp + diff, setpoint + diff, setpoint - r, setpoint + r}
+          ''')
     #returns true or false if value is within a specified range
-    if temp in range(setpoint - range, setpoint + (range + 1))):
+    if diff < r and diff >= 0:#temp in range(setpoint - r, setpoint + (r + 1)):
+        print("diff:" , diff)
         return True
-    else return False
+    
+    # if the temperature is below zero... 
+    elif diff <= 0 and (temp + diff) in range((setpoint - r), (setpoint + r)):
+        print("diff:", diff)
+        return True
+    else:
+        return False
 
 #---------LATCH--------#
 
@@ -289,8 +299,6 @@ while True:
                 play_sound("C4",0.2)
             LED_colour(BLUE)
             time.sleep(0.2)
-            
-            
         # START HEATING / SETPOINT TEMPERATURE (GREEN BUTTON)
         # START_BTN pressed, sets target temperature, disabling temperature controls and starts heating process
         if (START_BTN
@@ -302,7 +310,7 @@ while True:
             # -------------------  PID stuff
             pid = PID(5, 0.01, 0.1, setpoint=SETPOINT)
             pid.output_limits = (0, 100)
-            
+
             E_LED.value = False
             latch = True
             state = RUN_STATE
@@ -320,6 +328,7 @@ while True:
             ACTUAL_TEMPERATURE = mapto(value,0.0, 3.3, 20, 200)
             
             if ACTUAL_TEMPERATURE in range(80, 180):
+                print("1. in range.")
                 # if temp is in range 80 - 180, allow servo to move (to fix the angle issue)
                 
                 # servo = pressure valve : 0 = closed 180 = fully open
@@ -338,7 +347,7 @@ while True:
             
             """
             if bang_bang(ACTUAL_TEMPERATURE, SETPOINT, 2): # 2 + 1 to account for 0 start
-                print('in range!')
+                print('2. in range!')
 
                 # if over 180 or boiler is already heated to 80, then heater is switched off.
                 
@@ -355,9 +364,11 @@ while True:
                         # heater is switched on to "heat"
                         HEATER.value = True
                         LED_colour(GREEN)
-                        
             else:
-                raise Exception
+                print(f"""
+                      not in range of setpoint.
+                      {bang_bang(ACTUAL_TEMPERATURE, SETPOINT)}
+                      """)
             
             print(f"Temperature set at: {SETPOINT}C. Actual Temperature is: {ACTUAL_TEMPERATURE}C.")
             
