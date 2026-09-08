@@ -121,13 +121,11 @@ def mapto(v, x, y, a, b):
             print(f"error with angle {angle} = must be within 80-180")
     """
     
-def bang_bang(temp=0, setpoint=80, r=2):
-    
-    diff = temp - setpoint
-    print(f'''{diff, temp + diff, setpoint + diff, setpoint - r, setpoint + r}
-          ''')
+def range_check(temp=0, setpoint=80, r=2):
+    return (setpoint - (r + 1)) <= temp < (setpoint + r)
     #returns true or false if value is within a specified range
-    if diff < r and diff >= 0:#temp in range(setpoint - r, setpoint + (r + 1)):
+    """
+    if diff < r and diff >= 0:#temp in range(setpoint - r, setpoint                + (r + 1)):
         print("diff:" , diff)
         return True
     
@@ -135,8 +133,7 @@ def bang_bang(temp=0, setpoint=80, r=2):
     elif diff <= 0 and (temp + diff) in range((setpoint - r), (setpoint + r)):
         print("diff:", diff)
         return True
-    else:
-        return False
+    """
 
 #---------LATCH--------#
 
@@ -346,11 +343,11 @@ while True:
             disable
             
             """
-            if bang_bang(ACTUAL_TEMPERATURE, SETPOINT, 2): # 2 + 1 to account for 0 start
+            if range_check(ACTUAL_TEMPERATURE, SETPOINT): # 2 + 1 to account for 0 start
                 print('2. in range!')
 
                 # if over 180 or boiler is already heated to 80, then heater is switched off.
-                
+                """
                 if ACTUAL_TEMPERATURE > 180 or ACTUAL_TEMPERATURE > 80:
                     # this controls the "boiler" output node (labelled by RO2)
                     HEATER.value = False
@@ -364,10 +361,11 @@ while True:
                         # heater is switched on to "heat"
                         HEATER.value = True
                         LED_colour(GREEN)
+                """
             else:
                 print(f"""
                       not in range of setpoint.
-                      {bang_bang(ACTUAL_TEMPERATURE, SETPOINT)}
+                      {range_check(ACTUAL_TEMPERATURE, SETPOINT)}
                       """)
             
             print(f"Temperature set at: {SETPOINT}C. Actual Temperature is: {ACTUAL_TEMPERATURE}C.")
