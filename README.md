@@ -1,23 +1,24 @@
-# automation and embedded systems - water boiler controller
+# automation and embedded systems
 WATER BOILER PROJECT
 BY MARAEA AND SARA
 
 [current code on the board:](code.py)
-
-## Guide:
+[to-do](todo.md)
 
 **INSTRUCTIONS:**
 Please select a temperature using the BLUE button for UP and the YELLOW button for DOWN.
 Press the GREEN button to start heating and the RED button to stop heating.
 
-***-------------------IMPORTANT:----------------------***
-In case of an EMERGENCY, press the BLACK button to enable the EMERGENCY STOP.
-To disable the EMERGENCY STOP, press the BLACK and RED button simultaneously.
+*-------------------IMPORTANT:----------------------*<br>
+
+In case of an EMERGENCY, press the BLACK button to enable the EMERGENCY STOP.<br>
+To disable the EMERGENCY STOP, press the BLACK and RED button simultaneously.<br>
+
 ----------------------------------------------------
 
 below are functions related to the boiler controller
 
-*variables:*
+### variables:
 SETPOINT = temperature set by buttons ( defaults at 80 )
 state = can be RUNNING_STATE or OFF_STATE
 
@@ -29,7 +30,7 @@ state = can be RUNNING_STATE or OFF_STATE
   If SETPOINT and temperature of the boiler are not the same:
   - heating is turned on
  
-  if SETPOINT and temperature of the boiler are within a few degrees of eachother:
+  if SETPOINT and temperature of the boiler are within a few degrees of eachother OR
   if temperature of the boiler goes above SETPOINT:
   - heating is turned off and "no longer needed".
  
