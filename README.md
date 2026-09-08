@@ -2,10 +2,10 @@
 WATER BOILER PROJECT
 BY MARAEA AND SARA
 
-[current code on the board:](code.py)
-[to-do](todo.md)
+- [current code on the board:](code.py)
+- [to-do](todo.md)
 
-**INSTRUCTIONS:**
+**INSTRUCTIONS:**<br>
 Please select a temperature using the BLUE button for UP and the YELLOW button for DOWN.
 Press the GREEN button to start heating and the RED button to stop heating.
 
