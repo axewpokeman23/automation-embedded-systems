@@ -1,6 +1,7 @@
 # Part 2: Control Systems
 
-Over the course of weeks 7-8, we worked on this part of the assessment in our own times all week.
+For this assessment, we had to program code that would work on a microcontroller to fulfill the requirements as specified in the assignment handout for a smart water boiler.
+We worked on this part of this assessment for all of weeks 7-8.
 
 ## Challenges we faced: 
 
