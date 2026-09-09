@@ -19,7 +19,7 @@
 ## 1.0 Introduction
 Solution implemented as program code on a microcontroller.<br>
 - [current code on the board:](code.py)
-- [Assignment information - tasks](assignment-breakdown.md)
+- ![Assignment information - tasks](assignment-breakdown.md)
 
 references: (for the different callouts)
 > [!NOTE]
