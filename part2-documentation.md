@@ -33,8 +33,9 @@ Brought board home so she could work on it in her own time.
 
 ### Maraea:
 
-Wrote initial code to be built on in later iterations (implementing bang-bang). Worked on it on the mondays, tuesdays and wednesdays of week 7 and 8.
+Wrote initial code to be built on in later iterations (first working iteration of the code, implementing bang-bang logic and "if temp within range of setpoint + or - 2 degrees" ... etc). Worked on it on the mondays, tuesdays and wednesdays of week 7 and 8.
 
 - initial coding and logic setup
-    - code very messy in early stages, but every time, sara refactored the code and made it work and easier to understand
+    - code very messy in early stages
     - created state logic
+    - implemented bang-bang logic
