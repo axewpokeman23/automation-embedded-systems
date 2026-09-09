@@ -13,6 +13,7 @@ Over the course of weeks 7-8, we worked on this part of the assessment in our ow
 
 - PID 
     - entering different numbers would overshoot the heater and cause errors
+    - Super confusing to understand, but would be completed by Sara - Maraea
 
 - angle out of range:
     - had issues with the servo where the angle variable parsed to the servo would throw an error. fixed by wrapping in a "run only if within range"
