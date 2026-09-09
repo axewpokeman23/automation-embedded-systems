@@ -3,7 +3,12 @@
 For this assessment, we had to program code that would work on a microcontroller to fulfill the requirements as specified in the assignment handout for a smart water boiler.
 We worked on this part of this assessment for all of weeks 7-8.
 
-Code can be seen here: !(code.py)[code.py]
+Code can be seen at "code.py".
+
+# Table of contents:
+
+[Challenges we faced](#challenges-we-faced)<br>
+[Member contribution](#member-contribution)<br>
 
 ## Challenges we faced: 
 
