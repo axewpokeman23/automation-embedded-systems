@@ -30,7 +30,6 @@
 This report documents the development, testing and implementation of the Simple Water Boiler Controller case study.<br>
 The project involved connecting the required hardware to the Raspberry Pi Pico/PLC device, mapping the inputs and outputs, developing a CircuitPython program, and implementing a PID controller for temperature regulation.<br>
 - [current code on the board:](code.py)
-- ![Assignment information - tasks](assignment-breakdown.md)
 
 references: (for the different callouts)
 > [!NOTE]
@@ -287,6 +286,8 @@ For this project, both PID and bang-bang control were implemented. Because our s
 ## 7.0 Group Contribution
 
 Both members participated and contributed for every step of the project such as the hardware wiring, implementing CircuitPython code, testing PID controller, recording evidence and documentation during this project.
+
+![Part 2](part2-documentation.md)
 
 ## 8.0 References
 
