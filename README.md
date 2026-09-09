@@ -106,25 +106,24 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 |Component|Type|IO Mapping|GPIO|Description|
 |-|-|-|-|-|
 |Start - Green button|Digital Input|IX0.0|DI1|Sets temperature setpoint and enters the RUN_STATE/heating.|
-|Stop - Red button|Digital Input|||Stops heating and enters the STOPPED_STATE.|
+|Stop - Red button|Digital Input||||Stops heating and enters the STOPPED_STATE.|
 |Temperature Up - Blue button|Digital Input|||Increases temperature setpoint.|
 |Temperature Down - Yellow button|Digital Input|||Decreases temperature setpoint.|
-|Emergency Stop - Black button|Digital Input|
-|Pressure Switch - Dupont Wire|Digital Input|
-|Temperature Simulation Dial|Analogue Input|||Simulates the boiler temperature.|
-|Water Valve - Servo|Output|
+|Emergency Stop - Black button|Digital Input||||
+|Pressure Switch - Dupont Wire|Digital Input||||
+|Temperature Simulation Dial|Analogue Input||||Simulates the boiler temperature.|
+|Water Valve - Servo|Output||||
 |Heater LED|Digital Output|||Indicates heating.
-|LED1|Digital Output|
-|LED2|Digital Output|
-|LED3|Digital Output|
-|LED4|Digital Output|
-|LED5|Digital Output|
-|LED6|Digital Output|
+|LED1|Digital Output|||||
+|LED2|Digital Output|||||
+|LED3|Digital Output|||||
+|LED4|Digital Output|||||
+|LED5|Digital Output|||||
+|LED6|Digital Output|||||
 |Emergency LED|Digital Output|
 
 ### 2.2 Hardware Wiring
 The required buttons, LEDs, servo and temperature sensor were connected to the PLC according to the I/O Mapping above.
-
 
 **Note:** The GREEN button uses the red wire and the RED button uses the green wire.
 
@@ -243,10 +242,10 @@ The following table contains evidence that each operation works as intended.
 
 |Test|Expected Result|Pass/Fail|Evidence|
 |-|-|-|-|
-|Blue button|Setpoint increases|Pass|[temp control](./images/tempup_tempdown.MOV)|
-|Yellow button|Setpoint decreases|Pass|[temp control](./images/tempup_tempdown.MOV)|
+|Blue button|Setpoint increases|Pass|[temp up/down](./images/tempup_tempdown.MOV)|
+|Yellow button|Setpoint decreases|Pass|[temp up/down](./images/tempup_tempdown.MOV)|
 |Green button|Activates RUN_STATE|Pass|[start/stop](./images/start_stop.MOV)|
-|Red button|Activates STOPPED_STATE|Pass[start/stop](./images/start_stop.MOV)|
+|Red button|Activates STOPPED_STATE|Pass|[start/stop](./images/start_stop.MOV)|
 |Black button|Activates EMERGENCY_STATE|Pass|[emergency stop](./images/emergency.MOV)|
 |DuPont (Pressure Switch)|Activates EMERGENCY_STATE|Pass|[url]|
 |Temperature dial|Simulate temperature changes|Pass|[url]|
