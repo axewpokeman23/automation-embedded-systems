@@ -13,15 +13,17 @@
 [4.0 - Safety Operations](#40-safety-operations)<br>
 [4.1 - Emergency Stop](#41-emergency-stop)<br>
 [4.2 - Pressure Switch](#42-pressure-switch)<br>
-[5.0 - User Operations](#50-user-operations)<br>
+[5.0 - Control Operations](#50-control-operations)<br>
 [5.1 - Temperature Control](#51-temperature-control)<br>
 [5.2 - Start/Stop](#52-startstop)<br>
 [5.3 - Operating Instructions](#-53-operating-instructions)<br>
+[5.4 - Operations Testing](#54-operations-testing)<br>
 [6.0 - PID Control](#60-pid-control)<br>
 [6.1 - PID Parameters](#61-pid-parameters)<br>
 [6.2 - PID Testing](#62-pid-testing)<br>
 [6.3 - PID Suitability](#63-pid-suitability)<br>
 [7.0 - Group Contribution](#70-group-contribution)<br>
+[8.0 - References](#80-references)<br>
 <!--[4.0 - Code explanations](#40-code)<br>-->
 
 ## 1.0 Introduction
@@ -202,7 +204,7 @@ This event is simulated using a DuPont pin to trigger the input.
 
 > do we need the below sections? As it will be explained in the top part under scope
 
-## 5.0 User Operations
+## 5.0 Control Operations
 
 > [!IMPORTANT]
 > unfinished
@@ -236,6 +238,18 @@ The system allows for a minimum setpoint of 80C and a maximum setpoint of 180C.
 
 The REPL will display feedback for each valid action.
 
+### 5.4 Operations Testing
+
+|Test|Expected Result|Pass/Fail|Evidence|
+|-|-|-|-|
+|Blue button|Setpoint increases|Pass|[url]|
+|Yellow button|Setpoint decreases|Pass|[url]|
+|Green button|Activates RUN_STATE
+|Red button|
+|Black button|
+|DuPont|Activates EMERGENCY_STATE|Pass|[url]|
+|
+
 
 ## 6.0 PID Control
 A PID controller was implemented to control the simulated boiler temperature.
@@ -264,3 +278,6 @@ For this project, both PID and bang-bang control were implemented. Because our s
 
 Both members participated and contributed for every step of the project such as the hardware wiring, implementing CircuitPython code, testing PID controller, recording evidence and documentation during this project.
 
+## 8.0 References
+
+https://github.com/Copper280z/CircuitPython_simple-pid/blob/master/examples/water_boiler/README.md
