@@ -1,5 +1,5 @@
-<i><<p style="font-size:10">ITAE6.100 Automation and Embedded Systems
-Assignment - Part 2: Control Systems
+<i><p style="font-size:8">ITAE6.100 Automation and Embedded Systems<br>
+Assignment - Part 2: Control Systems<br>
 By Maraea and Sara</i></p>
 <br>
 # Simple Boiler Controller:<br>Operating Manual
