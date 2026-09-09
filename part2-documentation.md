@@ -14,7 +14,7 @@ We worked on this part of this assessment for all of weeks 7-8.
 
 - PID 
     - entering different numbers would overshoot the heater and cause errors
-    - Super confusing to understand, but would be completed by Sara - Maraea
+    - implementation was super confusing to understand, but would be completed by Sara - Maraea
 
 - angle out of range:
     - had issues with the servo where the angle variable parsed to the servo would throw an error. fixed by wrapping in a "run only if within range"
@@ -31,12 +31,12 @@ Brought board home so she could work on it in her own time.
     - fixed state logic (and adjusted names and functions to fit assignment requirements and circuit diagram) 
 - had a lot more understanding of the requirements in the assignment, and helped to incorporate it into the code (Water valve/servo (what the valve should do, etc), bang-bang, PID controller)
 - created and troubleshooted code in her own time at home
+- handled coding the outputs (setting up the temperature LEDs, heater, etc).
 
 ### Maraea:
 
 Wrote initial code to be built on in later iterations (first working iteration of the code, implementing bang-bang logic and "if temp within range of setpoint + or - 2 degrees" ... etc). Worked on it on the mondays, tuesdays and wednesdays of week 7 and 8.
 
 - initial coding and logic setup
-    - code very messy in early stages
-    - created state logic
-    - implemented bang-bang logic
+    - created state logic: RUNNING, OFF, HEATING, EMERGENCY, etc. Implemented as switches, but further refined by Sara.
+    - implemented bang-bang logic: when temp goes over setpoint, heater is automatically turned off and vice versa
