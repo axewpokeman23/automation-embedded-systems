@@ -1,22 +1,20 @@
----
-ITAE6.100 Automation and Embedded Systems
+<i><<p style="font-size:10">ITAE6.100 Automation and Embedded Systems
 Assignment - Part 2: Control Systems
-
-BY MARAEA AND SARA
----
+By Maraea and Sara</i></p>
+<br>
 # Simple Boiler Controller:<br>Operating Manual
 
 #### Table of Contents
-1. [Introduction](#introduction)
-  1.1 [Scope](#scope)
-  1.2 [Requirements](#requirements)
-2. [Getting Started](#getting-started)
-  2.1 [Temperature Control](#temperature-control)
-  2.2 [Start Heating / Setpoint](#start-heating--setpoint)
-  2.3 [Stop Heating](#stop-heating)
-3. [Safety Operations](#safety-operations)
-  3.1 [Emergency Stop](#emergency-stop)
-  3.2 [Pressure Switch](#pressure-switch)
+1. [Introduction](#introduction)<br>
+1.1 [Scope](#scope)<br>
+1.2 [Requirements](#requirements)<br>
+2. [Getting Started](#getting-started)<br>
+2.1 [Temperature Control](#temperature-control)<br>
+2.2 [Start Heating / Setpoint](#start-heating--setpoint)<br>
+2.3 [Stop Heating](#stop-heating)<br>
+3. [Safety Operations](#safety-operations)<br>
+3.1 [Emergency Stop](#emergency-stop)<br>
+3.2 [Pressure Switch](#pressure-switch)<br>
 
 
 ## 1. Introduction 
