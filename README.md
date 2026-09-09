@@ -5,7 +5,7 @@
 
 [1.0 - Introduction](#10-introduction)<br>
 [1.1 - Overview](#11-overview)<br>
-[1.2 - Hardware Mapping](#12-hardware-mapping)<br>
+[1.2 - Hardware and I/O Mapping](#12-hardware-and-io-mapping)<br>
 [1.3 - Requirements](#13-requirements)<br>
 [2.0 - Safety Operations](#20-safety-operations)<br>
 [2.1 - Emergency Stop](#21-emergency-stop)<br>
@@ -17,7 +17,8 @@
 <!--[4.0 - Code explanations](#40-code)<br>-->
 
 ## 1.0 Introduction
-Solution implemented as program code on a microcontroller.<br>
+This report documents the development, testing and implementation of the Simple Water Boiler Controller case study.<br>
+The project involved connecting the required hardware to the Raspberry Pi Pico/PLC device, mapping the inputs and outputs, developing a CircuitPython program, and implementing a PID controller for temperature regulation.<br>
 - [current code on the board:](code.py)
 - ![Assignment information - tasks](assignment-breakdown.md)
 
@@ -38,6 +39,9 @@ references: (for the different callouts)
 > caution
 
 ### 1.1 Overview
+The aim of this project is to develop a control system for a simulated water boiler.<br>
+The system will be programmed using CircuitPython and tested using the connected hardware to demonstrate that the required inputs, outputs and control functions operate as intended.<br>
+
 Simple control system for a water boiler simulation. 
 The system contains 6 inputs to control the associating 8 outputs.<br>
 
@@ -79,8 +83,8 @@ The system contains 6 inputs to control the associating 8 outputs.<br>
 > [!IMPORTANT] image here depicting additional inputs/outputs
 > labeled and circled RGB and BUZZER
 
-### 1.2 Hardware Mapping
-
+### 1.2 Hardware and I/O Mapping
+The control system was implemented using the Waveshare RP2350-POE-ETH-8DI-8RO board. The board is based on the Raspberry Pi RP2350 microcontroller.
 > [!IMPORTANT]
 > !(place hardware mapping thing here)[images/hardware-map-diagram.png]
 
