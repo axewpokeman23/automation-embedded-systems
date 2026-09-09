@@ -112,15 +112,17 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 |Emergency Stop - Black button|Digital Input||||
 |Pressure Switch - Dupont Wire|Digital Input||||
 |Temperature Simulation Dial|Analogue Input||||Simulates the boiler temperature.|
-|Water Valve - Servo|Output||||
+|Water Valve - Servo|Output|||Controls the water valve position/angle.|
 |Heater LED|Digital Output|||Indicates heating.
-|LED1|Digital Output|||||
-|LED2|Digital Output|||||
-|LED3|Digital Output|||||
-|LED4|Digital Output|||||
-|LED5|Digital Output|||||
-|LED6|Digital Output|||||
-|Emergency LED|Digital Output|
+|LED1|Digital Output||||Temperature range indicator(80C)|
+|LED2|Digital Output||||Temperature range indicator(100C)|
+|LED3|Digital Output||||Temperature range indicator(120C)|
+|LED4|Digital Output||||Temperature range indicator(140C)|
+|LED5|Digital Output||||Temperature range indicator(160C)|
+|LED6|Digital Output||||Temperature range indicator(180C)|
+|Emergency LED|Digital Output|||Indicates EMERGENCY_STATE|
+
+**Note**: Odd temperatures (e.g. 90, 110, 130, 150, 170) are indicated by both neighbouring LED's being active.
 
 ### 2.2 Hardware Wiring
 The required buttons, LEDs, servo and temperature sensor were connected to the PLC according to the I/O Mapping above.
@@ -146,7 +148,7 @@ Input functionality:
    * Pressure switch: disabled
 
 Output functionality:
-   * Heater is disabled
+   * Heater control is disabled
 
 **2. RUN_STATE**
 
@@ -170,7 +172,7 @@ Input functionality:
    * Pressure switch: active emergency state
 
 Output functionality:
-   * Heater is disabled
+   * Heater control is disabled
 
 > [!NOTE]
 > 1. All buttons cannot be pressed simultaneously EXCEPT for when disabling the emergency stop.
