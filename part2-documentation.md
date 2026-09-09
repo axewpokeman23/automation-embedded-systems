@@ -1,6 +1,6 @@
 # Part 2: Control Systems
 
-Over the course of weeks 7-8, we worked on this part of the assessment in our own times from Monday, Tuesday and Wednesday.
+Over the course of weeks 7-8, we worked on this part of the assessment in our own times all week.
 
 ## Challenges we faced: 
 
