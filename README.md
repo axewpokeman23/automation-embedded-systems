@@ -3,16 +3,16 @@
 
 #### Table of Contents
 [1.0 Introduction](#10-introduction)<br>
-[1.1 Scope](#11-scope)<br>
-[1.2 Hardware Mapping](#12-hardware-mapping)<br>
-[1.3 Requirements](#13-requirements)<br>
+- [1.1 Scope](#11-scope)<br>
+- [1.2 Hardware Mapping](#12-hardware-mapping)<br>
+- [1.3 Requirements](#13-requirements)<br>
 [2.0 Safety Operations](#20-safety-operations)<br>
-[2.1 Emergency Stop](#21-emergency-stop)<br>
-[2.2 Pressure Switch](#22-pressure-switch)<br>
+- [2.1 Emergency Stop](#21-emergency-stop)<br>
+- [2.2 Pressure Switch](#22-pressure-switch)<br>
 [3.0 Getting Started](#30-getting-started)<br>
-[3.1 Temperature Control](#31-temperature-control)<br>
-[3.2 Start Heating / Setpoint](#32-start-heating--setpoint)<br>
-[3.3 Stop Heating](#33-stop-heating)<br>
+- [3.1 Temperature Control](#31-temperature-control)<br>
+- [3.2 Start Heating / Setpoint](#32-start-heating--setpoint)<br>
+- [3.3 Stop Heating](#33-stop-heating)<br>
 [4.0 Code explanations](#40-code)<br>
 
 ## 1.0 Introduction
