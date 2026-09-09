@@ -2,7 +2,7 @@
 # Simple Boiler Controller:<br>Operating Manual
 
 #### Table of Contents
-1.0[Introduction](#10-introduction)<br>[1.1 Scope](#scope)<br>[1.2 Hardware Mapping](#12-hardware-mapping)<br>[1.2 Requirements](#requirements)<br>[2.0 Safety Operations](#safety-operations)<br>[2.1 Emergency Stop](#emergency-stop)<br>[2.2 Pressure Switch](#pressure-switch)[3.0 Getting Started](#getting-started)<br>[3.1 Temperature Control](#temperature-control)<br>[3.2 Start Heating / Setpoint](#start-heating--setpoint)<br>[3.3 Stop Heating](#stop-heating)<br>
+1.0 [Introduction](#10-introduction)<br>  [1.1 Scope](#scope)<br>1.2  [Hardware Mapping](#12-hardware-mapping)<br>[1.2 Requirements](#requirements)<br>[2.0 Safety Operations](#safety-operations)<br>[2.1 Emergency Stop](#emergency-stop)<br>[2.2 Pressure Switch](#pressure-switch)[3.0 Getting Started](#getting-started)<br>[3.1 Temperature Control](#temperature-control)<br>[3.2 Start Heating / Setpoint](#start-heating--setpoint)<br>[3.3 Stop Heating](#stop-heating)<br>
 
 ## 1.0 Introduction 
 Solution implemented as program code on a microcontroller
