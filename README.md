@@ -4,7 +4,7 @@
 #### Table of Contents
 
 [1.0 - Introduction](#10-introduction)<br>
-[1.1 - Scope](#11-scope)<br>
+[1.1 - Overview](#11-overview)<br>
 [1.2 - Hardware Mapping](#12-hardware-mapping)<br>
 [1.3 - Requirements](#13-requirements)<br>
 [2.0 - Safety Operations](#20-safety-operations)<br>
@@ -37,7 +37,7 @@ references: (for the different callouts)
 > [!CAUTION]
 > caution
 
-### 1.1 Scope
+### 1.1 Overview
 Simple control system for a water boiler simulation. 
 The system contains 6 inputs to control the associating 8 outputs.<br>
 
@@ -45,7 +45,7 @@ The system contains 6 inputs to control the associating 8 outputs.<br>
 > !(place the picture of the board and associated buttons here)[images/full-top-picture.png]
 > - outline outputs vs inputs ?
 
-Inputs include:
+##### Inputs include:
 1. Heating ON / temperature setpoint
 2. Heating OFF
 4. Temperature Up
@@ -57,7 +57,7 @@ Inputs include:
 > [!IMPORTANT] image here showing the buttons and input side of the board
 > labeled 1 - 8 corresponding to component listed above
 
-Outputs include:
+##### Outputs include:
 1. Heater
 2. Temperature Range Indicators (LED1-6)
 3. Emergency LED
@@ -66,14 +66,15 @@ Outputs include:
 > [!IMPORTANT] image here with full view of the output side of the board
 > labeled and circled 1-4
 
-Additional inputs/outputs:
-1. RGB LED
-  - Upon board receiving power, LED flashes colours before turning back off.
-  - LED is green when heating is on
+##### Additional inputs/outputs:
+1. **RGB LED**
+    - Upon board receiving power, LED flashes colours before turning back off.
+    - LED is green when heating is on
+    - LED changes colour according to temperature adjustment for visual feedback.
 
-3. Buzzer
-  - Upon board receiving power, plays a start-up tune.
-  - Simulates an emergency buzzer when: emergency stop has been activated, temperature is being adjusted, or temperature setpoint is attempted to be set to above or below a certain threshold.
+2. **Buzzer**
+    - Upon board receiving power, plays a start-up tune.
+    - Simulates an emergency buzzer when: emergency stop has been activated, temperature is being adjusted, or temperature setpoint is attempted to be set to above or below a certain threshold.
 
 > [!IMPORTANT] image here depicting additional inputs/outputs
 > labeled and circled RGB and BUZZER
