@@ -2,14 +2,10 @@
 # Simple Boiler Controller:<br>Operating Manual
 
 #### Table of Contents
-1.0 [Introduction](#10-introduction)<br>  [1.1 Scope](#scope)<br>1.2  [Hardware Mapping](#12-hardware-mapping)<br>[1.2 Requirements](#requirements)<br>[2.0 Safety Operations](#safety-operations)<br>[2.1 Emergency Stop](#emergency-stop)<br>[2.2 Pressure Switch](#pressure-switch)[3.0 Getting Started](#getting-started)<br>[3.1 Temperature Control](#temperature-control)<br>[3.2 Start Heating / Setpoint](#start-heating--setpoint)<br>[3.3 Stop Heating](#stop-heating)<br>
+[1.0 Introduction](#10-introduction)<br>  [1.1 Scope](#11-scope)<br>[1.2 Hardware Mapping](#12-hardware-mapping)<br>[1.3 Requirements](#13-requirements)<br>[2.0 Safety Operations](#20-safety-operations)<br>[2.1 Emergency Stop](#21-emergency-stop)<br>[2.2 Pressure Switch](#22-pressure-switch)[3.0 Getting Started](#30-getting-started)<br>[3.1 Temperature Control](#31-temperature-control)<br>[3.2 Start Heating / Setpoint](#32-start-heating--setpoint)<br>[3.3 Stop Heating](#33-stop-heating)<br>
 
 ## 1.0 Introduction
 Solution implemented as program code on a microcontroller.<br>
-Excerpt taken from assignment case study:<br>
-
-The logic and process control to drive the hot water is based on a Raspberry Pi microcontroller (RP2040, RP2350) device with peripheral devices. The boiler controller controls a power switch for the heater set by user driven choices. The user can select the desired heat and the Boiler Controller will heat the water to the set temperature. There are several indicators, buttons and fail-safe measures.
-
 - [current code on the board:](code.py)
 - [Assignment information - tasks](assignment-breakdown.md)
 
@@ -33,8 +29,9 @@ references: (for the different callouts)
 Simple control system for a water boiler simulation. 
 The system contains 6 inputs to control the associating 8 outputs.<br>
 
-!(place the picture of the board and associated buttons here)[images/full-top-picture.png]
-- outline outputs vs inputs ?
+> ![IMPORTANT]
+> !(place the picture of the board and associated buttons here)[images/full-top-picture.png]
+> - outline outputs vs inputs ?
 
 Inputs include:
 1. Heating ON / temperature setpoint
@@ -45,7 +42,7 @@ Inputs include:
 7. Pressure Switch
 8. Thermistor
 
->![IMPORTANT] image here showing the buttons and input side of the board
+> ![IMPORTANT] image here showing the buttons and input side of the board
 > labeled 1 - 8 corresponding to component listed above
 
 Outputs include:
@@ -54,7 +51,7 @@ Outputs include:
 3. Emergency LED
 4. Water valve
 
->![IMPORTANT] image here with full view of the output side of the board
+> ![IMPORTANT] image here with full view of the output side of the board
 > labeled and circled 1-4
 
 Additional inputs/outputs:
@@ -66,7 +63,7 @@ Additional inputs/outputs:
   - Upon board receiving power, plays a start-up tune.
   - Simulates an emergency buzzer when: emergency stop has been activated, temperature is being adjusted, or temperature setpoint is attempted to be set to above or below a certain threshold.
 
->![IMPORTANT] image here depicting additional inputs/outputs
+> ![IMPORTANT] image here depicting additional inputs/outputs
 > labeled and circled RGB and BUZZER
 
 ### 1.2 Hardware Mapping
