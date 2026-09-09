@@ -1,11 +1,11 @@
 # Part 2: Control Systems
 
-Over the course of weeks 7-8, we worked on this part of the assessment in our own times from Monday, Tuesday and Wednesday.
+Over the course of weeks 7-8, we worked on this part of the assessment in our own times all week.
 
 ## Challenges we faced: 
 
 - bang-bang not working correctly
-    - managed to fix it by revising the logic
+    - managed to fix it by revising the logic and correcting if statements
 
 - mismatched hardware
     - red wire went to the green button and green wire went to the red button
@@ -13,6 +13,7 @@ Over the course of weeks 7-8, we worked on this part of the assessment in our ow
 
 - PID 
     - entering different numbers would overshoot the heater and cause errors
+    - Super confusing to understand, but would be completed by Sara - Maraea
 
 - angle out of range:
     - had issues with the servo where the angle variable parsed to the servo would throw an error. fixed by wrapping in a "run only if within range"
@@ -22,6 +23,7 @@ Over the course of weeks 7-8, we worked on this part of the assessment in our ow
 ### Sara:
 
 Did majority of coding, refactoring and made code more comprehensive, and implemented the PID controller. Also helped to explain aspects of the assignment which were otherwise hard to understand.
+Brought board home so she could work on it in her own time.
 
 - cleaned up code and made it more presentable and easier to read
     - implemented start-up instructions interface (with the help text)
@@ -31,7 +33,7 @@ Did majority of coding, refactoring and made code more comprehensive, and implem
 
 ### Maraea:
 
-Wrote initial code which would be built on in later iterations (implementing bang-bang, PID controller, servo/water valve logic)
+Wrote initial code to be built on in later iterations (implementing bang-bang). Worked on it on the mondays, tuesdays and wednesdays of week 7 and 8.
 
 - initial coding and logic setup
     - code very messy in early stages, but every time, sara refactored the code and made it work and easier to understand
