@@ -161,8 +161,8 @@ while True:
 #---------GPIO---------#
 
     # inputs
-    START_BTN = not IO.IX0.value
-    STOP_BTN = not IO.IX1.value
+    START_BTN = not IO.IX0.value    # RED WIRE
+    STOP_BTN = not IO.IX1.value     # GREEN WIRE
     E_STOP = not IO.IX2.value
     TEMP_UP_BTN = not IO.IX3.value
     TEMP_DOWN_BTN = not IO.IX4.value
@@ -332,6 +332,8 @@ while True:
 
 # RUNNING STATE = heating in progress
     elif state == RUN_STATE:
+        LED_colour(GREEN)
+        # cycle
         if count % 100 == 0:
             # read temperature
             value = (IO.IW0.value * 3.3) / 65536
@@ -347,7 +349,7 @@ while True:
             error = SETPOINT - ACTUAL_TEMPERATURE
             power = pid(ACTUAL_TEMPERATURE)
             
-            # TIME
+            # UPTIME
             elapsed_time = time.monotonic() - start_time
 
             #if int(ACTUAL_TEMPERATURE) in range(80, 180):
@@ -368,12 +370,12 @@ while True:
             # BANG BANG CONTROL
             if (ACTUAL_TEMPERATURE >= SETPOINT+2): #or (in_range and int(ACTUAL_TEMPERATURE)):
                 HEATER.value = False
-                LED_colour(BLACK)
+                #LED_colour(BLACK)
                 # checks: if temp less than setpoint, and
                 # if temp is below 80... heating is turned on
             elif ACTUAL_TEMPERATURE <= SETPOINT-2:
                 HEATER.value = True
-                LED_colour(GREEN)
+                #LED_colour(GREEN)
             print(f"""
 --------------------------------
      HEATING CONTROL STATUS
