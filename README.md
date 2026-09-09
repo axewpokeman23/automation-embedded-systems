@@ -14,7 +14,7 @@
 [3.1 - Temperature Control](#31-temperature-control)<br>
 [3.2 - Start Heating / Setpoint](#32-start-heating--setpoint)<br>
 [3.3 - Stop Heating](#33-stop-heating)<br>
-[4.0 - Code explanations](#40-code)<br>
+<!--[4.0 - Code explanations](#40-code)<br>-->
 
 ## 1.0 Introduction
 Solution implemented as program code on a microcontroller.<br>
@@ -121,7 +121,7 @@ The system has 3 states. Below are the criteria to activate each state: <br>
 
 ### 2.2 Pressure Switch
 
-> [!IMPORTANT]
+>[!IMPORTANT]
 > We just put the pin in the thing and it will do something.
 > (maybe put image here of activating the pressure switch?)
 
@@ -132,59 +132,25 @@ The system has 3 states. Below are the criteria to activate each state: <br>
 ## 3.0 Getting Started
 
 > [!IMPORTANT]
+> unfinished
 Power source USB
 System will be powered on immediately.
 
 ### 3.1 Temperature Control
 
 > [!IMPORTANT]
+> unfinished
 
 ### 3.3 Start Heating / Setpoint
 
-> [!IMPORTANT]
+>[!IMPORTANT]
+>unfinished
 
 ### 3.4 Stop Heating
 
-> [!IMPORTANT]
+>[!IMPORTANT]
+>unfinished
 
-arbitrary text below:
-
-**INSTRUCTIONS:**<br>
-Please select a temperature using the BLUE button for UP and the YELLOW button for DOWN.
-Press the GREEN button to start heating and the RED button to stop heating.
-
-*-------------------IMPORTANT:----------------------*<br>
-
-In case of an EMERGENCY, press the BLACK button to enable the EMERGENCY STOP.<br>
-To disable the EMERGENCY STOP, press the BLACK and RED button simultaneously.<br>
-
-----------------------------------------------------
-
-below are functions related to the boiler controller
-
-## 4.0 Code
-### variables:
-SETPOINT = temperature set by buttons ( defaults at 80 )
-state = can be RUNNING_STATE or OFF_STATE
-
-### Green button :
-- turns on heating-state
-- when heating is on, rotate dial to adjust temperature to match the SETPOINT (temperature set by up down buttons)
-
-  #### features:
-  If SETPOINT and temperature of the boiler are not the same:
-  - heating is turned on
- 
-  if SETPOINT and temperature of the boiler are within a few degrees of eachother OR
-  if temperature of the boiler goes above SETPOINT:
-  - heating is turned off and "no longer needed".
- 
-  idea: if temperature of the boiler goes above 180 and above SETPOINT:
-  - enforce emergency stop??? just an idea
-
-### Red button:
-- turns off heating
-- allows for temperature setting
 
 ### Black button:
 - emergency stop
