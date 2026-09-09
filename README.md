@@ -239,17 +239,19 @@ The system allows for a minimum setpoint of 80C and a maximum setpoint of 180C.
 The REPL will display feedback for each valid action.
 
 ### 5.4 Operations Testing
+The following table contains evidence that each operation works as intended.
 
 |Test|Expected Result|Pass/Fail|Evidence|
 |-|-|-|-|
-|Blue button|Setpoint increases|Pass|[url]|
-|Yellow button|Setpoint decreases|Pass|[url]|
-|Green button|Activates RUN_STATE
-|Red button|
-|Black button|
-|DuPont|Activates EMERGENCY_STATE|Pass|[url]|
-|
-
+|Blue button|Setpoint increases|Pass|[temp control](./images/tempup_tempdown.MOV)|
+|Yellow button|Setpoint decreases|Pass|[temp control](./images/tempup_tempdown.MOV)|
+|Green button|Activates RUN_STATE|Pass|[start/stop](./images/start_stop.MOV)|
+|Red button|Activates STOPPED_STATE|Pass[start/stop](./images/start_stop.MOV)|
+|Black button|Activates EMERGENCY_STATE|Pass|[emergency stop](./images/emergency.MOV)|
+|DuPont (Pressure Switch)|Activates EMERGENCY_STATE|Pass|[url]|
+|Temperature dial|Simulate temperature changes|Pass|[url]|
+|PID Control|Controls/stabilises the temperature|Pass|[url]|
+|Servo|Opens/closes correctly|Pass|[url]|
 
 ## 6.0 PID Control
 A PID controller was implemented to control the simulated boiler temperature.
@@ -266,6 +268,13 @@ Kd: 0.01
 The PID parameters were adjusted through testing to achieve a low error when the boiler temperature reaches the desired setpoint.
 
 ### 6.2 PID Testing 
+To test how the PID works, the Kp, Ki and Kd was each changed incrementally to output a minimal temperature error when the boiler temperature reaches the setpoint. 
+
+Challenges were experienced when changing these inputs to received the correct results. Firstly, the PID, specifically the I was much higher and therefore the PID heating output completely overshot the desired setpoint, resulting in the following screenshot where the heating output is [percent] when the temperature [actual_temp] had already reached the setpoint [setpoint].
+[screenshot]
+
+The following screen recording displays the Heating Control Status and outputs the PID % and temperature error. 
+[REPL screen recording displaying heating outputs](./images/REPL_output.mp4)
 
 ### 6.3 PID Suitability
 PID control can be suitable for embedded systems such as smart water boilers, where a microcontroller can continuously monitor temperature and adjust the heating output. This is especially important for industrial water-heating systems, where accurate temperature control is required. 
