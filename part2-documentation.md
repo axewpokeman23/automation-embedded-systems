@@ -5,7 +5,7 @@ Over the course of weeks 7-8, we worked on this part of the assessment in our ow
 ## Challenges we faced: 
 
 - bang-bang not working correctly
-    - managed to fix it by revising the logic
+    - managed to fix it by revising the logic and correcting if statements
 
 - mismatched hardware
     - red wire went to the green button and green wire went to the red button
