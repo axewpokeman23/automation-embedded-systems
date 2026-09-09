@@ -2,16 +2,7 @@
 # Simple Boiler Controller:<br>Operating Manual
 
 #### Table of Contents
-[1.0 Introduction](#introduction)
-  [1.1 Scope](#scope)
-  [1.2 Requirements](#requirements)
-[2.0 Getting Started](#getting-started)
-  [2.1 Temperature Control](#temperature-control)
-  [2.2 Start Heating / Setpoint](#start-heating--setpoint)
-  [2.3 Stop Heating](#stop-heating)
-[3. Safety Operations](#safety-operations)
-  [3.1 Emergency Stop](#emergency-stop)
-  [3.2 Pressure Switch](#pressure-switch)
+1.0[Introduction](#10-introduction)<br>[1.1 Scope](#scope)<br>[1.2 Hardware Mapping](#12-hardware-mapping)<br>[1.2 Requirements](#requirements)<br>[2.0 Safety Operations](#safety-operations)<br>[2.1 Emergency Stop](#emergency-stop)<br>[2.2 Pressure Switch](#pressure-switch)[3.0 Getting Started](#getting-started)<br>[3.1 Temperature Control](#temperature-control)<br>[3.2 Start Heating / Setpoint](#start-heating--setpoint)<br>[3.3 Stop Heating](#stop-heating)<br>
 
 ## 1.0 Introduction 
 Solution implemented as program code on a microcontroller
@@ -30,37 +21,50 @@ Inputs include:
 
 Outputs include:
 * Heater
-* Temperature Range Indications (LED1-6)
+* Temperature Range Indicators (LED1-6)
 * Emergency LED
 
-### 1.2 Requirements
+### 1.2 Hardware Mapping
+
+### 1.3 Requirements
 
 The system has 3 states which each have their own set of requirements.<br>
 1. STOPPED_STATE
-   * Temperature control buttons enabled
-   * Start button enabled
-   * Stop button disabled
-   * Emergency button disabled
+   * Temperature control buttons press: enabled
+   * Start button pres: enabled
+   * Stop button press: disabled
+   * Emergency button press: disabled
+   * Pressure switch: disabled
 2. RUN_STATE
-   * Temperature control buttons disabled
-   * Start button 
+   * Temperature control buttons press: disabled
+   * Start button: active
+   * Stop button press: enabled
+   * Emergency button press: enabled
+   * Pressure switch: enabled
 3. EMERGENCY_STATE
+   * Temperature control buttons press: disabled
+   * Start button press: disabled
+   * Stop button press: disabled
+   * Emergency button press: active
+   * Pressure switch: active emergency state
 
+**Note:** All buttons cannot be pressed simultaneously EXCEPT for when disabling the emergency stop.
 
-## 2.0 Getting Started
+## 2.0 Safety Operations
+### 2.1 Emergency Stop
+### 2.2 Pressure Switch
+## 3.0 Getting Started
 Power source USB
 System will power on immediately, greeted with ringtone and flashing lights and message
 
-### 2.1 Temperature Control
+### 3.1 Temperature Control
 Control temp buttons
 
-### 2.3 Start Heating / Setpoint
+### 3.3 Start Heating / Setpoint
 
-### 2.4 Stop Heating
+### 3.4 Stop Heating
 
-## 3. Safety Operations
-### 3.1 Emergency Stop
-### 3.2 Pressure Switch
+
 
 
 
