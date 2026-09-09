@@ -1,6 +1,14 @@
 # Part 2: Control Systems
 
-Over the course of weeks 7-8, we worked on this part of the assessment in our own times all week.
+For this assessment, we had to program code that would work on a microcontroller to fulfill the requirements as specified in the assignment handout for a smart water boiler.
+We worked on this part of this assessment for all of weeks 7-8.
+
+Code can be seen at "code.py".
+
+# Table of contents:
+
+[Challenges we faced](#challenges-we-faced)<br>
+[Member contribution](#member-contribution)<br>
 
 ## Challenges we faced: 
 
@@ -13,7 +21,7 @@ Over the course of weeks 7-8, we worked on this part of the assessment in our ow
 
 - PID 
     - entering different numbers would overshoot the heater and cause errors
-    - Super confusing to understand, but would be completed by Sara - Maraea
+    - implementation was super confusing to understand, but would be completed by Sara - Maraea
 
 - angle out of range:
     - had issues with the servo where the angle variable parsed to the servo would throw an error. fixed by wrapping in a "run only if within range"
@@ -30,11 +38,12 @@ Brought board home so she could work on it in her own time.
     - fixed state logic (and adjusted names and functions to fit assignment requirements and circuit diagram) 
 - had a lot more understanding of the requirements in the assignment, and helped to incorporate it into the code (Water valve/servo (what the valve should do, etc), bang-bang, PID controller)
 - created and troubleshooted code in her own time at home
+- handled coding the outputs (setting up the temperature LEDs, heater, etc).
 
 ### Maraea:
 
-Wrote initial code to be built on in later iterations (implementing bang-bang). Worked on it on the mondays, tuesdays and wednesdays of week 7 and 8.
+Wrote initial code to be built on in later iterations (first working iteration of the code, implementing bang-bang logic and "if temp within range of setpoint + or - 2 degrees" ... etc). Worked on it on the mondays, tuesdays and wednesdays of week 7 and 8.
 
 - initial coding and logic setup
-    - code very messy in early stages, but every time, sara refactored the code and made it work and easier to understand
-    - created state logic
+    - created state logic: RUNNING, OFF, HEATING, EMERGENCY, etc. Implemented as switches, but further refined by Sara.
+    - implemented bang-bang logic: when temp goes over setpoint, heater is automatically turned off and vice versa
