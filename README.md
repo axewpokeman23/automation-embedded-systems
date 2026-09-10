@@ -93,7 +93,7 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 |Emergency Stop - Black button|Digital Input|IX2|||
 |Pressure Switch - Dupont Wire|Digital Input|IX5|||
 |Temperature Simulation Dial|Analogue Input|3V3(white), G(purple), 40(gray)|||Simulates the boiler temperature.|
-|Water Valve - Servo|Output|39(yellow),3V3(orange),G(brown)||Controls the water valve position/angle.|
+|Water Valve - Servo|Analogue Output|39(yellow),3V3(orange),G(brown)||Controls the water valve position/angle.|
 |Heater LED|Digital Output|QX0||Indicates heating.
 |LED1|Digital Output|QX1|
 ||Temperature range indicator(80C)|
@@ -104,7 +104,9 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 |LED6|Digital Output|QX6|||Temperature range indicator(180C)|
 |Emergency LED|Digital Output|QX7||Indicates EMERGENCY_STATE|
 
-**Note**: Odd temperatures (e.g. 90, 110, 130, 150, 170) trigger two LEDs, and are indicated by both neighbouring LED's being active.
+>[!NOTE]:
+> Odd temperatures (e.g. 90, 110, 130, 150, 170) trigger two LEDs, and are indicated by both neighbouring LED's being active.
+<br>
 
 ### 2.2 Hardware Wiring
 
