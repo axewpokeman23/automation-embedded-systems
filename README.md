@@ -47,9 +47,7 @@ The control system was implemented using the Waveshare RP2350-POE-ETH-8DI-8RO bo
 
 #### Labeled diagrams:
 
-![place labeled image of buttons](images/diagram-of-button.png)
-
-![place labeled board image here](images/diagram-of-board.png)
+![place labeled image here](images/diagram.png)
 
 The system contains 6 inputs to control the associating 8 outputs.<br>
 ##### Inputs include:
