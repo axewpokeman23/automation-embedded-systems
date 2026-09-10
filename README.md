@@ -84,24 +84,25 @@ The system contains 6 inputs to control the associating 8 outputs.<br>
 
 The components were mapped to the PLC/Pico inputs and outputs using the provided pinout documentation and waveshare.py.
 
-|Component|Type|GPIO|Device Pin|Description|
-|-|-|-|-|-|
-|Start - Green button|Digital Input|IX0|DI1|Sets temperature setpoint and enters the RUN_STATE/heating.|
-|Stop - Red button|Digital Input|IX1|||Stops heating and enters the STOPPED_STATE.|
-|Temperature Up - Blue button|Digital Input|IX3||Increases temperature setpoint.|
-|Temperature Down - Yellow button|Digital Input|IX4||Decreases temperature setpoint.|
-|Emergency Stop - Black button|Digital Input|IX2|||
-|Pressure Switch - Dupont Wire|Digital Input|IX5|||
-|Temperature Simulation Dial|Analogue Input|3V3(white), G(purple), 40(gray)|||Simulates the boiler temperature.|
-|Water Valve - Servo|Analogue Output|39(yellow),3V3(orange),G(brown)||Controls the water valve position/angle.|
-|Heater LED|Digital Output|QX0||Indicates heating.
-|LED1|Digital Output|QX1||Temperature range indicator(80C)|
-|LED2|Digital Output|QX2||Temperature range indicator(100C)|
-|LED3|Digital Output|QX3||Temperature range indicator(120C)|
-|LED4|Digital Output|QX4||Temperature range indicator(140C)|
-|LED5|Digital Output|QX5||Temperature range indicator(160C)|
-|LED6|Digital Output|QX6||Temperature range indicator(180C)|
-|Emergency LED|Digital Output|QX7||Indicates EMERGENCY_STATE|
+|Component|Wire|Type|GPIO|Device Pin|Description|
+|-|-|-|-|-|-|
+|Button box|White|Digital Input| - |DGND|Connects the button box to use as inputs.|
+|Start - Green button|Red|Digital Input|IX0|DI1|Sets temperature setpoint and enters the RUN_STATE/heating.|
+|Stop - Red button|Green|Digital Input|IX1|DI2|Stops heating and enters the STOPPED_STATE.|
+|Temperature Up - Blue button|Blue|Digital Input|IX3|DI3|Increases temperature setpoint.|
+|Temperature Down - Yellow button|Yellow|Digital Input|IX4|DI4|Decreases temperature setpoint.|
+|Emergency Stop - Black button|Black|Digital Input|IX2|DI5|Activates EMERGENCY_STATE.||
+|Pressure Switch|DuPont Wire|Digital Input|IX5|DI6|Activates EMERGENCY_STATE.|
+|Temperature Simulation Dial|White, Grey, Purple|Analogue Input||3V3(white - positive), G(purple - negative), 40(gray - middle wire)|Simulates the boiler temperature.|
+|Water Valve - Servo|Yellow, Orange, Brown||Analogue Output|39(yellow),3V3(orange),G(brown)|Controls the water valve position/angle.|
+|Heater LED| - |Digital Output(Relay)|QX0||Indicates heating.
+|LED1| - |Digital Output(Relay)|QX1||Temperature range indicator(80C)|
+|LED2| - |Digital Output(Relay)|QX2||Temperature range indicator(100C)|
+|LED3| - |Digital Output(Relay)|QX3||Temperature range indicator(120C)|
+|LED4| - |Digital Output(Relay)|QX4||Temperature range indicator(140C)|
+|LED5| - |Digital Output(Relay)|QX5||Temperature range indicator(160C)|
+|LED6| - |Digital Output(Relay)|QX6||Temperature range indicator(180C)|
+|Emergency LED| - |Digital Output(Relay)|QX7||Indicates EMERGENCY_STATE|
 
 > [!NOTE]
 > Odd temperatures (e.g. 90, 110, 130, 150, 170) trigger two LEDs, and are indicated by both
