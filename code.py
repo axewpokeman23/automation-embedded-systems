@@ -2,9 +2,11 @@
 # WATER BOILER PROJECT
 # BY MARAEA AND SARA
 
+
 from waveshare import PLC
 import time
 import simpleio
+# import library for PID function
 from lib.simple_pid import PID
 
 #-----INITIALISATION-----#
@@ -26,8 +28,7 @@ Press the GREEN button to start heating and the RED button to stop heating.
 
 IMPORTANT:
 In case of an EMERGENCY, press the BLACK button to enable the EMERGENCY STOP.
-To disable the EMERGENCY STOP, press the BLACK and RED button simultaneously.
-""")
+To disable the EMERGENCY STOP, press the BLACK and RED button simultaneously.""")
 
 #---------STATE---------#
 
@@ -119,29 +120,6 @@ def mapto(v, x, y, a, b):
     #moves valve with the dial
     return (v-x) / (y-x) * (b-a) + a
 
-    """
-    def pressure_valve(angle):
-    # update and move servo angle / pressure valve
-        try:
-            IO.SERVO.angle = int(angle)
-        except:
-            print(f"error with angle {angle} = must be within 80-180")
-    """
-    
-#def range_check(temp=0, setpoint=80, r=2):
-    #return (setpoint - (r + 1)) <= temp < (setpoint + r)
-    #returns true or false if value is within a specified range
-    """
-    if diff < r and diff >= 0:#temp in range(setpoint - r, setpoint                + (r + 1)):
-        print("diff:" , diff)
-        return True
-    
-    # if the temperature is below zero... 
-    elif diff <= 0 and (temp + diff) in range((setpoint - r), (setpoint + r)):
-        print("diff:", diff)
-        return True
-    """
-
 #---------LATCH--------#
 
 latch = False
@@ -149,7 +127,18 @@ emergency_latch = False
 
 #---------PID----------#
 
-pid = PID(2, 0.001, 0.0, setpoint=SETPOINT)
+"""
+Kp = proportional
+Generates the power output based on the temp error which is calculated by subtracting the boiler temp (ACTUAL_TEMPERATURE) from the temperature setpoint (SETPOINT).
+Ki = integral
+Will affect the PID output by offsetting past errors. If a large error occurs e.g -5C then +5C will be output to make up the difference.
+Kd = derivative 
+Will predict errors that may occur to dampen the effect of a possible error.
+
+The idea is for each value to be adjusted incrementally until the error is minimal when the ACTUAL_TEMPERATURE reaches the SETPOINT, therefore outputting less heat percentage, and when the error increases, based on the distance from the ACTUAL_TEMPERATURE to the SETPOINT, the PID will adjust the output to the limits (0% or 100% heating) to achieve the desired temperature.
+"""
+# pid = PID(Kp, Ki, Kd, setpoint=SETPOINT)
+pid = PID(2, 0.001, 0.01, setpoint=SETPOINT)
 pid.output_limits = (0, 100)
 
 #------SUPER-LOOP------#
@@ -181,6 +170,7 @@ while True:
 
 # STOPPED (DEFAULT STATE)
     if state == STOPPED_STATE:
+        # indicates that the system is stopped and not in a run_state
         LED_colour(BLACK)
         HEATER.value = False
         E_LED.value = False
@@ -198,6 +188,7 @@ while True:
                 SETPOINT += 10
                 play_sound("C5",0.2)
                 print(f"Temperature set to {SETPOINT}°C.")
+                # resets LEDs to off
                 LED1.value = False
                 LED2.value = False
                 LED3.value = False
@@ -245,7 +236,7 @@ while True:
                 play_sound("C4",0.2)
                 print("Error: Maximum setpoint of 180°C has been reached.\n")
             LED_colour(BLUE)
-            time.sleep(0.2)
+            time.sleep(0.1)
 
 
         # TEMPERATURE DOWN (YELLOW BUTTON)
@@ -310,7 +301,7 @@ while True:
                 play_sound("C4",0.2)
                 print("\nError: Minimum setpoint of 80°C has been reached.\n")
             LED_colour(BLUE)
-            time.sleep(0.2)
+            time.sleep(0.1)
 
 
         # START HEATING / SETPOINT (GREEN BUTTON)
@@ -324,7 +315,7 @@ while True:
             E_LED.value = False
             latch = True
             state = RUN_STATE
-            #PID
+            # PID will update the setpoint when START_BTN pressed and then reset for the next cycle update
             pid.setpoint = SETPOINT
             pid.reset()
             print(f"\nTarget temperature: {SETPOINT}°C.\nHeating started...")
@@ -332,6 +323,7 @@ while True:
 
 # RUNNING STATE = heating in progress
     elif state == RUN_STATE:
+        # green = indicates that the system is in the run state
         LED_colour(GREEN)
         # cycle
         if count % 100 == 0:
@@ -342,32 +334,19 @@ while True:
             # update servo
             # servo controls simulated water valve
             # valve opens progressively as temp increases
-            servo_angle = mapto (ACTUAL_TEMPERATURE, 20, 185, 15, 180)
+            servo_angle = mapto (ACTUAL_TEMPERATURE, 20, 185, 10, 80)
             IO.SERVO.angle = int(servo_angle)
-            
-            # PID
+
+            # PID calculations
+            # calculates the erorr by subtracting the ACTUAL_TEMPERATURE from the SETPOINT
             error = SETPOINT - ACTUAL_TEMPERATURE
+            # PID output - heating power percentage
             power = pid(ACTUAL_TEMPERATURE)
-            
-            # UPTIME
+
+            # UPTIME - system status QOL feature
             elapsed_time = time.monotonic() - start_time
 
-            #if int(ACTUAL_TEMPERATURE) in range(80, 180):
-                # if temp is in range 80 - 180, allow servo to move (to fix the angle issue)
-                
-                # servo = water valve : 0 = closed 180 = fully open
-                #servo_angle = mapto(ACTUAL_TEMPERATURE, 80, 180, 0, 180)
-                #try:
-                    #IO.SERVO.angle = int(servo_angle)
-                #except:
-                    #print(f"error with angle {servo_angle} = must be within 80-180")
-            
-            #in_range = range_check(ACTUAL_TEMPERATURE, SETPOINT)
-            
-            # checks: temp above setpoint,
-            # if the setpoint and actual temperature are "synchronized":
-
-            # BANG BANG CONTROL
+            # BANG BANG CONTROL - controls if the heatig is ON/OFF based on the temperature range (within 2degrees)
             if (ACTUAL_TEMPERATURE >= SETPOINT+2): #or (in_range and int(ACTUAL_TEMPERATURE)):
                 HEATER.value = False
                 #LED_colour(BLACK)
@@ -448,6 +427,5 @@ Press the BLACK button and RED button simultaneously.""")
             print("End of emergency.")
             E_LED.value = False
             LED1.value = True
-
     IO.RGB_LED.show()
     time.sleep(0.01)
