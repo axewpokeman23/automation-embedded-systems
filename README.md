@@ -169,9 +169,8 @@ Output functionality:
 ### 4.1 Emergency Stop
 
 > [!CAUTION]
->  Pressing the BLACK button will activate ***emergency stop***. When activated, the system enters the EMERGENCY_STATE. This ceases all interactivity and functions of the buttons (temp up, down, heating start, stop), activates a continuous buzzer, disables the heater, and fully closes the water valve to 0%.
-
-To **EXIT emergency stop mode** and resume normal function, the BLACK and RED buttons must be pressed simultaneously.
+> Pressing the BLACK button will activate the emergency stop ***(EMERGENCY_STATE)***. When activated, the system enters the EMERGENCY_STATE. This activates a continuous buzzer, disables the heater, and fully closes the water valve to 0%.<br>
+> To disable the emergency stop, the BLACK and RED buttons must be pressed simultaneously.
 
 ### 4.2 Pressure Switch
 
