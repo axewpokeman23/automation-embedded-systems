@@ -69,7 +69,7 @@ The system contains 6 inputs to control the associating 8 outputs.<br>
 5. Temperature Down
 6. Emergency Stop
 7. Pressure Switch
-8. Thermistor
+8. Thermister
 
 > [!IMPORTANT] image here showing the buttons and input side of the board
 > labeled 1 - 8 corresponding to component listed above
@@ -100,6 +100,7 @@ The system contains 6 inputs to control the associating 8 outputs.<br>
 > !(place hardware mapping thing here)[images/hardware-map-diagram.png]
 
 ### 2.1 I/O Mapping
+
 The components were mapped to the PLC/Pico inputs and outputs using the provided pinout documentation and waveshare.py.
 
 |Component|Type|IO Mapping|GPIO|Description|
@@ -124,14 +125,16 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 **Note**: Odd temperatures (e.g. 90, 110, 130, 150, 170) are indicated by both neighbouring LED's being active.
 
 ### 2.2 Hardware Wiring
-The required buttons, LEDs, servo and temperature sensor were connected to the PLC according to the I/O Mapping above.
+The required buttons, LEDs, servo and temperature sensor were connected to the PLC according to the I/O Mapping above. We also used a mini flathead screwdriver to adjust the screws to secure the different wiring to the board.
+<br>
 
-**Note:** The GREEN button uses the red wire and the RED button uses the green wire.
+>[!NOTE]:
+> The GREEN button uses the red wire and the RED button uses the green wire.
+<br>
 
 **Hardware Testing**
-As we implemented the CircuitPython code we tested each button until we achieved the desired outcome.
-[video]
-Figure 3: Video showing functioning buttons.
+As we implemented the CircuitPython code, we tested each button until we achieved the desired outcome.
+Video proof is in attached folder [images](images), and can also be seen under header [5.4 - Operations Testing](#54-operations-testing).
 
 ## 3.0 System Operations
 ### 3.1 State Machine
@@ -173,22 +176,14 @@ Input functionality:
 Output functionality:
    * Heater control is disabled
 
-> [!NOTE]
-> 1. All buttons cannot be pressed simultaneously EXCEPT for when disabling the emergency stop.
-
 ## 4.0 Safety Operations
 
 ### 4.1 Emergency Stop
 
 > [!CAUTION]
->  Pressing the Emergency Stop button will cease all function on the board, play the emergency siren, and disable all interactions with the controller by enabling the ***emergency stop mode.***
-  - This means that all buttons individual functionality will be disabled.
-    
-**To EXIT emergency stop mode*** and resume normal function, you must press the black button and the red button at the same time.
+>  Pressing the BLACK button will activate ***emergency stop***. When activated, the system enters the EMERGENCY_STATE. This ceases all interactivity and functions of the buttons (temp up, down, heating start, stop), activates a continuous buzzer, disables the heater, and fully closes the water valve to 0%.
 
-The BLACK button activates the emergency stop. When activated, the system enters the EMERGENCY_STATE. This activates a continuous buzzer, disables the heater, and fully closes the water valve to 0%.
-
-To disable the emergency stop, the BLACK and RED buttons must be pressed simultaneously.
+To **EXIT emergency stop mode** and resume normal function, the BLACK and RED buttons must be pressed simultaneously.
 
 ### 4.2 Pressure Switch
 
@@ -196,36 +191,19 @@ The pressure switch triggers the same emergency response as the emergency stop. 
 
 This event is simulated using a DuPont pin to trigger the input.
 
->[!IMPORTANT]
-> We just put the pin in the thing and it will do something.
-> (maybe put image here of activating the pressure switch?)
-
-
-
-> do we need the below sections? As it will be explained in the top part under scope
-
 ## 5.0 Control Operations
 
-> [!IMPORTANT]
-> unfinished
-Power source USB
-System will be powered on immediately.
+Board is powered via USB.
 
 ### 5.1 Temperature Control
 The temperature setpoint can be adjusted using the BLUE button to increase the setpoint and the YELLOW button to decrease the setpoint.
 
 The system allows for a minimum setpoint of 80C and a maximum setpoint of 180C.
 
-> [!IMPORTANT]
-> unfinished
-
 ### 5.2 Start/Stop
 
->[!IMPORTANT]
->unfinished
-
->[!IMPORTANT]
->unfinished
+Pressing the GREEN button activates heating, while the RED button will deactivate heating.
+Starting the heating will send a signal to output relay ***RO1***.
 
 ### 5.3 Operating Instructions 
 
