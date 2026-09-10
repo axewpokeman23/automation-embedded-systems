@@ -212,9 +212,9 @@ The following table contains evidence that each operation works as intended.
 |Red button|Activates STOPPED_STATE|Pass|[start/stop](./images/start_stop.MOV)|
 |Black button|Activates EMERGENCY_STATE|Pass|[emergency stop](./images/emergency.MOV)|
 |DuPont (Pressure Switch)|Activates EMERGENCY_STATE|Pass|[url]|
-|Temperature dial|Simulate temperature changes|Pass|[url]|
-|PID Control|Controls/stabilises the temperature|Pass|[url]|
-|Servo|Opens/closes correctly|Pass|[url]|
+|Temperature dial|Simulate temperature changes|Pass|[dial & servo]|(./images_dial_servo.MOV)|
+|PID Control|Controls/stabilises the temperature|Pass|[REPL screen recording displaying heating outputs](./images/REPL_output.mp4)|
+|Servo|Opens/closes correctly|Pass|[dial & servo](./images/dial_servo.MOV)||
 
 ## 6.0 PID Control
 
@@ -224,6 +224,8 @@ The controller compares the selected temperate setpoint with the temperature pro
 The PID controller was tested by observing the boiler temperature as it approached the selected setpoint.
 
 ### 6.1 PID Parameters
+
+Current PID Parameters being used: 
 
 Kp: 2
 Ki: 0.001
@@ -237,6 +239,8 @@ To test how the PID works, the Kp, Ki and Kd was each changed incrementally to o
 
 Challenges were experienced when changing these inputs to received the correct results. Firstly, the PID, specifically the Integral was much higher and therefore the PID heating output completely overshot the desired setpoint, resulting in the following screenshot where the heating output is [percent] when the temperature [actual_temp]() had already reached the setpoint [setpoint]().
 <br>
+
+PID Parameters tested:
 
 Kp: 2<br>
 Ki: 0.02<br>
