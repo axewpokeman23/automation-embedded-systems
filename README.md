@@ -103,8 +103,9 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 |LED6|Digital Output|QX6||Temperature range indicator(180C)|
 |Emergency LED|Digital Output|QX7||Indicates EMERGENCY_STATE|
 
->[!NOTE]:
-> Odd temperatures (e.g. 90, 110, 130, 150, 170) trigger two LEDs, and are indicated by both neighbouring LED's being active.
+> [!NOTE]:
+> Odd temperatures (e.g. 90, 110, 130, 150, 170) trigger two LEDs, and are indicated by both
+> neighbouring LED's being active.
 <br>
 
 ### 2.2 Hardware Wiring
@@ -112,7 +113,7 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 The required buttons, LEDs, servo and temperature sensor were connected to the PLC according to the I/O Mapping above. We also used a mini flathead screwdriver to adjust the screws to secure the different wiring to the board.
 <br>
 
->[!NOTE]:
+> [!NOTE]:
 > The GREEN button uses the red wire and the RED button uses the green wire.
 <br>
 
