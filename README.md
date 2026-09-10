@@ -1,4 +1,5 @@
 <i><p style="font-size:8">ITAE6.100 Automation and Embedded Systems<br>Assignment - Part 2: Control Systems<br>By Maraea and Sara</i></p>
+
 # Simple Boiler Controller:<br>Operating Manual
 
 #### Table of Contents
@@ -30,7 +31,7 @@
 
 This report documents the development, testing and implementation of the Simple Water Boiler Controller case study.<br>
 The project involved connecting the required hardware to the Raspberry Pi Pico/PLC device, mapping the inputs and outputs, developing a CircuitPython program, and implementing a PID controller for temperature regulation.<br>
-- [current code on the board:](code.py)
+- Current code on the board [code.py](code.py)
 
 ### 1.1 Overview
 
@@ -114,7 +115,7 @@ The required buttons, LEDs, servo and temperature sensor were connected to the P
 > The GREEN button uses the red wire and the RED button uses the green wire.
 <br>
 
-**Hardware Testing**
+**Hardware Testing**<br>
 As we implemented the CircuitPython code, we tested each button until we achieved the desired outcome.
 Video proof is in attached folder [images](images), and can also be seen under header [5.4 - Operations Testing](#54-operations-testing).
 
