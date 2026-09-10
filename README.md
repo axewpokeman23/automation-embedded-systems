@@ -272,9 +272,6 @@ We worked on this part of this assessment for all of weeks 7-8.
 Both members participated and contributed for every step of the project such as the hardware wiring, implementing CircuitPython code, testing PID controller, recording evidence and documentation during this project.
 <br>
 
-[Challenges we faced](#challenges-we-faced)<br>
-[Member contribution](#member-contribution)<br>
-
 ### 7.1 Challenges we faced: 
 
 - bang-bang not working correctly
