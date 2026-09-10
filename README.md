@@ -43,8 +43,7 @@ The system will be programmed using CircuitPython and tested using the connected
 
 The control system was implemented using the Waveshare RP2350-POE-ETH-8DI-8RO board. The board is based on the Raspberry Pi RP2350 microcontroller.
 <br>
-Simple control system for a water boiler simulation. 
-The system contains 6 inputs to control the associating 8 outputs.<br>
+
 
 #### Labeled diagrams:
 
@@ -52,6 +51,7 @@ The system contains 6 inputs to control the associating 8 outputs.<br>
 
 ![place labeled board image here](images/diagram-of-board.png)
 
+The system contains 6 inputs to control the associating 8 outputs.<br>
 ##### Inputs include:
 
 1. Heating ON / temperature setpoint
@@ -60,7 +60,7 @@ The system contains 6 inputs to control the associating 8 outputs.<br>
 5. Temperature Down
 6. Emergency Stop
 7. Pressure Switch
-8. Thermister
+8. Thermister(Temperature simulated with dial)
 
 ##### Outputs include:
 
@@ -271,4 +271,4 @@ Both members participated and contributed for every step of the project such as 
 
 ## 8.0 References
 
-https://github.com/Copper280z/CircuitPython_simple-pid/blob/master/examples/water_boiler/README.md
+Copper280z (2021). *Water Boiler Example*. GitHub. https://github.com/Copper280z/CircuitPython_simple-pid/blob/master/examples/water_boiler/README.md
