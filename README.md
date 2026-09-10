@@ -95,7 +95,7 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 |Temperature Simulation Dial|Analogue Input|3V3(white), G(purple), 40(gray)|||Simulates the boiler temperature.|
 |Water Valve - Servo|Analogue Output|39(yellow),3V3(orange),G(brown)||Controls the water valve position/angle.|
 |Heater LED|Digital Output|QX0||Indicates heating.
-|LED1|Digital Output|QX1|||Temperature range indicator(80C)|
+|LED1|Digital Output|QX1||Temperature range indicator(80C)|
 |LED2|Digital Output|QX2||Temperature range indicator(100C)|
 |LED3|Digital Output|QX3||Temperature range indicator(120C)|
 |LED4|Digital Output|QX4||Temperature range indicator(140C)|
