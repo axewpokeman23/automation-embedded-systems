@@ -190,7 +190,9 @@ The system allows for a minimum setpoint of 80C and a maximum setpoint of 180C.
 ### 5.2 Start/Stop
 
 Pressing the GREEN button activates heating, while the RED button will deactivate heating.
-Starting the heating will send a signal to output relay ***RO1***.
+Heating is indicated by the output relay ***RO1***.<br>
+If the temperature is above the SETPOINT, the heater relay (LED1) will turn off and vice versa. 
+The range is indicated by the implemented bang-bang control, controlling the heater within a range of 2C.
 
 ### 5.3 Operating Instructions 
 
