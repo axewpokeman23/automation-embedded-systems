@@ -135,9 +135,6 @@ Input functionality:
    * Emergency button press: disabled
    * Pressure switch: disabled
 
-Output functionality:
-   * Heater control is disabled
-
 **2. RUN_STATE**
 
 Input functionality:
@@ -147,9 +144,6 @@ Input functionality:
    * Emergency button press: enabled
    * Pressure switch: enabled
 
-Output functionality:
-   * Heater control is active
-
 **3. EMERGENCY_STATE**
 
 Input functionality:
@@ -158,9 +152,6 @@ Input functionality:
    * Stop button press: disabled
    * Emergency button press: active
    * Pressure switch: active emergency state
-
-Output functionality:
-   * Heater control is disabled
 
 ## 4.0 Safety Operations
 
