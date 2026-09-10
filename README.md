@@ -239,10 +239,10 @@ The PID parameters were adjusted through testing to achieve a low error when the
 To test how the PID works, the Kp, Ki and Kd was each changed incrementally to output a minimal temperature error when the boiler temperature reaches the setpoint. 
 
 Challenges were experienced when changing these inputs to received the correct results. Firstly, the PID, specifically the Ki was too high and therefore the PID heating output completely overshot the desired setpoint, resulting in the following screenshot where the heating output is 13.52% when the temperature 80.52C had already reached the setpoint 80C.<br>
-To fix this the values were adjusted, resulting in the final PID parameters in the following section.
-<br>
+To fix this the values were adjusted, resulting in the final PID parameters mentioned above.
+<br>The following are the parameters tested that resulted in the following image: ![](images/PID-fail.png)
 
-PID Parameters tested:
+PID Parameters tested and failed:
 
 Kp: 2<br>
 Ki: 0.02<br>
