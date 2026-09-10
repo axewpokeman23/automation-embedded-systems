@@ -211,7 +211,7 @@ The following table contains evidence that each operation works as intended.
 |Green button|Activates RUN_STATE|Pass|[start/stop](./images/start_stop.MOV)|
 |Red button|Activates STOPPED_STATE|Pass|[start/stop](./images/start_stop.MOV)|
 |Black button|Activates EMERGENCY_STATE|Pass|[emergency stop](./images/emergency.MOV)|
-|DuPont (Pressure Switch)|Activates EMERGENCY_STATE|Pass|[url]|
+|DuPont (Pressure Switch)|Activates EMERGENCY_STATE|Pass|[pressure switch]|(./pressure-switch)|
 |Temperature dial|Simulate temperature changes|Pass|[dial & servo]|(./images_dial_servo.MOV)|
 |PID Control|Controls/stabilises the temperature|Pass|[REPL screen recording displaying heating outputs](./images/REPL_output.mp4)|
 |Servo|Opens/closes correctly|Pass|[dial & servo](./images/dial_servo.MOV)||
