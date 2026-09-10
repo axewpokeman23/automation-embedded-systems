@@ -31,22 +31,6 @@ This report documents the development, testing and implementation of the Simple 
 The project involved connecting the required hardware to the Raspberry Pi Pico/PLC device, mapping the inputs and outputs, developing a CircuitPython program, and implementing a PID controller for temperature regulation.<br>
 - [current code on the board:](code.py)
 
-references: (for the different callouts)
-> [!NOTE]
-> note
-
-> [!TIP]
-> tip
-
-> [!IMPORTANT]
-> important
-
-> [!WARNING]
-> warning
-
-> [!CAUTION]
-> caution
-
 ### 1.1 Overview
 The aim of this project is to develop a control system for a simulated water boiler.<br>
 The system will be programmed using CircuitPython and tested using the connected hardware to demonstrate that the required inputs, outputs and control functions operate as intended.<br>
