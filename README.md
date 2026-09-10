@@ -27,26 +27,32 @@
 <!--[4.0 - Code explanations](#40-code)<br>-->
 
 ## 1.0 Introduction
+
 This report documents the development, testing and implementation of the Simple Water Boiler Controller case study.<br>
 The project involved connecting the required hardware to the Raspberry Pi Pico/PLC device, mapping the inputs and outputs, developing a CircuitPython program, and implementing a PID controller for temperature regulation.<br>
 - [current code on the board:](code.py)
 
 ### 1.1 Overview
+
 The aim of this project is to develop a control system for a simulated water boiler.<br>
 The system will be programmed using CircuitPython and tested using the connected hardware to demonstrate that the required inputs, outputs and control functions operate as intended.<br>
 
 
 ## 2.0 Hardware and I/O Mapping
-The control system was implemented using the Waveshare RP2350-POE-ETH-8DI-8RO board. The board is based on the Raspberry Pi RP2350 microcontroller.
 
+The control system was implemented using the Waveshare RP2350-POE-ETH-8DI-8RO board. The board is based on the Raspberry Pi RP2350 microcontroller.
+<br>
 Simple control system for a water boiler simulation. 
 The system contains 6 inputs to control the associating 8 outputs.<br>
 
-> [!IMPORTANT]
-> !(place the picture of the board and associated buttons here)[images/full-top-picture.png]
-> - outline outputs vs inputs ?
+#### Labeled diagrams:
+
+![place labeled image of buttons](images/diagram-of-button.png)
+
+![place labeled board image here](images/diagram-of-board.png)
 
 ##### Inputs include:
+
 1. Heating ON / temperature setpoint
 2. Heating OFF
 4. Temperature Up
@@ -55,19 +61,15 @@ The system contains 6 inputs to control the associating 8 outputs.<br>
 7. Pressure Switch
 8. Thermister
 
-> [!IMPORTANT] image here showing the buttons and input side of the board
-> labeled 1 - 8 corresponding to component listed above
-
 ##### Outputs include:
+
 1. Heater
 2. Temperature Range Indicators (LED1-6)
 3. Emergency LED
 4. Water valve
 
-> [!IMPORTANT] image here with full view of the output side of the board
-> labeled and circled 1-4
-
 ##### Additional inputs/outputs:
+
 1. **RGB LED**
     - Upon board receiving power, LED flashes colours before turning back off.
     - LED is green when heating is on
@@ -76,11 +78,6 @@ The system contains 6 inputs to control the associating 8 outputs.<br>
 2. **Buzzer**
     - Upon board receiving power, plays a start-up tune.
     - Simulates an emergency buzzer when: emergency stop has been activated, temperature is being adjusted, or temperature setpoint is attempted to be set to above or below a certain threshold.
-
-#### Labeled diagrams:
-![place labeled image of buttons](images/diagram-of-button.png)
-
-![place labeled board image here](images/diagram-of-board.png)
 
 ### 2.1 I/O Mapping
 
@@ -109,6 +106,7 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 **Note**: Odd temperatures (e.g. 90, 110, 130, 150, 170) trigger two LEDs, and are indicated by both neighbouring LED's being active.
 
 ### 2.2 Hardware Wiring
+
 The required buttons, LEDs, servo and temperature sensor were connected to the PLC according to the I/O Mapping above. We also used a mini flathead screwdriver to adjust the screws to secure the different wiring to the board.
 <br>
 
@@ -121,7 +119,9 @@ As we implemented the CircuitPython code, we tested each button until we achieve
 Video proof is in attached folder [images](images), and can also be seen under header [5.4 - Operations Testing](#54-operations-testing).
 
 ## 3.0 System Operations
+
 ### 3.1 State Machine
+
 The system has 3 states. Below are the criteria to activate each state: <br>
 
 **1. STOPPED_STATE**
@@ -177,9 +177,8 @@ This event is simulated using a DuPont pin to trigger the input.
 
 ## 5.0 Control Operations
 
-Board is powered via USB.
-
 ### 5.1 Temperature Control
+
 The temperature setpoint can be adjusted using the BLUE button to increase the setpoint and the YELLOW button to decrease the setpoint.
 
 The system allows for a minimum setpoint of 80C and a maximum setpoint of 180C.
@@ -201,6 +200,7 @@ Starting the heating will send a signal to output relay ***RO1***.
 The REPL will display feedback for each valid action.
 
 ### 5.4 Operations Testing
+
 The following table contains evidence that each operation works as intended.
 
 |Test|Expected Result|Pass/Fail|Evidence|
@@ -216,6 +216,7 @@ The following table contains evidence that each operation works as intended.
 |Servo|Opens/closes correctly|Pass|[url]|
 
 ## 6.0 PID Control
+
 A PID controller was implemented to control the simulated boiler temperature.
 The controller compares the selected temperate setpoint with the temperature provided by the simulation dial and adjusts the heater output based on the temperature error.
 
@@ -230,24 +231,34 @@ Kd: 0.01
 The PID parameters were adjusted through testing to achieve a low error when the boiler temperature reaches the desired setpoint.
 
 ### 6.2 PID Testing 
+
 To test how the PID works, the Kp, Ki and Kd was each changed incrementally to output a minimal temperature error when the boiler temperature reaches the setpoint. 
 
-Challenges were experienced when changing these inputs to received the correct results. Firstly, the PID, specifically the I was much higher and therefore the PID heating output completely overshot the desired setpoint, resulting in the following screenshot where the heating output is [percent] when the temperature [actual_temp] had already reached the setpoint [setpoint].
-[screenshot]
+Challenges were experienced when changing these inputs to received the correct results. Firstly, the PID, specifically the Integral was much higher and therefore the PID heating output completely overshot the desired setpoint, resulting in the following screenshot where the heating output is [percent] when the temperature [actual_temp]() had already reached the setpoint [setpoint]().
+<br>
 
-The following screen recording displays the Heating Control Status and outputs the PID % and temperature error. 
-[REPL screen recording displaying heating outputs](./images/REPL_output.mp4)
+Kp: 2<br>
+Ki: 0.02<br>
+Kd: 0.01<br>
+
+The following screen recording displays the Heating Control Status and outputs the PID % and temperature error.<br>
+
+![REPL screen recording displaying heating outputs](./images/REPL_output.mp4)
 
 ### 6.3 PID Suitability
+
 PID control can be suitable for embedded systems such as smart water boilers, where a microcontroller can continuously monitor temperature and adjust the heating output. This is especially important for industrial water-heating systems, where accurate temperature control is required. 
-
+<br>
 However, PID is not always necessary. A basic domestic water heater may only require a simple bang-bang (ON/OFF) control method to maintain the temperature within an acceptable range.
-
+<br>
 For this project, both PID and bang-bang control were implemented. Because our system uses a simple ON/OFF LED to simulate the heater, bang-bang is more suitable for this scenario.
+<br>
 
 ## 7.0 Group Contribution
 
+<br>
 Both members participated and contributed for every step of the project such as the hardware wiring, implementing CircuitPython code, testing PID controller, recording evidence and documentation during this project.
+<br>
 
 ![Part 2](part2-documentation.md)
 
