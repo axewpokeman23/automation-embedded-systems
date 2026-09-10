@@ -93,8 +93,8 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 |Temperature Down - Yellow button|Yellow|Digital Input|IX4|DI4|Decreases temperature setpoint.|
 |Emergency Stop - Black button|Black|Digital Input|IX2|DI5|Activates EMERGENCY_STATE.||
 |Pressure Switch|DuPont Wire|Digital Input|IX5|DI6|Activates EMERGENCY_STATE.|
-|Temperature Simulation Dial|White, Grey, Purple|Analogue Input||3V3<br>(white - positive)<br>G<br>(purple - negative)<br>40<br>(gray - middle wire)|Simulates the boiler temperature.|
-|Water Valve - Servo|Yellow, Orange, Brown||Analogue Output|39<br>(yellow)<br>3V3<br>(orange)<br>G<br>(brown)|Controls the water valve position/angle.|
+|Temperature Simulation Dial|White, Grey, Purple|Analogue Input|IW0|3V3<br>(white - positive)<br>G<br>(purple - negative)<br>40<br>(gray - middle wire)|Simulates the boiler temperature.|
+|Water Valve - Servo|Yellow, Orange, Brown|Analogue Output||39<br>(yellow)<br>3V3<br>(orange)<br>G<br>(brown)|Controls the water valve position/angle.|
 |Heater LED| - |Digital Output(Relay)|QX0|RO1|Indicates heating.
 |LED1| - |Digital Output(Relay)|QX1|RO2|Temperature range indicator(80C)|
 |LED2| - |Digital Output(Relay)|QX2|RO3|Temperature range indicator(100C)|
