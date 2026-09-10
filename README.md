@@ -86,7 +86,7 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 
 |Component|Wire|Type|GPIO|Device Pin|Description|
 |-|-|-|-|-|-|
-|Button box|White|Digital Input| <center>-</center> |DGND|Connects the button box to use as inputs.|
+|Button box|White|Digital Input| - |DGND|Connects the button box to use as inputs.|
 |Start - Green button|Red|Digital Input|IX0|DI1|Sets temperature setpoint and enters the RUN_STATE/heating.|
 |Stop - Red button|Green|Digital Input|IX1|DI2|Stops heating and enters the STOPPED_STATE.|
 |Temperature Up - Blue button|Blue|Digital Input|IX3|DI3|Increases temperature setpoint.|
@@ -95,14 +95,14 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 |Pressure Switch|DuPont Wire|Digital Input|IX5|DI6|Activates EMERGENCY_STATE.|
 |Temperature Simulation Dial|White, Grey, Purple|Analogue Input||3V3<br>(white - positive)<br>G<br>(purple - negative)<br>40<br>(gray - middle wire)|Simulates the boiler temperature.|
 |Water Valve - Servo|Yellow, Orange, Brown||Analogue Output|39<br>(yellow)<br>3V3<br>(orange)<br>G<br>(brown)|Controls the water valve position/angle.|
-|Heater LED| - |Digital Output(Relay)|QX0||Indicates heating.
-|LED1| <center>-</center> |Digital Output(Relay)|QX1||Temperature range indicator(80C)|
-|LED2| <center>-</center> |Digital Output(Relay)|QX2||Temperature range indicator(100C)|
-|LED3| <center>-</center> |Digital Output(Relay)|QX3||Temperature range indicator(120C)|
-|LED4| <center>-</center> |Digital Output(Relay)|QX4||Temperature range indicator(140C)|
-|LED5| <center>-</center> |Digital Output(Relay)|QX5||Temperature range indicator(160C)|
-|LED6| <center>-</center> |Digital Output(Relay)|QX6||Temperature range indicator(180C)|
-|Emergency LED| <center>-</center> |Digital Output(Relay)|QX7||Indicates EMERGENCY_STATE|
+|Heater LED| - |Digital Output(Relay)|QX0|RO1|Indicates heating.
+|LED1| - |Digital Output(Relay)|QX1|RO2|Temperature range indicator(80C)|
+|LED2| - |Digital Output(Relay)|QX2|RO3|Temperature range indicator(100C)|
+|LED3| - |Digital Output(Relay)|QX3|RO4|Temperature range indicator(120C)|
+|LED4| - |Digital Output(Relay)|QX4|RO5|Temperature range indicator(140C)|
+|LED5| - |Digital Output(Relay)|QX5|RO6|Temperature range indicator(160C)|
+|LED6| - |Digital Output(Relay)|QX6|RO7|Temperature range indicator(180C)|
+|Emergency LED| <center>-</center> |Digital Output(Relay)|QX7|RO8|Indicates EMERGENCY_STATE|
 
 > [!NOTE]
 > Odd temperatures (e.g. 90, 110, 130, 150, 170) trigger two LEDs, and are indicated by both
