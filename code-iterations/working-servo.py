@@ -288,7 +288,6 @@ while True:
         IO.SERVO.angle = int(a)
         time.sleep(1)
         print(f"Current temperature = {t:0.2f}")
-             
         
         LED_colour(GREEN)
         HEATER.value = True
