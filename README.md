@@ -240,7 +240,7 @@ To test how the PID works, the Kp, Ki and Kd was each changed incrementally to o
 
 Challenges were experienced when changing these inputs to received the correct results. Firstly, the PID, specifically the Ki was too high and therefore the PID heating output completely overshot the desired setpoint, resulting in the following screenshot where the heating output is 13.52% when the temperature 80.52C had already reached the setpoint 80C.<br>
 To fix this the values were adjusted, resulting in the final PID parameters mentioned above.
-<br>The following are the parameters tested that resulted in the following image: ![](images/PID-fail.png)
+<br>The following are the parameters tested that resulted in the following image: ![PID Output Unsuccessful](images/PID-fail.png)
 
 PID Parameters tested and failed:
 
