@@ -84,7 +84,7 @@ The system contains 6 inputs to control the associating 8 outputs.<br>
 
 The components were mapped to the PLC/Pico inputs and outputs using the provided pinout documentation and waveshare.py.
 
-|Component|Type|IO Mapping|GPIO|Description|
+|Component|Type|GPIO|Device Pin|Description|
 |-|-|-|-|-|
 |Start - Green button|Digital Input|IX0|DI1|Sets temperature setpoint and enters the RUN_STATE/heating.|
 |Stop - Red button|Digital Input|IX1|||Stops heating and enters the STOPPED_STATE.|
@@ -95,13 +95,12 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 |Temperature Simulation Dial|Analogue Input|3V3(white), G(purple), 40(gray)|||Simulates the boiler temperature.|
 |Water Valve - Servo|Analogue Output|39(yellow),3V3(orange),G(brown)||Controls the water valve position/angle.|
 |Heater LED|Digital Output|QX0||Indicates heating.
-|LED1|Digital Output|QX1|
-||Temperature range indicator(80C)|
-|LED2|Digital Output|QX2|||Temperature range indicator(100C)|
-|LED3|Digital Output|QX3|||Temperature range indicator(120C)|
-|LED4|Digital Output|QX4|||Temperature range indicator(140C)|
-|LED5|Digital Output|QX5|||Temperature range indicator(160C)|
-|LED6|Digital Output|QX6|||Temperature range indicator(180C)|
+|LED1|Digital Output|QX1|||Temperature range indicator(80C)|
+|LED2|Digital Output|QX2||Temperature range indicator(100C)|
+|LED3|Digital Output|QX3||Temperature range indicator(120C)|
+|LED4|Digital Output|QX4||Temperature range indicator(140C)|
+|LED5|Digital Output|QX5||Temperature range indicator(160C)|
+|LED6|Digital Output|QX6||Temperature range indicator(180C)|
 |Emergency LED|Digital Output|QX7||Indicates EMERGENCY_STATE|
 
 >[!NOTE]:
