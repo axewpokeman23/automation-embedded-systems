@@ -77,11 +77,10 @@ The system contains 6 inputs to control the associating 8 outputs.<br>
     - Upon board receiving power, plays a start-up tune.
     - Simulates an emergency buzzer when: emergency stop has been activated, temperature is being adjusted, or temperature setpoint is attempted to be set to above or below a certain threshold.
 
-> [!IMPORTANT] image here depicting additional inputs/outputs
-> labeled and circled RGB and BUZZER
+#### Labeled diagrams:
+![place labeled image of buttons](images/diagram-of-button.png)
 
-> [!IMPORTANT]
-> !(place hardware mapping thing here)[images/hardware-map-diagram.png]
+![place labeled board image here](images/diagram-of-board.png)
 
 ### 2.1 I/O Mapping
 
@@ -89,24 +88,25 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 
 |Component|Type|IO Mapping|GPIO|Description|
 |-|-|-|-|-|
-|Start - Green button|Digital Input|IX0.0|DI1|Sets temperature setpoint and enters the RUN_STATE/heating.|
-|Stop - Red button|Digital Input||||Stops heating and enters the STOPPED_STATE.|
-|Temperature Up - Blue button|Digital Input|||Increases temperature setpoint.|
-|Temperature Down - Yellow button|Digital Input|||Decreases temperature setpoint.|
-|Emergency Stop - Black button|Digital Input||||
-|Pressure Switch - Dupont Wire|Digital Input||||
-|Temperature Simulation Dial|Analogue Input||||Simulates the boiler temperature.|
-|Water Valve - Servo|Output|||Controls the water valve position/angle.|
-|Heater LED|Digital Output|||Indicates heating.
-|LED1|Digital Output||||Temperature range indicator(80C)|
-|LED2|Digital Output||||Temperature range indicator(100C)|
-|LED3|Digital Output||||Temperature range indicator(120C)|
-|LED4|Digital Output||||Temperature range indicator(140C)|
-|LED5|Digital Output||||Temperature range indicator(160C)|
-|LED6|Digital Output||||Temperature range indicator(180C)|
-|Emergency LED|Digital Output|||Indicates EMERGENCY_STATE|
+|Start - Green button|Digital Input|IX0|DI1|Sets temperature setpoint and enters the RUN_STATE/heating.|
+|Stop - Red button|Digital Input|IX1|||Stops heating and enters the STOPPED_STATE.|
+|Temperature Up - Blue button|Digital Input|IX3||Increases temperature setpoint.|
+|Temperature Down - Yellow button|Digital Input|IX4||Decreases temperature setpoint.|
+|Emergency Stop - Black button|Digital Input|IX2|||
+|Pressure Switch - Dupont Wire|Digital Input|IX5|||
+|Temperature Simulation Dial|Analogue Input|3V3(white), G(purple), 40(gray)|||Simulates the boiler temperature.|
+|Water Valve - Servo|Output|39(yellow),3V3(orange),G(brown)||Controls the water valve position/angle.|
+|Heater LED|Digital Output|QX0||Indicates heating.
+|LED1|Digital Output|QX1|
+||Temperature range indicator(80C)|
+|LED2|Digital Output|QX2|||Temperature range indicator(100C)|
+|LED3|Digital Output|QX3|||Temperature range indicator(120C)|
+|LED4|Digital Output|QX4|||Temperature range indicator(140C)|
+|LED5|Digital Output|QX5|||Temperature range indicator(160C)|
+|LED6|Digital Output|QX6|||Temperature range indicator(180C)|
+|Emergency LED|Digital Output|QX7||Indicates EMERGENCY_STATE|
 
-**Note**: Odd temperatures (e.g. 90, 110, 130, 150, 170) are indicated by both neighbouring LED's being active.
+**Note**: Odd temperatures (e.g. 90, 110, 130, 150, 170) trigger two LEDs, and are indicated by both neighbouring LED's being active.
 
 ### 2.2 Hardware Wiring
 The required buttons, LEDs, servo and temperature sensor were connected to the PLC according to the I/O Mapping above. We also used a mini flathead screwdriver to adjust the screws to secure the different wiring to the board.
