@@ -212,8 +212,8 @@ The following table contains evidence that each operation works as intended.
 |Green button|Activates RUN_STATE|Pass|[start/stop](./images/start_stop.MOV)|
 |Red button|Activates STOPPED_STATE|Pass|[start/stop](./images/start_stop.MOV)|
 |Black button|Activates EMERGENCY_STATE|Pass|[emergency stop](./images/emergency.MOV)|
-|DuPont (Pressure Switch)|Activates EMERGENCY_STATE|Pass|[pressure switch]|(./images/pressure-switch)|
-|Temperature dial|Simulate temperature changes|Pass|[dial & servo]|(./images/dial_servo.MOV)|
+|DuPont (Pressure Switch)|Activates EMERGENCY_STATE|Pass|[pressure switch](./images/pressure-switch)|
+|Temperature dial|Simulate temperature changes|Pass|[dial & servo](./images/dial_servo.MOV)|
 |PID Control|Controls/stabilises the temperature|Pass|[REPL screen recording displaying heating outputs](./images/REPL_output.mp4)|
 |Servo|Opens/closes correctly|Pass|[dial & servo](./images/dial_servo.MOV)||
 
@@ -238,7 +238,8 @@ The PID parameters were adjusted through testing to achieve a low error when the
 
 To test how the PID works, the Kp, Ki and Kd was each changed incrementally to output a minimal temperature error when the boiler temperature reaches the setpoint. 
 
-Challenges were experienced when changing these inputs to received the correct results. Firstly, the PID, specifically the Integral was much higher and therefore the PID heating output completely overshot the desired setpoint, resulting in the following screenshot where the heating output is [percent] when the temperature [actual_temp]() had already reached the setpoint [setpoint]().
+Challenges were experienced when changing these inputs to received the correct results. Firstly, the PID, specifically the Ki was too high and therefore the PID heating output completely overshot the desired setpoint, resulting in the following screenshot where the heating output is 13.52% when the temperature 80.52C had already reached the setpoint 80C.<br>
+To fix this the values were adjusted, resulting in the final PID parameters in the following section.
 <br>
 
 PID Parameters tested:
