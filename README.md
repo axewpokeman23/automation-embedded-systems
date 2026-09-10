@@ -84,7 +84,7 @@ The system contains 6 inputs to control the associating 8 outputs.<br>
 
 The components were mapped to the PLC/Pico inputs and outputs using the provided pinout documentation and waveshare.py.
 
-|Component|Wire|Type|GPIO|Device Pin|Description|
+|Component|Wire|Type|I/O Mapping|Device Pin|Description|
 |-|-|-|-|-|-|
 |Button box|White|Digital Input| - |DGND|Connects the button box to use as inputs.|
 |Start - Green button|Red|Digital Input|IX0|DI1|Sets temperature setpoint and enters the RUN_STATE/heating.|
@@ -94,7 +94,7 @@ The components were mapped to the PLC/Pico inputs and outputs using the provided
 |Emergency Stop - Black button|Black|Digital Input|IX2|DI5|Activates EMERGENCY_STATE.||
 |Pressure Switch|DuPont Wire|Digital Input|IX5|DI6|Activates EMERGENCY_STATE.|
 |Temperature Simulation Dial|White, Grey, Purple|Analogue Input|IW0|3V3<br>(white - positive)<br>G<br>(purple - negative)<br>40<br>(gray - middle wire)|Simulates the boiler temperature.|
-|Water Valve - Servo|Yellow, Orange, Brown|Analogue Output||39<br>(yellow)<br>3V3<br>(orange)<br>G<br>(brown)|Controls the water valve position/angle.|
+|Water Valve - Servo|Yellow, Orange, Brown|Analogue Output|IW1|39<br>(yellow)<br>3V3<br>(orange)<br>G<br>(brown)|Controls the water valve position/angle.|
 |Heater LED| - |Digital Output(Relay)|QX0|RO1|Indicates heating.
 |LED1| - |Digital Output(Relay)|QX1|RO2|Temperature range indicator(80C)|
 |LED2| - |Digital Output(Relay)|QX2|RO3|Temperature range indicator(100C)|
