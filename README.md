@@ -44,7 +44,7 @@ picture of board and inputs
 
 |**Analogues**|Type|Wire|Board Label|GPIO Pin|I/O Mapping|
 |-|-|-|-|-|-|
-|Temp Dial|Analogue Input(Analogue Input Register)|Purple  Grey  White|GND, AD0, 3V3|26|IW0.0|
+|Temp Dial|Analogue Input(Analogue Input Register)|Purple<br>Grey<br>White|GND<br>AD0<br>3V3|26|IW0.0|
 |Servo (Water Valve)|Analogue Output|Brown<br>Red<br>Yellow|GND<br>5V<br>PMW|4|QW0.0|
 
 **Note:** AD0 is Channel 1.
