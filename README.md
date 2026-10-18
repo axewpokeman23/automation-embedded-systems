@@ -40,7 +40,7 @@ picture of board and inputs
 |LED3|Digital Output(Discrete Output Coil)|DO-5 / LED8|17|QX0.4|
 |LED4|Digital Output(Discrete Output Coil)|DO-6 / LED9|16|QX0.5|
 |LED5|Digital Output(Discrete Output Coil)|DO-7 / LED10|15|QX0.6|
-|Emergency LED	Digital Output(Discrete Output Coil)|DO-8 / LED11|14|QX0.7|
+|Emergency LED|Digital Output(Discrete Output Coil)|DO-8 / LED11|14|QX0.7|
 
 |**Analogues**|Type|Wire|Board Label|GPIO Pin|I/O Mapping|
 |Temp Dial|Analogue Input(Analogue Input Register)|Purple, Grey, White|GND, AD0, 3V3|26|IW0.0|
