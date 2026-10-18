@@ -41,10 +41,8 @@ picture of board and inputs
 |LED3|Digital Output<br>(Discrete Output Coil)|-|DO-5 / LED8|17|QX0.4|
 |LED4|Digital Output<br>(Discrete Output Coil)|-|DO-6 / LED9|16|QX0.5|
 |LED5|Digital Output<br>(Discrete Output Coil)|-|DO-7 / LED10|15|QX0.6|
-|Emergency LED|Digital Output(Discrete Output Coil)|-|DO-8 / LED11|14|QX0.7|
+|Emergency LED|Digital Output<br>(Discrete Output Coil)|-|DO-8 / LED11|14|QX0.7|
 |Servo (Water Valve)|Analogue Output|Brown<br>Red<br>Yellow|GND<br>5V<br>PMW|4|QW0.0|
-
-**Note:** AD0 is Channel 1.
 
 ## 3.0 System Operations
 
