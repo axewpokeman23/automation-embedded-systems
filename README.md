@@ -1,8 +1,6 @@
 <i><p style="font-size:8">ITAE6.100 Automation and Embedded Systems<br>Assignment - Part 3: Programming with a PLC<br>By Maraea and Sara</i></p>
 
-
-
-
+![I/O Mapping](./images/mapping.pdf)
 
 
 The system has 3 states. Below are the criteria to activate each state: <br>
