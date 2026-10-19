@@ -73,6 +73,9 @@ The following displays the input and output mapping used.
 > The following information in this section iterates the logic from the previous tasks and case study.
 > Skip to [Testing](#40-testing) for evidence. 
 
+<details>
+   <summary>Click to expand</summary>
+
 The system has 3 states. Below are the criteria to activate each state: <br>
 
 **1. STOPPED_STATE**
@@ -132,8 +135,8 @@ The system allows for a minimum setpoint of 80C and a maximum setpoint of 180C.
 ### 3.3 Start/Stop
 
 Pressing the GREEN button activates heating, while the RED button will deactivate heating.
-Heating is indicated by the output relay ***RO1***.<br>
-If the temperature is above the SETPOINT, the heater relay (LED4) will turn off and vice versa. 
+Heating is indicated by the output relay DO-1 / LED 4.<br>
+If the temperature is above the SETPOINT, the heater relay / LED will turn off and vice versa. 
 
 ### 3.4 Operating Instructions 
 
@@ -143,6 +146,8 @@ If the temperature is above the SETPOINT, the heater relay (LED4) will turn off 
 4. Press the RED button to stop heating.
 5. In an emergency, press the BLACK button to activate the emergency stop.
 6. To reset the emergency stop, press the BLACK and RED buttons simultaneously.
+
+</details>
 
 ## 4.0 Testing
 
@@ -161,3 +166,8 @@ The following table contains evidence that each operation works as intended. Mod
 |Servo|Opens/closes correctly|||
 |Modbus||||
 |Runtime||||
+
+
+<!--
+connected by SERIAL COM11
+>
