@@ -71,10 +71,10 @@ The following displays the input and output mapping used.
 
 > [!NOTE]  
 > The following information in this section iterates the logic from the previous tasks and case study.<br>
-> Skip to [Testing](#40-testing) for evidence. <br>
+> Click toggle below to expand this information, or skip to [Testing](#40-testing).<br>
 
 <details>
-   <summary>Click to expand.</summary>
+   <summary>Click to view System Operations information</summary>
 
 The system has 3 states. Below are the criteria to activate each state: <br>
 
