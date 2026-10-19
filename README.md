@@ -159,3 +159,5 @@ The following table contains evidence that each operation works as intended. Mod
 |Temperature dial|Simulate temperature changes|||
 |PID Control|Controls/stabilises the temperature|||
 |Servo|Opens/closes correctly|||
+|Modbus||||
+|Runtime||||
