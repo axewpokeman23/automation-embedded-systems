@@ -70,11 +70,11 @@ The following displays the input and output mapping used.
 ## 3.0 System Operations
 
 > [!NOTE]  
-> The following information in this section iterates the logic from the previous tasks and case study.
-> Skip to [Testing](#40-testing) for evidence. 
+> The following information in this section iterates the logic from the previous tasks and case study.<br>
+> Skip to [Testing](#40-testing) for evidence. <br>
 
 <details>
-   <summary>Click to expand</summary>
+   <summary>Click to expand.</summary>
 
 The system has 3 states. Below are the criteria to activate each state: <br>
 
@@ -116,8 +116,7 @@ Output functionality:
 
 ### 3.1 Emergency Stop
 
-> [!CAUTION]
-> Pressing the BLACK button will activate the emergency stop ***(EMERGENCY_STATE)***. When activated, the system enters the EMERGENCY_STATE. This activates a continuous buzzer, disables the heater, and fully closes the water valve to 0%.<br>
+Pressing the BLACK button will activate the emergency stop ***(EMERGENCY_STATE)***. When activated, the system enters the EMERGENCY_STATE. This activates a continuous buzzer, disables the heater, and fully closes the water valve to 0%.<br>
 > To disable the emergency stop, the BLACK and RED buttons must be pressed simultaneously.
 
 ### 3.2 Pressure Switch
