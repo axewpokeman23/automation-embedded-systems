@@ -123,7 +123,6 @@ The pressure switch triggers the same emergency response as the emergency stop. 
 
 This event is simulated using a DuPont pin to trigger the input.
 
-
 ### 3.2 Temperature Control
 
 The temperature setpoint can be adjusted using the BLUE button to increase the setpoint and the YELLOW button to decrease the setpoint.
@@ -134,8 +133,7 @@ The system allows for a minimum setpoint of 80C and a maximum setpoint of 180C.
 
 Pressing the GREEN button activates heating, while the RED button will deactivate heating.
 Heating is indicated by the output relay ***RO1***.<br>
-If the temperature is above the SETPOINT, the heater relay (LED1) will turn off and vice versa. 
-The range is indicated by the implemented bang-bang control, controlling the heater within a range of 2C.
+If the temperature is above the SETPOINT, the heater relay (LED4) will turn off and vice versa. 
 
 ### 3.4 Operating Instructions 
 
@@ -146,11 +144,9 @@ The range is indicated by the implemented bang-bang control, controlling the hea
 5. In an emergency, press the BLACK button to activate the emergency stop.
 6. To reset the emergency stop, press the BLACK and RED buttons simultaneously.
 
-The REPL will display feedback for each valid action.
-
 ## 4.0 Testing
 
-The following table contains evidence that each operation works as intended.
+The following table contains evidence that each operation works as intended. Modbus was also used to confirm that the inputs, coils and holding registers were working correctly.
 
 |Test|Expected Result|Pass/Fail|Evidence|
 |-|-|-|-|
