@@ -8,6 +8,7 @@
 [2.0 - Hardware and I/O Mapping](#20-hardware-and-io-mapping)<br>
 [2.1 - I/O Mapping](#21-io-mapping)<br>
 [3.0 - System Operations](#30-system-operations)<br>
+[4.0 - Testing](#40-testing)<br>
 
 ## 1.0 Introduction
 
