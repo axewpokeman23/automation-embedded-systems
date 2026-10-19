@@ -51,7 +51,7 @@ The following displays the input and output mapping used.
 |Temp Up (BLUE)|Digital Input<br>(Discrete Input Contacts)|Blue|DI-4|9|IX0.3|
 |Temp Down (YELLOW)|Digital Input<br>(Discrete Input Contacts)|Yellow|DI-5|10|IX0.4|
 |Pressure Switch (DuPont)|Digital Input<br>(Discrete Input Contacts)|Yellow DuPont|DI-6|11|IX0.5|
-|Temp Dial|Analogue Input<br>(Analogue Input Register)|Purple<br>Grey<br>White|GND<br>AD0<br>3V3|26|IW0.0|
+|Temp Dial|Analogue Input<br>(Input Register)|Purple<br>Grey<br>White|GND<br>AD0<br>3V3|26|IW0.0|
 
 **Note:** Start and Stop button wires are opposite.
 
@@ -65,7 +65,7 @@ The following displays the input and output mapping used.
 |LED4|Digital Output<br>(Discrete Output Coil)|-|DO-6 / LED9|16|QX0.5|
 |LED5|Digital Output<br>(Discrete Output Coil)|-|DO-7 / LED10|15|QX0.6|
 |Emergency LED|Digital Output<br>(Discrete Output Coil)|-|DO-8 / LED11|14|QX0.7|
-|Servo (Water Valve)|Analogue Output|Brown<br>Red<br>Yellow|GND<br>5V<br>PMW|4|QW0.0|
+|Servo (Water Valve)|Analogue Output<br>(Holding Register)|Brown<br>Red<br>Yellow|GND<br>5V<br>PMW|4|QW0.0|
 
 ## 3.0 System Operations
 
