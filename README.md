@@ -5,20 +5,42 @@
 #### Table of Contents
 
 [1.0 - Introduction](#10-introduction)<br>
-[1.1 - Overview](#11-overview)<br>
 [2.0 - Hardware and I/O Mapping](#20-hardware-and-io-mapping)<br>
 [2.1 - I/O Mapping](#21-io-mapping)<br>
 [3.0 - System Operations](#30-system-operations)<br>
 
 ## 1.0 Introduction
 
-### 1.1 Overview
+This report documents Part 3 of the Simple Water Boiler Controller case study. Previously, we used Logisim and CircuitPython to implement the case study logic. 
+Part 3 aims to implement the case study logic using a combination of ladder diagrams (LD) and function block diagrams (FBD) using the OpenPLC software. 
+
+We will be using the Custom Raspberry Pico W PLC to test the connected hardware (digital, and analogue inputs, and outputs) and to demonstrate that the PLC is functioning as intended.
 
 ## 2.0 Hardware and I/O Mapping
+
+The system contains 8 inputs to control the associating 9 outputs.<br>
+##### Inputs include:
+
+1. Start / Heating ON / Setpoint
+2. Stop / Heating OFF
+4. Temperature Up
+5. Temperature Down
+6. Emergency Stop
+7. Pressure Switch
+8. Thermister(Temperature simulated with dial)
+
+##### Outputs include:
+
+1. Heater LED
+2. Temperature Range Indicators (Relays / LED0-5)
+3. Emergency LED
+4. Servo(Water valve)
 
 picture of board and inputs 
 
 ### 2.1 I/O Mapping
+
+The following displays the input and output mapping used.
 
 |**Inputs**|Type|Wire|Board Label|GPIO Pin|I/O Mapping|
 |-|-|-|-|-|-|
@@ -45,6 +67,10 @@ picture of board and inputs
 |Servo (Water Valve)|Analogue Output|Brown<br>Red<br>Yellow|GND<br>5V<br>PMW|4|QW0.0|
 
 ## 3.0 System Operations
+
+> [!NOTE]  
+> The following information in this section iterates the logic from the previous tasks and case study.
+> Skip to [Testing](#40-testing) for evidence. 
 
 The system has 3 states. Below are the criteria to activate each state: <br>
 
@@ -83,3 +109,56 @@ Input functionality:
 
 Output functionality:
    * Heater control is disabled
+
+### 3.1 Emergency Stop
+
+> [!CAUTION]
+> Pressing the BLACK button will activate the emergency stop ***(EMERGENCY_STATE)***. When activated, the system enters the EMERGENCY_STATE. This activates a continuous buzzer, disables the heater, and fully closes the water valve to 0%.<br>
+> To disable the emergency stop, the BLACK and RED buttons must be pressed simultaneously.
+
+### 3.2 Pressure Switch
+
+The pressure switch triggers the same emergency response as the emergency stop. When activated, the system enters the EMERGENCY_STATE. This activates a continuous buzzer, disables the heater, and fully closes the water valve to 0%.
+
+This event is simulated using a DuPont pin to trigger the input.
+
+
+### 3.2 Temperature Control
+
+The temperature setpoint can be adjusted using the BLUE button to increase the setpoint and the YELLOW button to decrease the setpoint.
+
+The system allows for a minimum setpoint of 80C and a maximum setpoint of 180C.
+
+### 3.3 Start/Stop
+
+Pressing the GREEN button activates heating, while the RED button will deactivate heating.
+Heating is indicated by the output relay ***RO1***.<br>
+If the temperature is above the SETPOINT, the heater relay (LED1) will turn off and vice versa. 
+The range is indicated by the implemented bang-bang control, controlling the heater within a range of 2C.
+
+### 3.4 Operating Instructions 
+
+1. Select the desired temperature using the BLUE and YELLOW buttons.
+2. Press the GREEN button to set the temperature and start heating.
+3. The system monitors the boiler temperature and controls the heater.
+4. Press the RED button to stop heating.
+5. In an emergency, press the BLACK button to activate the emergency stop.
+6. To reset the emergency stop, press the BLACK and RED buttons simultaneously.
+
+The REPL will display feedback for each valid action.
+
+## 4.0 Testing
+
+The following table contains evidence that each operation works as intended.
+
+|Test|Expected Result|Pass/Fail|Evidence|
+|-|-|-|-|
+|Blue button|Setpoint increases|||
+|Yellow button|Setpoint decreases|||
+|Green button|Activates RUN_STATE|||
+|Red button|Activates STOPPED_STATE|||
+|Black button|Activates EMERGENCY_STATE|||
+|DuPont (Pressure Switch)|Activates EMERGENCY_STATE|||
+|Temperature dial|Simulate temperature changes|||
+|PID Control|Controls/stabilises the temperature|||
+|Servo|Opens/closes correctly|||
