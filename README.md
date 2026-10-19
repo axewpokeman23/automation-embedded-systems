@@ -117,7 +117,7 @@ Output functionality:
 ### 3.1 Emergency Stop
 
 Pressing the BLACK button will activate the emergency stop ***(EMERGENCY_STATE)***. When activated, the system enters the EMERGENCY_STATE. This activates a continuous buzzer, disables the heater, and fully closes the water valve to 0%.<br>
-> To disable the emergency stop, the BLACK and RED buttons must be pressed simultaneously.
+**To disable the emergency stop, the BLACK and RED buttons must be pressed simultaneously.**
 
 ### 3.2 Pressure Switch
 
@@ -158,13 +158,13 @@ The following table contains evidence that each operation works as intended. Mod
 |Yellow button|Setpoint decreases|||
 |Green button|Activates RUN_STATE|||
 |Red button|Activates STOPPED_STATE|||
-|Black button|Activates EMERGENCY_STATE|||
+|Black button|Activates EMERGENCY_STATE<br>Black and Red button to disable EMERGENCY_STATE|||
 |DuPont (Pressure Switch)|Activates EMERGENCY_STATE|||
 |Temperature dial|Simulate temperature changes|||
-|PID Control|Controls/stabilises the temperature|||
 |Servo|Opens/closes correctly|||
-|Modbus||||
-|Runtime||||
+|PID Control|Controls/stabilises the temperature|||
+|Modbus|Displays inputs, coils, holding registers and input registers|||
+|Runtime|Displays |||
 
 
 <!--
