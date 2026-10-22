@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2026-09-21T13:51:32"/>
-  <contentHeader name="Unnamed" modificationDateTime="2026-10-19T14:49:56">
+  <contentHeader name="Unnamed" modificationDateTime="2026-10-22T14:23:30">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -123,12 +123,12 @@
                 <INT/>
               </type>
               <documentation>
-                <xhtml:p><![CDATA[thermister]]></xhtml:p>
+                <xhtml:p><![CDATA[potentiometer]]></xhtml:p>
               </documentation>
             </variable>
             <variable name="ACTUAL_TEMPERATURE" address="%MW1">
               <type>
-                <WORD/>
+                <INT/>
               </type>
               <initialValue>
                 <simpleValue value="0"/>
@@ -137,7 +137,7 @@
                 <xhtml:p><![CDATA[ACTUAL_TEMPERATURE 34]]></xhtml:p>
               </documentation>
             </variable>
-            <variable name="SERVO" address="%QW1">
+            <variable name="SERVO" address="%QW0">
               <type>
                 <INT/>
               </type>
@@ -180,7 +180,7 @@
                 <INT/>
               </type>
               <documentation>
-                <xhtml:p><![CDATA[status of boiler. modbus address: 36]]></xhtml:p>
+                <xhtml:p><![CDATA[status of PWM. modbus address: 36]]></xhtml:p>
               </documentation>
             </variable>
           </localVars>
@@ -210,6 +210,28 @@
             </variable>
             <variable name="POWER" address="%MW6">
               <type>
+                <INT/>
+              </type>
+              <initialValue>
+                <simpleValue value="0"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[power that goes to the heater]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="voltmulcurrent" address="%MW7">
+              <type>
+                <INT/>
+              </type>
+              <initialValue>
+                <simpleValue value="0"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[power that goes to the heater]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="POWER1" address="%MW8">
+              <type>
                 <WORD/>
               </type>
               <initialValue>
@@ -219,7 +241,7 @@
                 <xhtml:p><![CDATA[power that goes to the heater]]></xhtml:p>
               </documentation>
             </variable>
-            <variable name="NORMALIZED_TEMP" address="%MW5">
+            <variable name="current_temp" address="%MW9">
               <type>
                 <INT/>
               </type>
@@ -227,7 +249,18 @@
                 <simpleValue value="0"/>
               </initialValue>
               <documentation>
-                <xhtml:p><![CDATA[actual temp divded by 65565]]></xhtml:p>
+                <xhtml:p><![CDATA[power that goes to the heater]]></xhtml:p>
+              </documentation>
+            </variable>
+            <variable name="POWER_PERCENT" address="%MW5">
+              <type>
+                <INT/>
+              </type>
+              <initialValue>
+                <simpleValue value="0"/>
+              </initialValue>
+              <documentation>
+                <xhtml:p><![CDATA[power usage in percentage]]></xhtml:p>
               </documentation>
             </variable>
           </localVars>
@@ -241,6 +274,9 @@
               <type>
                 <REAL/>
               </type>
+              <documentation>
+                <xhtml:p><![CDATA[converted voltage from analog]]></xhtml:p>
+              </documentation>
             </variable>
           </localVars>
         </interface>
@@ -1665,7 +1701,7 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
             <inVariable localId="119" width="90" height="30" negated="false">
               <position x="250" y="2120"/>
               <connectionPointOut>
-                <relPosition x="90" y="10"/>
+                <relPosition x="90" y="20"/>
               </connectionPointOut>
               <expression>VOLT</expression>
             </inVariable>
@@ -1750,16 +1786,16 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               <expression>190.0</expression>
             </inVariable>
             <block localId="125" typeName="PWM_CONTROLLER" instanceName="PWM_CONTROLLER0" width="130" height="80">
-              <position x="500" y="2530"/>
+              <position x="500" y="2510"/>
               <inputVariables>
                 <variable formalParameter="CHANNEL">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="126">
-                      <position x="500" y="2560"/>
-                      <position x="485" y="2560"/>
-                      <position x="485" y="2550"/>
-                      <position x="470" y="2550"/>
+                      <position x="500" y="2540"/>
+                      <position x="485" y="2540"/>
+                      <position x="485" y="2530"/>
+                      <position x="470" y="2530"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1767,10 +1803,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="127">
-                      <position x="500" y="2580"/>
-                      <position x="470" y="2580"/>
-                      <position x="470" y="2590"/>
-                      <position x="440" y="2590"/>
+                      <position x="500" y="2560"/>
+                      <position x="470" y="2560"/>
+                      <position x="470" y="2570"/>
+                      <position x="440" y="2570"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1778,10 +1814,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="70"/>
                     <connection refLocalId="76" formalParameter="OUT">
-                      <position x="500" y="2600"/>
-                      <position x="470" y="2600"/>
-                      <position x="470" y="2650"/>
-                      <position x="440" y="2650"/>
+                      <position x="500" y="2580"/>
+                      <position x="470" y="2580"/>
+                      <position x="470" y="2630"/>
+                      <position x="440" y="2630"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1796,28 +1832,28 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <inVariable localId="126" width="20" height="30" negated="false">
-              <position x="450" y="2540"/>
+              <position x="450" y="2520"/>
               <connectionPointOut>
                 <relPosition x="20" y="10"/>
               </connectionPointOut>
               <expression>1</expression>
             </inVariable>
             <inVariable localId="127" width="50" height="30" negated="false">
-              <position x="390" y="2570"/>
+              <position x="390" y="2550"/>
               <connectionPointOut>
                 <relPosition x="50" y="20"/>
               </connectionPointOut>
               <expression>50.00</expression>
             </inVariable>
             <outVariable localId="128" width="120" height="30" negated="false">
-              <position x="810" y="2510"/>
+              <position x="810" y="2490"/>
               <connectionPointIn>
                 <relPosition x="0" y="20"/>
                 <connection refLocalId="136" formalParameter="OUT">
-                  <position x="810" y="2530"/>
-                  <position x="780" y="2530"/>
-                  <position x="780" y="2560"/>
-                  <position x="760" y="2560"/>
+                  <position x="810" y="2510"/>
+                  <position x="780" y="2510"/>
+                  <position x="780" y="2540"/>
+                  <position x="760" y="2540"/>
                 </connection>
               </connectionPointIn>
               <expression>STATUS_PWM</expression>
@@ -1867,14 +1903,14 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <block localId="136" typeName="BOOL_TO_INT" width="100" height="40">
-              <position x="660" y="2530"/>
+              <position x="660" y="2510"/>
               <inputVariables>
                 <variable formalParameter="IN">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="125" formalParameter="SUCCESS">
-                      <position x="660" y="2560"/>
-                      <position x="630" y="2560"/>
+                      <position x="660" y="2540"/>
+                      <position x="630" y="2540"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1957,8 +1993,8 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
             <comment localId="152" height="140" width="150">
               <position x="10" y="2010"/>
               <content>
-                <xhtml:p><![CDATA[thermister normalized to servo angle ranges
-0-100]]></xhtml:p>
+                <xhtml:p><![CDATA[potentiometer to valid angle and calculated power output values
+(hopefully)]]></xhtml:p>
               </content>
             </comment>
             <comment localId="38" height="90" width="140">
@@ -2027,14 +2063,16 @@ renamed to volt
               <expression>STATUS_RUN</expression>
             </outVariable>
             <block localId="76" typeName="INT_TO_REAL" width="100" height="40" executionOrderId="0">
-              <position x="340" y="2620"/>
+              <position x="340" y="2600"/>
               <inputVariables>
                 <variable formalParameter="IN">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="171">
-                      <position x="340" y="2650"/>
-                      <position x="310" y="2650"/>
+                      <position x="340" y="2630"/>
+                      <position x="325" y="2630"/>
+                      <position x="325" y="2560"/>
+                      <position x="310" y="2560"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2049,23 +2087,12 @@ renamed to volt
               </outputVariables>
             </block>
             <inVariable localId="171" width="50" height="30" negated="false">
-              <position x="260" y="2630"/>
+              <position x="260" y="2540"/>
               <connectionPointOut>
-                <relPosition x="50" y="20"/>
+                <relPosition x="50" y="10"/>
               </connectionPointOut>
               <expression>ANGLE</expression>
             </inVariable>
-            <outVariable localId="172" width="160" height="30" negated="false">
-              <position x="990" y="1970"/>
-              <connectionPointIn>
-                <relPosition x="0" y="10"/>
-                <connection refLocalId="190" formalParameter="OUT">
-                  <position x="990" y="1980"/>
-                  <position x="960" y="1980"/>
-                </connection>
-              </connectionPointIn>
-              <expression>ACTUAL_TEMPERATURE</expression>
-            </outVariable>
             <block localId="173" typeName="MUL" width="70" height="60">
               <position x="900" y="2090"/>
               <inputVariables>
@@ -2109,46 +2136,44 @@ renamed to volt
               <expression>10</expression>
             </inVariable>
             <outVariable localId="175" width="130" height="30" negated="false">
-              <position x="870" y="2270"/>
+              <position x="900" y="2320"/>
               <connectionPointIn>
-                <relPosition x="0" y="10"/>
+                <relPosition x="0" y="20"/>
                 <connection refLocalId="180" formalParameter="OUT">
-                  <position x="870" y="2280"/>
-                  <position x="840" y="2280"/>
-                  <position x="840" y="2290"/>
-                  <position x="810" y="2290"/>
+                  <position x="900" y="2340"/>
+                  <position x="885" y="2340"/>
+                  <position x="885" y="2320"/>
+                  <position x="870" y="2320"/>
                 </connection>
               </connectionPointIn>
               <expression>POWER</expression>
             </outVariable>
             <comment localId="178" height="40" width="370">
-              <position x="560" y="1880"/>
+              <position x="530" y="1780"/>
               <content>
-                <xhtml:p><![CDATA[volt * 3.3 / 65535 = temperature range]]></xhtml:p>
+                <xhtml:p><![CDATA[volt * 3.3 / 65535 = power being used]]></xhtml:p>
               </content>
             </comment>
             <block localId="179" typeName="PID" instanceName="PID0" width="90" height="180">
-              <position x="590" y="2260"/>
+              <position x="630" y="2220"/>
               <inputVariables>
                 <variable formalParameter="AUTO">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="150">
-                      <position x="590" y="2290"/>
-                      <position x="549" y="2290"/>
-                      <position x="549" y="2400"/>
-                      <position x="200" y="2400"/>
+                      <position x="630" y="2250"/>
+                      <position x="375" y="2250"/>
+                      <position x="375" y="2170"/>
+                      <position x="200" y="2170"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="PV">
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
-                    <connection refLocalId="188">
-                      <position x="590" y="2310"/>
-                      <position x="555" y="2310"/>
-                      <position x="555" y="2270"/>
-                      <position x="520" y="2270"/>
+                    <connection refLocalId="99">
+                      <position x="630" y="2270"/>
+                      <position x="560" y="2270"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2156,31 +2181,21 @@ renamed to volt
                   <connectionPointIn>
                     <relPosition x="0" y="70"/>
                     <connection refLocalId="182" formalParameter="OUT">
-                      <position x="590" y="2330"/>
-                      <position x="540" y="2330"/>
+                      <position x="630" y="2290"/>
+                      <position x="603" y="2290"/>
+                      <position x="603" y="2360"/>
+                      <position x="500" y="2360"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="X0">
                   <connectionPointIn>
                     <relPosition x="0" y="90"/>
-                    <connection refLocalId="72">
-                      <position x="590" y="2350"/>
-                      <position x="560" y="2350"/>
-                      <position x="560" y="2380"/>
-                      <position x="530" y="2380"/>
-                    </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="KP">
                   <connectionPointIn>
                     <relPosition x="0" y="110"/>
-                    <connection refLocalId="71">
-                      <position x="590" y="2370"/>
-                      <position x="505" y="2370"/>
-                      <position x="505" y="2380"/>
-                      <position x="420" y="2380"/>
-                    </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="TR">
@@ -2191,20 +2206,16 @@ renamed to volt
                 <variable formalParameter="TD">
                   <connectionPointIn>
                     <relPosition x="0" y="150"/>
-                    <connection refLocalId="72">
-                      <position x="590" y="2410"/>
-                      <position x="560" y="2410"/>
-                      <position x="560" y="2380"/>
-                      <position x="530" y="2380"/>
-                    </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="CYCLE">
                   <connectionPointIn>
                     <relPosition x="0" y="170"/>
                     <connection refLocalId="186">
-                      <position x="590" y="2430"/>
-                      <position x="540" y="2430"/>
+                      <position x="630" y="2390"/>
+                      <position x="525" y="2390"/>
+                      <position x="525" y="2460"/>
+                      <position x="500" y="2460"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2218,15 +2229,17 @@ renamed to volt
                 </variable>
               </outputVariables>
             </block>
-            <block localId="180" typeName="REAL_TO_WORD" width="110" height="40">
-              <position x="700" y="2260"/>
+            <block localId="180" typeName="REAL_TO_INT" width="110" height="40">
+              <position x="760" y="2290"/>
               <inputVariables>
                 <variable formalParameter="IN">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="179" formalParameter="XOUT">
-                      <position x="700" y="2290"/>
-                      <position x="680" y="2290"/>
+                      <position x="760" y="2320"/>
+                      <position x="740" y="2320"/>
+                      <position x="740" y="2250"/>
+                      <position x="720" y="2250"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2241,23 +2254,23 @@ renamed to volt
               </outputVariables>
             </block>
             <inVariable localId="181" width="80" height="30" negated="false">
-              <position x="340" y="2320"/>
+              <position x="300" y="2350"/>
               <connectionPointOut>
                 <relPosition x="80" y="20"/>
               </connectionPointOut>
               <expression>SETPOINT</expression>
             </inVariable>
             <block localId="182" typeName="INT_TO_REAL" width="100" height="40">
-              <position x="440" y="2300"/>
+              <position x="400" y="2330"/>
               <inputVariables>
                 <variable formalParameter="IN">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="181">
-                      <position x="440" y="2330"/>
-                      <position x="430" y="2330"/>
-                      <position x="430" y="2340"/>
-                      <position x="420" y="2340"/>
+                      <position x="400" y="2360"/>
+                      <position x="390" y="2360"/>
+                      <position x="390" y="2370"/>
+                      <position x="380" y="2370"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2272,30 +2285,16 @@ renamed to volt
               </outputVariables>
             </block>
             <inVariable localId="186" width="70" height="30" negated="false">
-              <position x="470" y="2420"/>
+              <position x="430" y="2440"/>
               <connectionPointOut>
                 <relPosition x="70" y="10"/>
               </connectionPointOut>
               <expression>T#100ms</expression>
             </inVariable>
-            <inVariable localId="71" width="70" height="30" negated="false" executionOrderId="0">
-              <position x="350" y="2360"/>
-              <connectionPointOut>
-                <relPosition x="70" y="20"/>
-              </connectionPointOut>
-              <expression>2.0</expression>
-            </inVariable>
-            <inVariable localId="72" width="70" height="30" negated="false" executionOrderId="0">
-              <position x="460" y="2360"/>
-              <connectionPointOut>
-                <relPosition x="70" y="20"/>
-              </connectionPointOut>
-              <expression>0.0</expression>
-            </inVariable>
             <inVariable localId="188" width="90" height="30" negated="false">
-              <position x="430" y="2260"/>
+              <position x="260" y="2800"/>
               <connectionPointOut>
-                <relPosition x="90" y="10"/>
+                <relPosition x="90" y="20"/>
               </connectionPointOut>
               <expression>CALCPOWER</expression>
             </inVariable>
@@ -2316,7 +2315,7 @@ renamed to volt
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="74">
                       <position x="760" y="2000"/>
-                      <position x="750" y="2000"/>
+                      <position x="740" y="2000"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2350,8 +2349,8 @@ renamed to volt
                     <connection refLocalId="189">
                       <position x="580" y="2000"/>
                       <position x="560" y="2000"/>
-                      <position x="560" y="2030"/>
-                      <position x="540" y="2030"/>
+                      <position x="560" y="2020"/>
+                      <position x="540" y="2020"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2365,10 +2364,10 @@ renamed to volt
                 </variable>
               </outputVariables>
             </block>
-            <inVariable localId="74" width="70" height="30" negated="false" executionOrderId="0">
-              <position x="680" y="1990"/>
+            <inVariable localId="74" width="80" height="30" negated="false" executionOrderId="0">
+              <position x="660" y="1990"/>
               <connectionPointOut>
-                <relPosition x="70" y="10"/>
+                <relPosition x="80" y="10"/>
               </connectionPointOut>
               <expression>65535.0</expression>
             </inVariable>
@@ -2379,13 +2378,229 @@ renamed to volt
               </connectionPointOut>
               <expression>3.3</expression>
             </inVariable>
-            <block localId="190" typeName="REAL_TO_WORD" width="110" height="40">
-              <position x="850" y="1950"/>
+            <outVariable localId="75" width="90" height="30" negated="false" executionOrderId="0">
+              <position x="870" y="1960"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="70" formalParameter="OUT">
+                  <position x="870" y="1980"/>
+                  <position x="830" y="1980"/>
+                </connection>
+              </connectionPointIn>
+              <expression>CALCPOWER</expression>
+            </outVariable>
+            <inVariable localId="190" width="90" height="30" negated="false">
+              <position x="240" y="2660"/>
+              <connectionPointOut>
+                <relPosition x="90" y="10"/>
+              </connectionPointOut>
+              <expression>CALCPOWER</expression>
+            </inVariable>
+            <block localId="191" typeName="DIV" width="70" height="60">
+              <position x="370" y="2650"/>
+              <inputVariables>
+                <variable formalParameter="IN1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="190">
+                      <position x="370" y="2680"/>
+                      <position x="350" y="2680"/>
+                      <position x="350" y="2670"/>
+                      <position x="330" y="2670"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="IN2">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="78">
+                      <position x="370" y="2700"/>
+                      <position x="345" y="2700"/>
+                      <position x="345" y="2710"/>
+                      <position x="320" y="2710"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="70" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <outVariable localId="77" width="90" height="30" negated="false">
+              <position x="760" y="2370"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="179" formalParameter="XOUT">
+                  <position x="760" y="2380"/>
+                  <position x="740" y="2380"/>
+                  <position x="740" y="2250"/>
+                  <position x="720" y="2250"/>
+                </connection>
+              </connectionPointIn>
+              <expression>CALCPOWER</expression>
+            </outVariable>
+            <inVariable localId="78" width="40" height="30" negated="false" executionOrderId="0">
+              <position x="280" y="2700"/>
+              <connectionPointOut>
+                <relPosition x="40" y="10"/>
+              </connectionPointOut>
+              <expression>3.3</expression>
+            </inVariable>
+            <block localId="192" typeName="MUL" width="70" height="60">
+              <position x="500" y="2650"/>
+              <inputVariables>
+                <variable formalParameter="IN1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="191" formalParameter="OUT">
+                      <position x="500" y="2680"/>
+                      <position x="440" y="2680"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="IN2">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="79">
+                      <position x="500" y="2700"/>
+                      <position x="470" y="2700"/>
+                      <position x="470" y="2740"/>
+                      <position x="440" y="2740"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="70" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <inVariable localId="79" width="50" height="30" negated="false" executionOrderId="0">
+              <position x="390" y="2720"/>
+              <connectionPointOut>
+                <relPosition x="50" y="10"/>
+              </connectionPointOut>
+              <expression>100.0</expression>
+            </inVariable>
+            <outVariable localId="194" width="120" height="30" negated="false">
+              <position x="840" y="2670"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="81" formalParameter="OUT">
+                  <position x="840" y="2680"/>
+                  <position x="820" y="2680"/>
+                </connection>
+              </connectionPointIn>
+              <expression>POWER_PERCENT</expression>
+            </outVariable>
+            <block localId="81" typeName="REAL_TO_INT" width="100" height="40" executionOrderId="0">
+              <position x="720" y="2650"/>
+              <inputVariables>
+                <variable formalParameter="IN">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="192" formalParameter="OUT">
+                      <position x="720" y="2680"/>
+                      <position x="570" y="2680"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="100" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <comment localId="195" height="80" width="210">
+              <position x="10" y="2650"/>
+              <content>
+                <xhtml:p><![CDATA[voltage conversion to % eg (2.1/3.3 x 100) x 100 = idk%]]></xhtml:p>
+              </content>
+            </comment>
+            <comment localId="82" height="40" width="150">
+              <position x="30" y="2520"/>
+              <content>
+                <xhtml:p><![CDATA[Servo controller]]></xhtml:p>
+              </content>
+            </comment>
+            <comment localId="83" height="40" width="50">
+              <position x="70" y="2300"/>
+              <content>
+                <xhtml:p><![CDATA[PID]]></xhtml:p>
+              </content>
+            </comment>
+            <outVariable localId="196" width="160" height="30" negated="false">
+              <position x="380" y="2050"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="119">
+                  <position x="380" y="2070"/>
+                  <position x="350" y="2070"/>
+                  <position x="350" y="2140"/>
+                  <position x="340" y="2140"/>
+                </connection>
+              </connectionPointIn>
+              <expression>ACTUAL_TEMPERATURE</expression>
+            </outVariable>
+            <outVariable localId="197" width="122" height="30" negated="false">
+              <position x="780" y="1870"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="71" formalParameter="OUT">
+                  <position x="780" y="1880"/>
+                  <position x="740" y="1880"/>
+                </connection>
+              </connectionPointIn>
+              <expression>voltmulcurrent</expression>
+            </outVariable>
+            <block localId="71" typeName="REAL_TO_INT" width="100" height="40" executionOrderId="0">
+              <position x="640" y="1850"/>
+              <inputVariables>
+                <variable formalParameter="IN">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="73" formalParameter="OUT">
+                      <position x="640" y="1880"/>
+                      <position x="630" y="1880"/>
+                      <position x="630" y="1930"/>
+                      <position x="660" y="1930"/>
+                      <position x="660" y="1980"/>
+                      <position x="650" y="1980"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="100" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <block localId="72" typeName="REAL_TO_WORD" width="110" height="40" executionOrderId="0">
+              <position x="870" y="1840"/>
               <inputVariables>
                 <variable formalParameter="IN">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="70" formalParameter="OUT">
+                      <position x="870" y="1870"/>
+                      <position x="850" y="1870"/>
                       <position x="850" y="1980"/>
                       <position x="830" y="1980"/>
                     </connection>
@@ -2401,21 +2616,202 @@ renamed to volt
                 </variable>
               </outputVariables>
             </block>
-            <outVariable localId="75" width="90" height="30" negated="false" executionOrderId="0">
-              <position x="890" y="2000"/>
+            <outVariable localId="84" width="60" height="30" negated="false" executionOrderId="0">
+              <position x="1020" y="1860"/>
               <connectionPointIn>
                 <relPosition x="0" y="20"/>
-                <connection refLocalId="70" formalParameter="OUT">
-                  <position x="890" y="2020"/>
-                  <position x="840" y="2020"/>
-                  <position x="840" y="1980"/>
-                  <position x="830" y="1980"/>
+                <connection refLocalId="72" formalParameter="OUT">
+                  <position x="1020" y="1880"/>
+                  <position x="985" y="1880"/>
+                  <position x="985" y="1875"/>
+                  <position x="990" y="1875"/>
+                  <position x="990" y="1870"/>
+                  <position x="980" y="1870"/>
                 </connection>
               </connectionPointIn>
-              <expression>CALCPOWER</expression>
+              <expression>POWER1</expression>
             </outVariable>
+            <comment localId="80" height="40" width="120">
+              <position x="1000" y="1810"/>
+              <content>
+                <xhtml:p><![CDATA[in decimals]]></xhtml:p>
+              </content>
+            </comment>
+            <block localId="198" typeName="DIV" width="70" height="60">
+              <position x="380" y="2790"/>
+              <inputVariables>
+                <variable formalParameter="IN1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="188">
+                      <position x="380" y="2820"/>
+                      <position x="350" y="2820"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="IN2">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="85">
+                      <position x="380" y="2840"/>
+                      <position x="355" y="2840"/>
+                      <position x="355" y="2860"/>
+                      <position x="330" y="2860"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="70" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <inVariable localId="85" width="40" height="30" negated="false" executionOrderId="0">
+              <position x="290" y="2840"/>
+              <connectionPointOut>
+                <relPosition x="40" y="20"/>
+              </connectionPointOut>
+              <expression>3.3</expression>
+            </inVariable>
+            <block localId="199" typeName="MUL" width="70" height="60">
+              <position x="480" y="2790"/>
+              <inputVariables>
+                <variable formalParameter="IN1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="198" formalParameter="OUT">
+                      <position x="480" y="2820"/>
+                      <position x="450" y="2820"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="IN2">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="200">
+                      <position x="480" y="2840"/>
+                      <position x="460" y="2840"/>
+                      <position x="460" y="2880"/>
+                      <position x="430" y="2880"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="70" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <inVariable localId="200" width="60" height="30" negated="false">
+              <position x="370" y="2860"/>
+              <connectionPointOut>
+                <relPosition x="60" y="20"/>
+              </connectionPointOut>
+              <expression>-110.0</expression>
+            </inVariable>
+            <inVariable localId="201" width="50" height="30" negated="false">
+              <position x="520" y="2860"/>
+              <connectionPointOut>
+                <relPosition x="50" y="10"/>
+              </connectionPointOut>
+              <expression>80.0</expression>
+            </inVariable>
+            <block localId="202" typeName="ADD" width="70" height="60">
+              <position x="570" y="2790"/>
+              <inputVariables>
+                <variable formalParameter="IN1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="199" formalParameter="OUT">
+                      <position x="570" y="2820"/>
+                      <position x="550" y="2820"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="IN2">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
+                    <connection refLocalId="201">
+                      <position x="570" y="2840"/>
+                      <position x="560" y="2840"/>
+                      <position x="560" y="2860"/>
+                      <position x="580" y="2860"/>
+                      <position x="580" y="2880"/>
+                      <position x="570" y="2880"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="70" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <comment localId="86" height="80" width="210">
+              <position x="20" y="2790"/>
+              <content>
+                <xhtml:p><![CDATA[voltage to temp range v / 3.3 *(80 - 190 (-110) + 80)]]></xhtml:p>
+              </content>
+            </comment>
+            <block localId="88" typeName="REAL_TO_INT" width="100" height="40" executionOrderId="0">
+              <position x="680" y="2810"/>
+              <inputVariables>
+                <variable formalParameter="IN">
+                  <connectionPointIn>
+                    <relPosition x="0" y="30"/>
+                    <connection refLocalId="202" formalParameter="OUT">
+                      <position x="680" y="2840"/>
+                      <position x="660" y="2840"/>
+                      <position x="660" y="2820"/>
+                      <position x="640" y="2820"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+              </inputVariables>
+              <inOutVariables/>
+              <outputVariables>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="100" y="30"/>
+                  </connectionPointOut>
+                </variable>
+              </outputVariables>
+            </block>
+            <outVariable localId="87" width="106" height="30" negated="false">
+              <position x="840" y="2820"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+                <connection refLocalId="88" formalParameter="OUT">
+                  <position x="840" y="2840"/>
+                  <position x="780" y="2840"/>
+                </connection>
+              </connectionPointIn>
+              <expression>current_temp</expression>
+            </outVariable>
+            <inVariable localId="99" width="90" height="30" negated="false" executionOrderId="0">
+              <position x="470" y="2250"/>
+              <connectionPointOut>
+                <relPosition x="90" y="20"/>
+              </connectionPointOut>
+              <expression>CALCPOWER</expression>
+            </inVariable>
           </LD>
         </body>
+        <documentation>
+          <xhtml:p><![CDATA[CALC]]></xhtml:p>
+        </documentation>
       </pou>
     </pous>
   </types>

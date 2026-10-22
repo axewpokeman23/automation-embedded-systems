@@ -77,9 +77,9 @@ void WATERBOILER_init__(WATERBOILER *data__, BOOL retain) {
   __INIT_LOCATED_VALUE(data__->SETPOINT,80)
   __INIT_LOCATED(INT,__IW0_0,data__->VOLT,retain)
   __INIT_LOCATED_VALUE(data__->VOLT,0)
-  __INIT_LOCATED(WORD,__MW1,data__->ACTUAL_TEMPERATURE,retain)
+  __INIT_LOCATED(INT,__MW1,data__->ACTUAL_TEMPERATURE,retain)
   __INIT_LOCATED_VALUE(data__->ACTUAL_TEMPERATURE,0)
-  __INIT_LOCATED(INT,__QW1,data__->SERVO,retain)
+  __INIT_LOCATED(INT,__QW0,data__->SERVO,retain)
   __INIT_LOCATED_VALUE(data__->SERVO,0)
   SR_init__(&data__->SR0,retain);
   R_TRIG_init__(&data__->R_TRIG0,retain);
@@ -92,10 +92,16 @@ void WATERBOILER_init__(WATERBOILER *data__, BOOL retain) {
   PWM_CONTROLLER_init__(&data__->PWM_CONTROLLER0,retain);
   __INIT_LOCATED(INT,__MW4,data__->ANGLE,retain)
   __INIT_LOCATED_VALUE(data__->ANGLE,0)
-  __INIT_LOCATED(WORD,__MW6,data__->POWER,retain)
+  __INIT_LOCATED(INT,__MW6,data__->POWER,retain)
   __INIT_LOCATED_VALUE(data__->POWER,0)
-  __INIT_LOCATED(INT,__MW5,data__->NORMALIZED_TEMP,retain)
-  __INIT_LOCATED_VALUE(data__->NORMALIZED_TEMP,0)
+  __INIT_LOCATED(INT,__MW7,data__->VOLTMULCURRENT,retain)
+  __INIT_LOCATED_VALUE(data__->VOLTMULCURRENT,0)
+  __INIT_LOCATED(WORD,__MW8,data__->POWER1,retain)
+  __INIT_LOCATED_VALUE(data__->POWER1,0)
+  __INIT_LOCATED(INT,__MW9,data__->CURRENT_TEMP,retain)
+  __INIT_LOCATED_VALUE(data__->CURRENT_TEMP,0)
+  __INIT_LOCATED(INT,__MW5,data__->POWER_PERCENT,retain)
+  __INIT_LOCATED_VALUE(data__->POWER_PERCENT,0)
   PID_init__(&data__->PID0,retain);
   __INIT_VAR(data__->CALCPOWER,0,retain)
   R_TRIG_init__(&data__->R_TRIG2,retain);
@@ -122,11 +128,19 @@ void WATERBOILER_init__(WATERBOILER *data__, BOOL retain) {
   __INIT_VAR(data__->_TMP_REAL_TO_INT133_OUT,0,retain)
   __INIT_VAR(data__->_TMP_MUL173_OUT,0,retain)
   __INIT_VAR(data__->_TMP_BOOL_TO_INT163_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_INT_TO_REAL182_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_REAL_TO_INT180_OUT,0,retain)
   __INIT_VAR(data__->_TMP_MUL73_OUT,0,retain)
   __INIT_VAR(data__->_TMP_DIV70_OUT,0,retain)
-  __INIT_VAR(data__->_TMP_REAL_TO_WORD190_OUT,0,retain)
-  __INIT_VAR(data__->_TMP_INT_TO_REAL182_OUT,0,retain)
-  __INIT_VAR(data__->_TMP_REAL_TO_WORD180_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_DIV191_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_MUL192_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_REAL_TO_INT81_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_REAL_TO_INT71_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_REAL_TO_WORD72_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_DIV198_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_MUL199_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_ADD202_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_REAL_TO_INT88_OUT,0,retain)
 }
 
 // Code part
@@ -306,6 +320,20 @@ void WATERBOILER_body__(WATERBOILER *data__) {
     NULL,
     (BOOL)(((__GET_VAR(data__->RUN_STATE,) && !(__GET_LOCATED(data__->STOP_BTN,))) && __GET_LOCATED(data__->START_BTN,)) && !(__GET_LOCATED(data__->STOP_BTN,)))));
   __SET_LOCATED(data__->,STATUS_RUN,,__GET_VAR(data__->_TMP_BOOL_TO_INT163_OUT,));
+  __SET_VAR(data__->,_TMP_INT_TO_REAL182_OUT,,INT_TO_REAL(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (INT)__GET_LOCATED(data__->SETPOINT,)));
+  __SET_VAR(data__->PID0.,AUTO,,__BOOL_LITERAL(TRUE));
+  __SET_VAR(data__->PID0.,PV,,__GET_VAR(data__->CALCPOWER,));
+  __SET_VAR(data__->PID0.,SP,,__GET_VAR(data__->_TMP_INT_TO_REAL182_OUT,));
+  __SET_VAR(data__->PID0.,CYCLE,,__time_to_timespec(1, 100, 0, 0, 0, 0));
+  PID_body__(&data__->PID0);
+  __SET_VAR(data__->,_TMP_REAL_TO_INT180_OUT,,REAL_TO_INT(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (REAL)__GET_VAR(data__->PID0.XOUT,)));
+  __SET_LOCATED(data__->,POWER,,__GET_VAR(data__->_TMP_REAL_TO_INT180_OUT,));
   __SET_VAR(data__->,_TMP_MUL73_OUT,,MUL__REAL__REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
@@ -316,30 +344,58 @@ void WATERBOILER_body__(WATERBOILER *data__) {
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
     (REAL)__GET_VAR(data__->_TMP_MUL73_OUT,),
-    (REAL)65535.0));
-  __SET_VAR(data__->,_TMP_REAL_TO_WORD190_OUT,,REAL_TO_WORD(
+    (REAL)65536.0));
+  __SET_VAR(data__->,CALCPOWER,,__GET_VAR(data__->_TMP_DIV70_OUT,));
+  __SET_VAR(data__->,CALCPOWER,,__GET_VAR(data__->PID0.XOUT,));
+  __SET_VAR(data__->,_TMP_DIV191_OUT,,DIV__REAL__REAL__REAL(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (REAL)__GET_VAR(data__->CALCPOWER,),
+    (REAL)3.3));
+  __SET_VAR(data__->,_TMP_MUL192_OUT,,MUL__REAL__REAL(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (UINT)2,
+    (REAL)__GET_VAR(data__->_TMP_DIV191_OUT,),
+    (REAL)100.0));
+  __SET_VAR(data__->,_TMP_REAL_TO_INT81_OUT,,REAL_TO_INT(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (REAL)__GET_VAR(data__->_TMP_MUL192_OUT,)));
+  __SET_LOCATED(data__->,POWER_PERCENT,,__GET_VAR(data__->_TMP_REAL_TO_INT81_OUT,));
+  __SET_LOCATED(data__->,ACTUAL_TEMPERATURE,,__GET_LOCATED(data__->VOLT,));
+  __SET_VAR(data__->,_TMP_REAL_TO_INT71_OUT,,REAL_TO_INT(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (REAL)__GET_VAR(data__->_TMP_MUL73_OUT,)));
+  __SET_LOCATED(data__->,VOLTMULCURRENT,,__GET_VAR(data__->_TMP_REAL_TO_INT71_OUT,));
+  __SET_VAR(data__->,_TMP_REAL_TO_WORD72_OUT,,REAL_TO_WORD(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
     (REAL)__GET_VAR(data__->_TMP_DIV70_OUT,)));
-  __SET_LOCATED(data__->,ACTUAL_TEMPERATURE,,__GET_VAR(data__->_TMP_REAL_TO_WORD190_OUT,));
-  __SET_VAR(data__->,_TMP_INT_TO_REAL182_OUT,,INT_TO_REAL(
+  __SET_LOCATED(data__->,POWER1,,__GET_VAR(data__->_TMP_REAL_TO_WORD72_OUT,));
+  __SET_VAR(data__->,_TMP_DIV198_OUT,,DIV__REAL__REAL__REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
-    (INT)__GET_LOCATED(data__->SETPOINT,)));
-  __SET_VAR(data__->PID0.,AUTO,,__BOOL_LITERAL(TRUE));
-  __SET_VAR(data__->PID0.,PV,,__GET_VAR(data__->CALCPOWER,));
-  __SET_VAR(data__->PID0.,SP,,__GET_VAR(data__->_TMP_INT_TO_REAL182_OUT,));
-  __SET_VAR(data__->PID0.,X0,,0.0);
-  __SET_VAR(data__->PID0.,KP,,2.0);
-  __SET_VAR(data__->PID0.,TD,,0.0);
-  __SET_VAR(data__->PID0.,CYCLE,,__time_to_timespec(1, 100, 0, 0, 0, 0));
-  PID_body__(&data__->PID0);
-  __SET_VAR(data__->,_TMP_REAL_TO_WORD180_OUT,,REAL_TO_WORD(
+    (REAL)__GET_VAR(data__->CALCPOWER,),
+    (REAL)3.3));
+  __SET_VAR(data__->,_TMP_MUL199_OUT,,MUL__REAL__REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
-    (REAL)__GET_VAR(data__->PID0.XOUT,)));
-  __SET_LOCATED(data__->,POWER,,__GET_VAR(data__->_TMP_REAL_TO_WORD180_OUT,));
-  __SET_VAR(data__->,CALCPOWER,,__GET_VAR(data__->_TMP_DIV70_OUT,));
+    (UINT)2,
+    (REAL)__GET_VAR(data__->_TMP_DIV198_OUT,),
+    (REAL)-110.0));
+  __SET_VAR(data__->,_TMP_ADD202_OUT,,ADD__REAL__REAL(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (UINT)2,
+    (REAL)__GET_VAR(data__->_TMP_MUL199_OUT,),
+    (REAL)80.0));
+  __SET_VAR(data__->,_TMP_REAL_TO_INT88_OUT,,REAL_TO_INT(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (REAL)__GET_VAR(data__->_TMP_ADD202_OUT,)));
+  __SET_LOCATED(data__->,CURRENT_TEMP,,__GET_VAR(data__->_TMP_REAL_TO_INT88_OUT,));
 
   goto __end;
 

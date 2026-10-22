@@ -130,20 +130,26 @@ IEC_INT var14;
 IEC_INT *__MW0 = &var14;
 IEC_INT var15;
 IEC_INT *__IW0_0 = &var15;
-IEC_WORD var16;
-IEC_WORD *__MW1 = &var16;
+IEC_INT var16;
+IEC_INT *__MW1 = &var16;
 IEC_INT var17;
-IEC_INT *__QW1 = &var17;
+IEC_INT *__QW0 = &var17;
 IEC_INT var18;
 IEC_INT *__MW2 = &var18;
 IEC_INT var19;
 IEC_INT *__MW3 = &var19;
 IEC_INT var20;
 IEC_INT *__MW4 = &var20;
-IEC_WORD var21;
-IEC_WORD *__MW6 = &var21;
+IEC_INT var21;
+IEC_INT *__MW6 = &var21;
 IEC_INT var22;
-IEC_INT *__MW5 = &var22;
+IEC_INT *__MW7 = &var22;
+IEC_WORD var23;
+IEC_WORD *__MW8 = &var23;
+IEC_INT var24;
+IEC_INT *__MW9 = &var24;
+IEC_INT var25;
+IEC_INT *__MW5 = &var25;
 /**
  * Win32 specific code
  **/
