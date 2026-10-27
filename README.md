@@ -150,7 +150,7 @@ If the temperature is above the SETPOINT, the heater relay / LED will turn off a
 
 ## 4.0 Testing
 
-The following table contains evidence that each operation works as intended. Modbus was also used to confirm that the inputs, coils and holding registers were working correctly.
+The following table contains evidence that each operation works as intended. Modbus and Runtime were also used to confirm that the inputs, coils, input registers and holding registers were working correctly.
 
 |Test|Expected Result|Pass/Fail|Evidence|
 |-|-|-|-|
