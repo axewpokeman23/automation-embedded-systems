@@ -15,20 +15,20 @@
 This report documents Part 3 of the Simple Water Boiler Controller case study. Previously, we used Logisim and CircuitPython to implement the case study logic. 
 Part 3 aims to implement the case study logic using a combination of ladder diagrams (LD) and function block diagrams (FBD) using the OpenPLC software. 
 
-We will be using the Custom Raspberry Pico W PLC to test the connected hardware (digital, and analogue inputs, and outputs) and to demonstrate that the PLC is functioning as intended.
+We will be using the Raspberry Pico W to test the connected hardware (digital, and analogue inputs, and outputs) and to demonstrate that the PLC is functioning as intended.
 
 ## 2.0 Hardware and I/O Mapping
 
-The system contains 8 inputs to control the associating 9 outputs.<br>
+The system contains 7 inputs to control the associating 9 outputs.<br>
 ##### Inputs include:
 
 1. Start / Heating ON / Setpoint
 2. Stop / Heating OFF
-4. Temperature Up
-5. Temperature Down
-6. Emergency Stop
-7. Pressure Switch
-8. Thermister(Temperature simulated with dial)
+3. Temperature Up
+4. Temperature Down
+5. Emergency Stop
+6. Pressure Switch
+7. Thermister(Temperature simulated with dial)
 
 ##### Outputs include:
 
