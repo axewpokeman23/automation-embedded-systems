@@ -20,6 +20,8 @@ PROGRAM waterboiler
     LED5 AT %QX0.6 : BOOL;
     E_LED AT %QX0.7 : BOOL;
     SETPOINT AT %MW0 : INT := 80;
+    POWER AT %MD0 : REAL;
+    ACTUAL_TEMPERATURE AT %MW1 : INT;
     DIAL_VALUE AT %IW0 : INT;
   END_VAR
   VAR
@@ -31,11 +33,15 @@ PROGRAM waterboiler
     SERVO_OK : BOOL;
   END_VAR
   VAR
-    ANGLE AT %QW0 : INT;
+    ANGLE AT %QW0.1 : INT;
   END_VAR
   VAR
     DUTY : REAL;
+    dial_voltage : REAL;
     R_TRIG2 : R_TRIG;
+    PID0 : PID;
+    _TMP_LT198_ENO : BOOL;
+    _TMP_LT198_OUT : BOOL;
     R_TRIG3 : R_TRIG;
     R_TRIG4 : R_TRIG;
     _TMP_ADD92_OUT : INT;
@@ -53,19 +59,26 @@ PROGRAM waterboiler
     _TMP_EQ50_OUT : BOOL;
     _TMP_EQ51_OUT : BOOL;
     _TMP_INT_TO_REAL77_OUT : REAL;
+    _TMP_DIV120_ENO : BOOL;
     _TMP_DIV120_OUT : REAL;
     _TMP_MUL121_OUT : REAL;
-    _TMP_ADD173_OUT : REAL;
-    _TMP_REAL_TO_INT180_OUT : INT;
-    _TMP_INT_TO_REAL179_OUT : REAL;
-    _TMP_DIV175_OUT : REAL;
-    _TMP_MUL176_OUT : REAL;
-    _TMP_ADD177_OUT : REAL;
+    _TMP_INT_TO_REAL206_OUT : REAL;
+    _TMP_DIV81_OUT : REAL;
+    _TMP_MUL82_OUT : REAL;
+    _TMP_REAL_TO_INT88_OUT : INT;
+    _TMP_INT_TO_REAL72_OUT : REAL;
+    _TMP_DIV203_OUT : REAL;
+    _TMP_MUL204_OUT : REAL;
+    _TMP_INT_TO_REAL102_OUT : REAL;
+    _TMP_MUL104_OUT : REAL;
+    _TMP_DIV100_OUT : REAL;
+    _TMP_REAL_TO_INT182_OUT : INT;
   END_VAR
 
   RUN_STATE := (RUN_STATE OR START_BTN) AND NOT(STOP_BTN);
   STOPPED_STATE := NOT(E_STATE) AND NOT(RUN_STATE);
-  HEATER := NOT(E_STATE) AND RUN_STATE;
+  _TMP_LT198_OUT := LT(EN := NOT(E_STATE) AND RUN_STATE, IN1 := ACTUAL_TEMPERATURE, IN2 := SETPOINT, ENO => _TMP_LT198_ENO);
+  HEATER := _TMP_LT198_OUT;
   SR0(S1 := E_STOP AND RUN_STATE, R := STOP_BTN AND E_STOP AND E_STATE);
   E_STATE := SR0.Q1;
   E_LED := E_STATE;
@@ -114,19 +127,28 @@ PROGRAM waterboiler
   IF E_STATE THEN
     LED5 := FALSE; (*reset*)
   END_IF;
-  _TMP_INT_TO_REAL77_OUT := INT_TO_REAL(DIAL_VALUE);
-  _TMP_DIV120_OUT := DIV(_TMP_INT_TO_REAL77_OUT, 65535.0);
-  _TMP_MUL121_OUT := MUL(_TMP_DIV120_OUT, 190.0);
-  _TMP_ADD173_OUT := ADD(_TMP_MUL121_OUT, 5.0);
-  _TMP_REAL_TO_INT180_OUT := REAL_TO_INT(_TMP_ADD173_OUT);
-  ANGLE := _TMP_REAL_TO_INT180_OUT;
-  _TMP_INT_TO_REAL179_OUT := INT_TO_REAL(ANGLE);
-  _TMP_DIV175_OUT := DIV(_TMP_INT_TO_REAL179_OUT, 190.0);
-  _TMP_MUL176_OUT := MUL(_TMP_DIV175_OUT, 5.0);
-  _TMP_ADD177_OUT := ADD(_TMP_MUL176_OUT, 5.0);
-  DUTY := _TMP_ADD177_OUT;
-  PWM_CONTROLLER0(CHANNEL := 0, FREQ := 50.00, DUTY := DUTY);
+  PWM_CONTROLLER0(CHANNEL := 1, FREQ := 50.00, DUTY := DUTY);
   SERVO_OK := PWM_CONTROLLER0.SUCCESS;
+  _TMP_INT_TO_REAL77_OUT := INT_TO_REAL(DIAL_VALUE);
+  _TMP_DIV120_OUT := DIV(EN := RUN_STATE, IN1 := _TMP_INT_TO_REAL77_OUT, IN2 := 65535.0, ENO => _TMP_DIV120_ENO);
+  _TMP_MUL121_OUT := MUL(_TMP_DIV120_OUT, 190.0);
+  DUTY := _TMP_MUL121_OUT;
+  _TMP_INT_TO_REAL206_OUT := INT_TO_REAL(DIAL_VALUE);
+  _TMP_DIV81_OUT := DIV(_TMP_INT_TO_REAL206_OUT, 3419.0);
+  _TMP_MUL82_OUT := MUL(_TMP_DIV81_OUT, 190.0);
+  _TMP_REAL_TO_INT88_OUT := REAL_TO_INT(_TMP_MUL82_OUT);
+  ACTUAL_TEMPERATURE := _TMP_REAL_TO_INT88_OUT;
+  _TMP_INT_TO_REAL72_OUT := INT_TO_REAL(SETPOINT);
+  PID0(AUTO := HEATER, PV := dial_voltage, SP := _TMP_INT_TO_REAL72_OUT, X0 := 0.0, KP := 2.0, TR := 0.1, TD := 0.0, CYCLE := T#100ms);
+  _TMP_DIV203_OUT := DIV(PID0.XOUT, 3.3);
+  _TMP_MUL204_OUT := MUL(_TMP_DIV203_OUT, 100.0);
+  POWER := _TMP_MUL204_OUT;
+  _TMP_INT_TO_REAL102_OUT := INT_TO_REAL(DIAL_VALUE);
+  _TMP_MUL104_OUT := MUL(_TMP_INT_TO_REAL102_OUT, 3.3);
+  _TMP_DIV100_OUT := DIV(_TMP_MUL104_OUT, 65535.0);
+  dial_voltage := _TMP_DIV100_OUT;
+  _TMP_REAL_TO_INT182_OUT := REAL_TO_INT(_TMP_MUL121_OUT);
+  ANGLE := _TMP_REAL_TO_INT182_OUT;
 END_PROGRAM
 
 
@@ -138,7 +160,7 @@ CONFIGURATION Config0
   END_RESOURCE
 END_CONFIGURATION
 
-(*DBG:char md5[] = "7fbb2040f9b4bb87708323e46592396a";*)
+(*DBG:char md5[] = "0698545de765f831078eaf075aacba70";*)
 (*DBG:/**)
 (*DBG: * This file is part of OpenPLC Runtime*)
 (*DBG: **)
@@ -195,6 +217,8 @@ END_CONFIGURATION
 (*DBG:    {&(RES0__INSTANCE0.LED5), BOOL_O_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.E_LED), BOOL_O_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.SETPOINT), INT_O_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.POWER), REAL_O_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.ACTUAL_TEMPERATURE), INT_O_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.DIAL_VALUE), INT_P_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.SR0.EN), BOOL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.SR0.ENO), BOOL_ENUM},*)
@@ -243,11 +267,44 @@ END_CONFIGURATION
 (*DBG:    {&(RES0__INSTANCE0.SERVO_OK), BOOL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.ANGLE), INT_O_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.DUTY), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.DIAL_VOLTAGE), REAL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.R_TRIG2.EN), BOOL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.R_TRIG2.ENO), BOOL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.R_TRIG2.CLK), BOOL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.R_TRIG2.Q), BOOL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.R_TRIG2.M), BOOL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.EN), BOOL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.ENO), BOOL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.AUTO), BOOL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.PV), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.SP), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.X0), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.KP), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.TR), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.TD), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.CYCLE), TIME_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.XOUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.ERROR), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.ITERM.EN), BOOL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.ITERM.ENO), BOOL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.ITERM.RUN), BOOL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.ITERM.R1), BOOL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.ITERM.XIN), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.ITERM.X0), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.ITERM.CYCLE), TIME_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.ITERM.Q), BOOL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.ITERM.XOUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.DTERM.EN), BOOL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.DTERM.ENO), BOOL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.DTERM.RUN), BOOL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.DTERM.XIN), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.DTERM.CYCLE), TIME_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.DTERM.XOUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.DTERM.X1), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.DTERM.X2), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0.PID0.DTERM.X3), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_LT198_ENO), BOOL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_LT198_OUT), BOOL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.R_TRIG3.EN), BOOL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.R_TRIG3.ENO), BOOL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0.R_TRIG3.CLK), BOOL_ENUM},*)
@@ -273,17 +330,23 @@ END_CONFIGURATION
 (*DBG:    {&(RES0__INSTANCE0._TMP_EQ50_OUT), BOOL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0._TMP_EQ51_OUT), BOOL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0._TMP_INT_TO_REAL77_OUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_DIV120_ENO), BOOL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0._TMP_DIV120_OUT), REAL_ENUM},*)
 (*DBG:    {&(RES0__INSTANCE0._TMP_MUL121_OUT), REAL_ENUM},*)
-(*DBG:    {&(RES0__INSTANCE0._TMP_ADD173_OUT), REAL_ENUM},*)
-(*DBG:    {&(RES0__INSTANCE0._TMP_REAL_TO_INT180_OUT), INT_ENUM},*)
-(*DBG:    {&(RES0__INSTANCE0._TMP_INT_TO_REAL179_OUT), REAL_ENUM},*)
-(*DBG:    {&(RES0__INSTANCE0._TMP_DIV175_OUT), REAL_ENUM},*)
-(*DBG:    {&(RES0__INSTANCE0._TMP_MUL176_OUT), REAL_ENUM},*)
-(*DBG:    {&(RES0__INSTANCE0._TMP_ADD177_OUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_INT_TO_REAL206_OUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_DIV81_OUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_MUL82_OUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_REAL_TO_INT88_OUT), INT_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_INT_TO_REAL72_OUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_DIV203_OUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_MUL204_OUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_INT_TO_REAL102_OUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_MUL104_OUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_DIV100_OUT), REAL_ENUM},*)
+(*DBG:    {&(RES0__INSTANCE0._TMP_REAL_TO_INT182_OUT), INT_ENUM},*)
 (*DBG:};*)
 (*DBG:*)
-(*DBG:#define VAR_COUNT               104*)
+(*DBG:#define VAR_COUNT               145*)
 (*DBG:*)
 (*DBG:uint16_t get_var_count(void)*)
 (*DBG:{*)
@@ -301,14 +364,17 @@ END_CONFIGURATION
 (*DBG:    case BOOL_O_ENUM:*)
 (*DBG:    case BOOL_P_ENUM:*)
 (*DBG:        return sizeof(BOOL);*)
-(*DBG:    case SINT_ENUM:*)
-(*DBG:        return sizeof(SINT);*)
-(*DBG:    case REAL_ENUM:*)
-(*DBG:        return sizeof(REAL);*)
+(*DBG:    case TIME_ENUM:*)
+(*DBG:        return sizeof(TIME);*)
 (*DBG:    case INT_ENUM:*)
 (*DBG:    case INT_O_ENUM:*)
 (*DBG:    case INT_P_ENUM:*)
 (*DBG:        return sizeof(INT);*)
+(*DBG:    case SINT_ENUM:*)
+(*DBG:        return sizeof(SINT);*)
+(*DBG:    case REAL_ENUM:*)
+(*DBG:    case REAL_O_ENUM:*)
+(*DBG:        return sizeof(REAL);*)
 (*DBG:    default:*)
 (*DBG:        return 0;*)
 (*DBG:    }*)
@@ -326,10 +392,8 @@ END_CONFIGURATION
 (*DBG:        return (void *)((((__IEC_BOOL_p *) ptr)->flags & __IEC_FORCE_FLAG) *)
 (*DBG:                        ? &(((__IEC_BOOL_p *) ptr)->fvalue) *)
 (*DBG:                        : ((__IEC_BOOL_p *) ptr)->value);*)
-(*DBG:    case SINT_ENUM:*)
-(*DBG:        return (void *)&((__IEC_SINT_t *) ptr)->value;*)
-(*DBG:    case REAL_ENUM:*)
-(*DBG:        return (void *)&((__IEC_REAL_t *) ptr)->value;*)
+(*DBG:    case TIME_ENUM:*)
+(*DBG:        return (void *)&((__IEC_TIME_t *) ptr)->value;*)
 (*DBG:    case INT_ENUM:*)
 (*DBG:        return (void *)&((__IEC_INT_t *) ptr)->value;*)
 (*DBG:    case INT_O_ENUM:*)
@@ -337,6 +401,14 @@ END_CONFIGURATION
 (*DBG:        return (void *)((((__IEC_INT_p *) ptr)->flags & __IEC_FORCE_FLAG) *)
 (*DBG:                        ? &(((__IEC_INT_p *) ptr)->fvalue) *)
 (*DBG:                        : ((__IEC_INT_p *) ptr)->value);*)
+(*DBG:    case SINT_ENUM:*)
+(*DBG:        return (void *)&((__IEC_SINT_t *) ptr)->value;*)
+(*DBG:    case REAL_ENUM:*)
+(*DBG:        return (void *)&((__IEC_REAL_t *) ptr)->value;*)
+(*DBG:    case REAL_O_ENUM:*)
+(*DBG:        return (void *)((((__IEC_REAL_p *) ptr)->flags & __IEC_FORCE_FLAG) *)
+(*DBG:                        ? &(((__IEC_REAL_p *) ptr)->fvalue) *)
+(*DBG:                        : ((__IEC_REAL_p *) ptr)->value);*)
 (*DBG:    default:*)
 (*DBG:        return 0;*)
 (*DBG:    }*)
@@ -367,16 +439,10 @@ END_CONFIGURATION
 (*DBG:            ((__IEC_BOOL_p *) ptr)->flags |= __IEC_FORCE_FLAG;*)
 (*DBG:            break;*)
 (*DBG:        }*)
-(*DBG:        case SINT_ENUM: {*)
-(*DBG:            memcpy(&((__IEC_SINT_t *) ptr)->value, val, var_size);*)
-(*DBG:            //((__IEC_SINT_t *) ptr)->value = *((SINT *) val);*)
-(*DBG:            ((__IEC_SINT_t *) ptr)->flags |= __IEC_FORCE_FLAG;*)
-(*DBG:            break;*)
-(*DBG:        }*)
-(*DBG:        case REAL_ENUM: {*)
-(*DBG:            memcpy(&((__IEC_REAL_t *) ptr)->value, val, var_size);*)
-(*DBG:            //((__IEC_REAL_t *) ptr)->value = *((REAL *) val);*)
-(*DBG:            ((__IEC_REAL_t *) ptr)->flags |= __IEC_FORCE_FLAG;*)
+(*DBG:        case TIME_ENUM: {*)
+(*DBG:            memcpy(&((__IEC_TIME_t *) ptr)->value, val, var_size);*)
+(*DBG:            //((__IEC_TIME_t *) ptr)->value = *((TIME *) val);*)
+(*DBG:            ((__IEC_TIME_t *) ptr)->flags |= __IEC_FORCE_FLAG;*)
 (*DBG:            break;*)
 (*DBG:        }*)
 (*DBG:        case INT_ENUM: {*)
@@ -397,6 +463,24 @@ END_CONFIGURATION
 (*DBG:            ((__IEC_INT_p *) ptr)->flags |= __IEC_FORCE_FLAG;*)
 (*DBG:            break;*)
 (*DBG:        }*)
+(*DBG:        case SINT_ENUM: {*)
+(*DBG:            memcpy(&((__IEC_SINT_t *) ptr)->value, val, var_size);*)
+(*DBG:            //((__IEC_SINT_t *) ptr)->value = *((SINT *) val);*)
+(*DBG:            ((__IEC_SINT_t *) ptr)->flags |= __IEC_FORCE_FLAG;*)
+(*DBG:            break;*)
+(*DBG:        }*)
+(*DBG:        case REAL_ENUM: {*)
+(*DBG:            memcpy(&((__IEC_REAL_t *) ptr)->value, val, var_size);*)
+(*DBG:            //((__IEC_REAL_t *) ptr)->value = *((REAL *) val);*)
+(*DBG:            ((__IEC_REAL_t *) ptr)->flags |= __IEC_FORCE_FLAG;*)
+(*DBG:            break;*)
+(*DBG:        }*)
+(*DBG:        case REAL_O_ENUM: {*)
+(*DBG:            memcpy((((__IEC_REAL_p *) ptr)->value), val, var_size);*)
+(*DBG:            //*(((__IEC_REAL_p *) ptr)->value) = *((REAL *) val);*)
+(*DBG:            ((__IEC_REAL_p *) ptr)->flags |= __IEC_FORCE_FLAG;*)
+(*DBG:            break;*)
+(*DBG:        }*)
 (*DBG:        default:*)
 (*DBG:            break;*)
 (*DBG:        }*)
@@ -409,11 +493,8 @@ END_CONFIGURATION
 (*DBG:        case BOOL_P_ENUM:*)
 (*DBG:            ((__IEC_BOOL_p *) ptr)->flags &= ~__IEC_FORCE_FLAG;*)
 (*DBG:            break;*)
-(*DBG:        case SINT_ENUM:*)
-(*DBG:            ((__IEC_SINT_t *) ptr)->flags &= ~__IEC_FORCE_FLAG;*)
-(*DBG:            break;*)
-(*DBG:        case REAL_ENUM:*)
-(*DBG:            ((__IEC_REAL_t *) ptr)->flags &= ~__IEC_FORCE_FLAG;*)
+(*DBG:        case TIME_ENUM:*)
+(*DBG:            ((__IEC_TIME_t *) ptr)->flags &= ~__IEC_FORCE_FLAG;*)
 (*DBG:            break;*)
 (*DBG:        case INT_ENUM:*)
 (*DBG:            ((__IEC_INT_t *) ptr)->flags &= ~__IEC_FORCE_FLAG;*)
@@ -421,6 +502,15 @@ END_CONFIGURATION
 (*DBG:        case INT_O_ENUM:*)
 (*DBG:        case INT_P_ENUM:*)
 (*DBG:            ((__IEC_INT_p *) ptr)->flags &= ~__IEC_FORCE_FLAG;*)
+(*DBG:            break;*)
+(*DBG:        case SINT_ENUM:*)
+(*DBG:            ((__IEC_SINT_t *) ptr)->flags &= ~__IEC_FORCE_FLAG;*)
+(*DBG:            break;*)
+(*DBG:        case REAL_ENUM:*)
+(*DBG:            ((__IEC_REAL_t *) ptr)->flags &= ~__IEC_FORCE_FLAG;*)
+(*DBG:            break;*)
+(*DBG:        case REAL_O_ENUM:*)
+(*DBG:            ((__IEC_REAL_p *) ptr)->flags &= ~__IEC_FORCE_FLAG;*)
 (*DBG:            break;*)
 (*DBG:        default:*)
 (*DBG:            break;*)

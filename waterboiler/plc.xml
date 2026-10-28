@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2026-09-21T13:51:32"/>
-  <contentHeader name="Unnamed" modificationDateTime="2026-10-28T09:21:05">
+  <contentHeader name="Unnamed" modificationDateTime="2026-10-28T13:01:25">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -118,9 +118,7 @@
                 <xhtml:p><![CDATA[Default temperature. Min = 80C. Address 32]]></xhtml:p>
               </documentation>
             </variable>
-          </localVars>
-          <localVars>
-            <variable name="POWER">
+            <variable name="POWER" address="%MD0">
               <type>
                 <REAL/>
               </type>
@@ -128,8 +126,6 @@
                 <xhtml:p><![CDATA[Represents heating power output]]></xhtml:p>
               </documentation>
             </variable>
-          </localVars>
-          <localVars>
             <variable name="ACTUAL_TEMPERATURE" address="%MW1">
               <type>
                 <INT/>
@@ -195,32 +191,12 @@
                 <xhtml:p><![CDATA[detects when wave has passed]]></xhtml:p>
               </documentation>
             </variable>
-          </localVars>
-          <localVars>
-            <variable name="current_power_use" address="%MW2">
-              <type>
-                <INT/>
-              </type>
-              <documentation>
-                <xhtml:p><![CDATA[PID output value]]></xhtml:p>
-              </documentation>
-            </variable>
-            <variable name="current_dial_value" address="%MW3">
-              <type>
-                <INT/>
-              </type>
-              <documentation>
-                <xhtml:p><![CDATA[to see the dial values]]></xhtml:p>
-              </documentation>
-            </variable>
-          </localVars>
-          <localVars>
             <variable name="dial_voltage">
               <type>
                 <REAL/>
               </type>
               <documentation>
-                <xhtml:p><![CDATA[how much power/v the dial is emitting]]></xhtml:p>
+                <xhtml:p><![CDATA[actual power usage value]]></xhtml:p>
               </documentation>
             </variable>
             <variable name="R_TRIG2">
@@ -376,28 +352,28 @@
               <variable>STOPPED_STATE</variable>
             </coil>
             <leftPowerRail localId="12" width="10" height="110" executionOrderId="0">
-              <position x="190" y="300"/>
+              <position x="190" y="410"/>
               <connectionPointOut formalParameter="">
                 <relPosition x="10" y="20"/>
               </connectionPointOut>
             </leftPowerRail>
             <rightPowerRail localId="13" width="10" height="110" executionOrderId="0">
-              <position x="1170" y="300"/>
+              <position x="1170" y="410"/>
               <connectionPointIn>
                 <relPosition x="0" y="20"/>
                 <connection refLocalId="45">
-                  <position x="1170" y="320"/>
-                  <position x="1131" y="320"/>
+                  <position x="1170" y="430"/>
+                  <position x="1131" y="430"/>
                 </connection>
               </connectionPointIn>
             </rightPowerRail>
             <contact localId="43" negated="false" width="21" height="20">
-              <position x="240" y="310"/>
+              <position x="240" y="420"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="12">
-                  <position x="240" y="320"/>
-                  <position x="200" y="320"/>
+                  <position x="240" y="430"/>
+                  <position x="200" y="430"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -406,12 +382,12 @@
               <variable>RUN_STATE</variable>
             </contact>
             <contact localId="44" negated="true" width="21" height="20">
-              <position x="350" y="310"/>
+              <position x="350" y="420"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="43">
-                  <position x="350" y="320"/>
-                  <position x="261" y="320"/>
+                  <position x="350" y="430"/>
+                  <position x="261" y="430"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -420,14 +396,14 @@
               <variable>E_STATE</variable>
             </contact>
             <coil localId="45" negated="false" width="21" height="20">
-              <position x="1110" y="310"/>
+              <position x="1110" y="420"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="198" formalParameter="OUT">
-                  <position x="1110" y="320"/>
-                  <position x="945" y="320"/>
-                  <position x="945" y="340"/>
-                  <position x="780" y="340"/>
+                  <position x="1110" y="430"/>
+                  <position x="945" y="430"/>
+                  <position x="945" y="380"/>
+                  <position x="760" y="380"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -436,28 +412,28 @@
               <variable>HEATER</variable>
             </coil>
             <leftPowerRail localId="15" width="10" height="110" executionOrderId="0">
-              <position x="190" y="410"/>
+              <position x="190" y="520"/>
               <connectionPointOut formalParameter="">
                 <relPosition x="10" y="20"/>
               </connectionPointOut>
             </leftPowerRail>
             <rightPowerRail localId="16" width="10" height="110" executionOrderId="0">
-              <position x="1170" y="410"/>
+              <position x="1170" y="520"/>
               <connectionPointIn>
                 <relPosition x="0" y="20"/>
                 <connection refLocalId="48">
-                  <position x="1170" y="430"/>
-                  <position x="1131" y="430"/>
+                  <position x="1170" y="540"/>
+                  <position x="1131" y="540"/>
                 </connection>
               </connectionPointIn>
             </rightPowerRail>
             <contact localId="47" negated="false" width="21" height="20">
-              <position x="350" y="420"/>
+              <position x="350" y="530"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="17">
-                  <position x="350" y="430"/>
-                  <position x="261" y="430"/>
+                  <position x="350" y="540"/>
+                  <position x="261" y="540"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -466,12 +442,12 @@
               <variable>E_STOP</variable>
             </contact>
             <coil localId="48" negated="false" width="21" height="20">
-              <position x="1110" y="420"/>
+              <position x="1110" y="530"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="49" formalParameter="Q1">
-                  <position x="1110" y="430"/>
-                  <position x="600" y="430"/>
+                  <position x="1110" y="540"/>
+                  <position x="600" y="540"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -480,14 +456,14 @@
               <variable>E_STATE</variable>
             </coil>
             <block localId="49" typeName="SR" instanceName="SR0" width="50" height="60">
-              <position x="550" y="400"/>
+              <position x="550" y="510"/>
               <inputVariables>
                 <variable formalParameter="S1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="47">
-                      <position x="550" y="430"/>
-                      <position x="371" y="430"/>
+                      <position x="550" y="540"/>
+                      <position x="371" y="540"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -495,10 +471,10 @@
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="60">
-                      <position x="550" y="450"/>
-                      <position x="515" y="450"/>
-                      <position x="515" y="470"/>
-                      <position x="481" y="470"/>
+                      <position x="550" y="560"/>
+                      <position x="515" y="560"/>
+                      <position x="515" y="580"/>
+                      <position x="481" y="580"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -513,12 +489,12 @@
               </outputVariables>
             </block>
             <contact localId="17" negated="false" width="21" height="20" executionOrderId="0">
-              <position x="240" y="420"/>
+              <position x="240" y="530"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="15">
-                  <position x="240" y="430"/>
-                  <position x="200" y="430"/>
+                  <position x="240" y="540"/>
+                  <position x="200" y="540"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -527,28 +503,28 @@
               <variable>RUN_STATE</variable>
             </contact>
             <leftPowerRail localId="18" width="10" height="160" executionOrderId="0">
-              <position x="190" y="520"/>
+              <position x="190" y="630"/>
               <connectionPointOut formalParameter="">
                 <relPosition x="10" y="20"/>
               </connectionPointOut>
             </leftPowerRail>
             <rightPowerRail localId="19" width="10" height="160" executionOrderId="0">
-              <position x="1170" y="520"/>
+              <position x="1170" y="630"/>
               <connectionPointIn>
                 <relPosition x="0" y="20"/>
                 <connection refLocalId="53">
-                  <position x="1170" y="540"/>
-                  <position x="1131" y="540"/>
+                  <position x="1170" y="650"/>
+                  <position x="1131" y="650"/>
                 </connection>
               </connectionPointIn>
             </rightPowerRail>
             <contact localId="52" negated="false" width="21" height="20">
-              <position x="240" y="530"/>
+              <position x="240" y="640"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="18">
-                  <position x="240" y="540"/>
-                  <position x="200" y="540"/>
+                  <position x="240" y="650"/>
+                  <position x="200" y="650"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -557,12 +533,12 @@
               <variable>E_STATE</variable>
             </contact>
             <coil localId="53" negated="false" width="21" height="20">
-              <position x="1110" y="530"/>
+              <position x="1110" y="640"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="28">
-                  <position x="1110" y="540"/>
-                  <position x="1071" y="540"/>
+                  <position x="1110" y="650"/>
+                  <position x="1071" y="650"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -571,14 +547,14 @@
               <variable>E_LED</variable>
             </coil>
             <contact localId="54" negated="false" width="21" height="20">
-              <position x="240" y="460"/>
+              <position x="240" y="570"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="15">
-                  <position x="240" y="470"/>
-                  <position x="210" y="470"/>
-                  <position x="210" y="430"/>
-                  <position x="200" y="430"/>
+                  <position x="240" y="580"/>
+                  <position x="210" y="580"/>
+                  <position x="210" y="540"/>
+                  <position x="200" y="540"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -587,12 +563,12 @@
               <variable>E_STATE</variable>
             </contact>
             <contact localId="55" negated="false" width="21" height="20">
-              <position x="350" y="460"/>
+              <position x="350" y="570"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="54">
-                  <position x="350" y="470"/>
-                  <position x="261" y="470"/>
+                  <position x="350" y="580"/>
+                  <position x="261" y="580"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -627,12 +603,12 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </content>
             </comment>
             <contact localId="60" negated="false" width="21" height="20">
-              <position x="460" y="460"/>
+              <position x="460" y="570"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="55">
-                  <position x="460" y="470"/>
-                  <position x="371" y="470"/>
+                  <position x="460" y="580"/>
+                  <position x="371" y="580"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -641,28 +617,28 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               <variable>STOP_BTN</variable>
             </contact>
             <leftPowerRail localId="20" width="10" height="110" executionOrderId="0">
-              <position x="190" y="680"/>
+              <position x="190" y="790"/>
               <connectionPointOut formalParameter="">
                 <relPosition x="10" y="20"/>
               </connectionPointOut>
             </leftPowerRail>
             <rightPowerRail localId="21" width="10" height="110" executionOrderId="0">
-              <position x="1170" y="680"/>
+              <position x="1170" y="790"/>
               <connectionPointIn>
                 <relPosition x="0" y="20"/>
               </connectionPointIn>
             </rightPowerRail>
             <block localId="89" typeName="R_TRIG" instanceName="R_TRIG0" width="60" height="40">
-              <position x="460" y="640"/>
+              <position x="460" y="750"/>
               <inputVariables>
                 <variable formalParameter="CLK">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="114">
-                      <position x="460" y="670"/>
-                      <position x="430" y="670"/>
-                      <position x="430" y="700"/>
-                      <position x="401" y="700"/>
+                      <position x="460" y="780"/>
+                      <position x="430" y="780"/>
+                      <position x="430" y="810"/>
+                      <position x="401" y="810"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -677,16 +653,16 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <block localId="90" typeName="R_TRIG" instanceName="R_TRIG1" width="60" height="40">
-              <position x="460" y="740"/>
+              <position x="460" y="850"/>
               <inputVariables>
                 <variable formalParameter="CLK">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="117">
-                      <position x="460" y="770"/>
-                      <position x="430" y="770"/>
-                      <position x="430" y="750"/>
-                      <position x="401" y="750"/>
+                      <position x="460" y="880"/>
+                      <position x="430" y="880"/>
+                      <position x="430" y="860"/>
+                      <position x="401" y="860"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -701,14 +677,14 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <block localId="91" typeName="CTUD" instanceName="CTUD0" width="70" height="120">
-              <position x="630" y="640"/>
+              <position x="630" y="750"/>
               <inputVariables>
                 <variable formalParameter="CU" edge="rising">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="89" formalParameter="Q">
-                      <position x="630" y="670"/>
-                      <position x="520" y="670"/>
+                      <position x="630" y="780"/>
+                      <position x="520" y="780"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -716,10 +692,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="90" formalParameter="Q">
-                      <position x="630" y="690"/>
-                      <position x="530" y="690"/>
-                      <position x="530" y="770"/>
-                      <position x="520" y="770"/>
+                      <position x="630" y="800"/>
+                      <position x="530" y="800"/>
+                      <position x="530" y="880"/>
+                      <position x="520" y="880"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -727,10 +703,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="70"/>
                     <connection refLocalId="70" formalParameter="Q">
-                      <position x="630" y="710"/>
+                      <position x="630" y="820"/>
+                      <position x="560" y="820"/>
                       <position x="560" y="710"/>
-                      <position x="560" y="600"/>
-                      <position x="390" y="600"/>
+                      <position x="390" y="710"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -743,10 +719,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="110"/>
                     <connection refLocalId="101">
-                      <position x="630" y="750"/>
-                      <position x="615" y="750"/>
-                      <position x="615" y="760"/>
-                      <position x="600" y="760"/>
+                      <position x="630" y="860"/>
+                      <position x="615" y="860"/>
+                      <position x="615" y="870"/>
+                      <position x="600" y="870"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -781,16 +757,16 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <block localId="92" typeName="ADD" width="70" height="60">
-              <position x="790" y="640"/>
+              <position x="790" y="750"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="91" formalParameter="CV">
-                      <position x="790" y="670"/>
-                      <position x="725" y="670"/>
-                      <position x="725" y="710"/>
-                      <position x="700" y="710"/>
+                      <position x="790" y="780"/>
+                      <position x="725" y="780"/>
+                      <position x="725" y="820"/>
+                      <position x="700" y="820"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -798,10 +774,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="95">
-                      <position x="790" y="690"/>
-                      <position x="780" y="690"/>
-                      <position x="780" y="710"/>
-                      <position x="770" y="710"/>
+                      <position x="790" y="800"/>
+                      <position x="780" y="800"/>
+                      <position x="780" y="830"/>
+                      <position x="770" y="830"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -816,14 +792,14 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <block localId="93" typeName="MUL" width="70" height="60">
-              <position x="880" y="640"/>
+              <position x="880" y="750"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="92" formalParameter="OUT">
-                      <position x="880" y="670"/>
-                      <position x="860" y="670"/>
+                      <position x="880" y="780"/>
+                      <position x="860" y="780"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -831,10 +807,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="97">
-                      <position x="880" y="690"/>
-                      <position x="870" y="690"/>
-                      <position x="870" y="730"/>
-                      <position x="860" y="730"/>
+                      <position x="880" y="800"/>
+                      <position x="870" y="800"/>
+                      <position x="870" y="830"/>
+                      <position x="860" y="830"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -849,14 +825,14 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <block localId="94" typeName="ADD" width="70" height="60">
-              <position x="970" y="640"/>
+              <position x="970" y="750"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="93" formalParameter="OUT">
-                      <position x="970" y="670"/>
-                      <position x="950" y="670"/>
+                      <position x="970" y="780"/>
+                      <position x="950" y="780"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -864,10 +840,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="98">
-                      <position x="970" y="690"/>
-                      <position x="960" y="690"/>
-                      <position x="960" y="730"/>
-                      <position x="950" y="730"/>
+                      <position x="970" y="800"/>
+                      <position x="960" y="800"/>
+                      <position x="960" y="830"/>
+                      <position x="950" y="830"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -882,94 +858,95 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <inVariable localId="95" width="20" height="30" negated="false">
-              <position x="750" y="700"/>
+              <position x="750" y="810"/>
               <connectionPointOut>
-                <relPosition x="20" y="10"/>
+                <relPosition x="20" y="20"/>
               </connectionPointOut>
               <expression>1</expression>
             </inVariable>
             <outVariable localId="96" width="80" height="30" negated="false">
-              <position x="1070" y="650"/>
+              <position x="1070" y="760"/>
               <connectionPointIn>
-                <relPosition x="0" y="20"/>
+                <relPosition x="0" y="10"/>
                 <connection refLocalId="94" formalParameter="OUT">
-                  <position x="1070" y="670"/>
-                  <position x="1040" y="670"/>
+                  <position x="1070" y="770"/>
+                  <position x="1055" y="770"/>
+                  <position x="1055" y="780"/>
+                  <position x="1040" y="780"/>
                 </connection>
               </connectionPointIn>
               <expression>SETPOINT</expression>
             </outVariable>
             <inVariable localId="97" width="30" height="30" negated="false">
-              <position x="830" y="710"/>
+              <position x="830" y="820"/>
               <connectionPointOut>
-                <relPosition x="30" y="20"/>
+                <relPosition x="30" y="10"/>
               </connectionPointOut>
               <expression>10</expression>
             </inVariable>
             <inVariable localId="98" width="30" height="30" negated="false">
-              <position x="920" y="710"/>
+              <position x="920" y="820"/>
               <connectionPointOut>
-                <relPosition x="30" y="20"/>
+                <relPosition x="30" y="10"/>
               </connectionPointOut>
               <expression>70</expression>
             </inVariable>
             <inVariable localId="101" width="30" height="30" negated="false">
-              <position x="570" y="750"/>
+              <position x="570" y="860"/>
               <connectionPointOut>
-                <relPosition x="30" y="20"/>
+                <relPosition x="30" y="10"/>
               </connectionPointOut>
               <expression>10</expression>
             </inVariable>
             <inVariable localId="30" width="30" height="30" negated="false" executionOrderId="0">
-              <position x="510" y="850"/>
+              <position x="500" y="940"/>
               <connectionPointOut>
-                <relPosition x="30" y="10"/>
+                <relPosition x="30" y="20"/>
               </connectionPointOut>
               <expression>80</expression>
             </inVariable>
             <outVariable localId="105" width="50" height="30" negated="false">
-              <position x="690" y="850"/>
+              <position x="690" y="940"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="111" formalParameter="OUT">
-                  <position x="690" y="860"/>
-                  <position x="660" y="860"/>
-                  <position x="660" y="870"/>
-                  <position x="630" y="870"/>
+                  <position x="690" y="950"/>
+                  <position x="660" y="950"/>
+                  <position x="660" y="960"/>
+                  <position x="630" y="960"/>
                 </connection>
                 <connection refLocalId="22" formalParameter="OUT">
-                  <position x="690" y="860"/>
-                  <position x="660" y="860"/>
-                  <position x="660" y="940"/>
-                  <position x="630" y="940"/>
+                  <position x="690" y="950"/>
+                  <position x="660" y="950"/>
+                  <position x="660" y="1030"/>
+                  <position x="630" y="1030"/>
                 </connection>
               </connectionPointIn>
               <expression>LED0</expression>
             </outVariable>
             <inVariable localId="1" width="40" height="30" negated="false" executionOrderId="0">
-              <position x="500" y="1020"/>
+              <position x="500" y="1110"/>
               <connectionPointOut>
                 <relPosition x="40" y="20"/>
               </connectionPointOut>
               <expression>100</expression>
             </inVariable>
             <inVariable localId="2" width="80" height="30" negated="false" executionOrderId="0">
-              <position x="300" y="930"/>
+              <position x="300" y="1020"/>
               <connectionPointOut>
                 <relPosition x="80" y="10"/>
               </connectionPointOut>
               <expression>SETPOINT</expression>
             </inVariable>
             <block localId="111" typeName="EQ" width="70" height="60">
-              <position x="560" y="840"/>
+              <position x="560" y="930"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="30">
-                      <position x="552" y="878"/>
-                      <position x="552" y="860"/>
-                      <position x="540" y="860"/>
+                      <position x="560" y="960"/>
+                      <position x="530" y="960"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -977,10 +954,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="2">
-                      <position x="560" y="890"/>
-                      <position x="470" y="890"/>
-                      <position x="470" y="940"/>
-                      <position x="380" y="940"/>
+                      <position x="560" y="980"/>
+                      <position x="470" y="980"/>
+                      <position x="470" y="1040"/>
+                      <position x="380" y="1040"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -995,16 +972,16 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <block localId="11" typeName="EQ" width="70" height="60" executionOrderId="0">
-              <position x="560" y="980"/>
+              <position x="560" y="1070"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="2">
-                      <position x="560" y="1010"/>
-                      <position x="470" y="1010"/>
-                      <position x="470" y="940"/>
-                      <position x="380" y="940"/>
+                      <position x="560" y="1100"/>
+                      <position x="470" y="1100"/>
+                      <position x="470" y="1030"/>
+                      <position x="380" y="1030"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1012,10 +989,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="1">
-                      <position x="560" y="1030"/>
-                      <position x="550" y="1030"/>
-                      <position x="550" y="1040"/>
-                      <position x="540" y="1040"/>
+                      <position x="560" y="1120"/>
+                      <position x="550" y="1120"/>
+                      <position x="550" y="1130"/>
+                      <position x="540" y="1130"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1030,37 +1007,37 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <outVariable localId="14" width="50" height="30" negated="false" executionOrderId="0">
-              <position x="700" y="990"/>
+              <position x="700" y="1080"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="11" formalParameter="OUT">
-                  <position x="700" y="1000"/>
-                  <position x="660" y="1000"/>
-                  <position x="660" y="1010"/>
-                  <position x="630" y="1010"/>
+                  <position x="700" y="1090"/>
+                  <position x="660" y="1090"/>
+                  <position x="660" y="1100"/>
+                  <position x="630" y="1100"/>
                 </connection>
                 <connection refLocalId="22" formalParameter="OUT">
-                  <position x="700" y="1000"/>
-                  <position x="660" y="1000"/>
-                  <position x="660" y="940"/>
-                  <position x="630" y="940"/>
+                  <position x="700" y="1090"/>
+                  <position x="660" y="1090"/>
+                  <position x="660" y="1030"/>
+                  <position x="630" y="1030"/>
                 </connection>
                 <connection refLocalId="23" formalParameter="OUT">
-                  <position x="700" y="1000"/>
-                  <position x="660" y="1000"/>
-                  <position x="660" y="1080"/>
-                  <position x="630" y="1080"/>
+                  <position x="700" y="1090"/>
+                  <position x="660" y="1090"/>
+                  <position x="660" y="1170"/>
+                  <position x="630" y="1170"/>
                 </connection>
               </connectionPointIn>
               <expression>LED1</expression>
             </outVariable>
             <contact localId="114" negated="false" width="21" height="20">
-              <position x="380" y="690"/>
+              <position x="380" y="800"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="116">
-                  <position x="380" y="700"/>
-                  <position x="331" y="700"/>
+                  <position x="380" y="810"/>
+                  <position x="331" y="810"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -1069,12 +1046,12 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               <variable>TEMP_UP</variable>
             </contact>
             <contact localId="115" negated="true" width="21" height="20">
-              <position x="240" y="690"/>
+              <position x="240" y="800"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="20">
-                  <position x="240" y="700"/>
-                  <position x="200" y="700"/>
+                  <position x="240" y="810"/>
+                  <position x="200" y="810"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -1083,12 +1060,12 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               <variable>RUN_STATE</variable>
             </contact>
             <contact localId="116" negated="true" width="21" height="20">
-              <position x="310" y="690"/>
+              <position x="310" y="800"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="115">
-                  <position x="310" y="700"/>
-                  <position x="261" y="700"/>
+                  <position x="310" y="810"/>
+                  <position x="261" y="810"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -1097,14 +1074,14 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               <variable>E_STATE</variable>
             </contact>
             <contact localId="117" negated="false" width="21" height="20">
-              <position x="380" y="740"/>
+              <position x="380" y="850"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="116">
-                  <position x="380" y="750"/>
-                  <position x="355" y="750"/>
-                  <position x="355" y="700"/>
-                  <position x="331" y="700"/>
+                  <position x="380" y="860"/>
+                  <position x="355" y="860"/>
+                  <position x="355" y="810"/>
+                  <position x="331" y="810"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -1113,14 +1090,14 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               <variable>TEMP_DWN</variable>
             </contact>
             <block localId="22" typeName="EQ" width="70" height="60" executionOrderId="0">
-              <position x="560" y="910"/>
+              <position x="560" y="1000"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="2">
-                      <position x="560" y="940"/>
-                      <position x="380" y="940"/>
+                      <position x="560" y="1030"/>
+                      <position x="380" y="1030"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1128,8 +1105,8 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="118">
-                      <position x="560" y="960"/>
-                      <position x="530" y="960"/>
+                      <position x="560" y="1050"/>
+                      <position x="530" y="1050"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1144,23 +1121,23 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <inVariable localId="118" width="30" height="30" negated="false">
-              <position x="500" y="950"/>
+              <position x="500" y="1040"/>
               <connectionPointOut>
                 <relPosition x="30" y="10"/>
               </connectionPointOut>
               <expression>90</expression>
             </inVariable>
             <block localId="23" typeName="EQ" width="70" height="60" executionOrderId="0">
-              <position x="560" y="1050"/>
+              <position x="560" y="1140"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="2">
-                      <position x="560" y="1080"/>
-                      <position x="470" y="1080"/>
-                      <position x="470" y="940"/>
-                      <position x="380" y="940"/>
+                      <position x="560" y="1170"/>
+                      <position x="470" y="1170"/>
+                      <position x="470" y="1030"/>
+                      <position x="380" y="1030"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1168,8 +1145,8 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="29">
-                      <position x="560" y="1100"/>
-                      <position x="540" y="1100"/>
+                      <position x="560" y="1190"/>
+                      <position x="540" y="1190"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1184,23 +1161,23 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <inVariable localId="29" width="40" height="30" negated="false" executionOrderId="0">
-              <position x="500" y="1090"/>
+              <position x="500" y="1180"/>
               <connectionPointOut>
                 <relPosition x="40" y="10"/>
               </connectionPointOut>
               <expression>110</expression>
             </inVariable>
             <block localId="31" typeName="EQ" width="70" height="60" executionOrderId="0">
-              <position x="560" y="1120"/>
+              <position x="560" y="1210"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="2">
-                      <position x="560" y="1150"/>
-                      <position x="470" y="1150"/>
-                      <position x="470" y="940"/>
-                      <position x="380" y="940"/>
+                      <position x="560" y="1240"/>
+                      <position x="470" y="1240"/>
+                      <position x="470" y="1030"/>
+                      <position x="380" y="1030"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1208,10 +1185,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="37">
-                      <position x="560" y="1170"/>
-                      <position x="545" y="1170"/>
-                      <position x="545" y="1180"/>
-                      <position x="530" y="1180"/>
+                      <position x="560" y="1260"/>
+                      <position x="545" y="1260"/>
+                      <position x="545" y="1270"/>
+                      <position x="530" y="1270"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1226,16 +1203,16 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <block localId="33" typeName="EQ" width="70" height="60" executionOrderId="0">
-              <position x="560" y="1190"/>
+              <position x="560" y="1280"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="2">
-                      <position x="560" y="1220"/>
-                      <position x="470" y="1220"/>
-                      <position x="470" y="940"/>
-                      <position x="380" y="940"/>
+                      <position x="560" y="1310"/>
+                      <position x="470" y="1310"/>
+                      <position x="470" y="1030"/>
+                      <position x="380" y="1030"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1243,8 +1220,8 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="40">
-                      <position x="560" y="1240"/>
-                      <position x="530" y="1240"/>
+                      <position x="560" y="1330"/>
+                      <position x="530" y="1330"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1259,30 +1236,30 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <inVariable localId="37" width="40" height="30" negated="false" executionOrderId="0">
-              <position x="490" y="1160"/>
+              <position x="490" y="1250"/>
               <connectionPointOut>
                 <relPosition x="40" y="20"/>
               </connectionPointOut>
               <expression>120</expression>
             </inVariable>
             <inVariable localId="40" width="40" height="30" negated="false" executionOrderId="0">
-              <position x="490" y="1230"/>
+              <position x="490" y="1320"/>
               <connectionPointOut>
                 <relPosition x="40" y="10"/>
               </connectionPointOut>
               <expression>130</expression>
             </inVariable>
             <block localId="41" typeName="EQ" width="70" height="60" executionOrderId="0">
-              <position x="560" y="1260"/>
+              <position x="560" y="1350"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="2">
-                      <position x="560" y="1290"/>
-                      <position x="470" y="1290"/>
-                      <position x="470" y="940"/>
-                      <position x="380" y="940"/>
+                      <position x="560" y="1380"/>
+                      <position x="470" y="1380"/>
+                      <position x="470" y="1030"/>
+                      <position x="380" y="1030"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1290,10 +1267,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="61">
-                      <position x="560" y="1310"/>
-                      <position x="545" y="1310"/>
-                      <position x="545" y="1320"/>
-                      <position x="530" y="1320"/>
+                      <position x="560" y="1400"/>
+                      <position x="545" y="1400"/>
+                      <position x="545" y="1410"/>
+                      <position x="530" y="1410"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1308,16 +1285,16 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <block localId="42" typeName="EQ" width="70" height="60" executionOrderId="0">
-              <position x="560" y="1330"/>
+              <position x="560" y="1420"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="2">
-                      <position x="560" y="1360"/>
-                      <position x="470" y="1360"/>
-                      <position x="470" y="940"/>
-                      <position x="380" y="940"/>
+                      <position x="560" y="1450"/>
+                      <position x="470" y="1450"/>
+                      <position x="470" y="1030"/>
+                      <position x="380" y="1030"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1325,10 +1302,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="62">
-                      <position x="560" y="1380"/>
-                      <position x="545" y="1380"/>
-                      <position x="545" y="1400"/>
-                      <position x="530" y="1400"/>
+                      <position x="560" y="1470"/>
+                      <position x="545" y="1470"/>
+                      <position x="545" y="1490"/>
+                      <position x="530" y="1490"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1343,16 +1320,16 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <block localId="46" typeName="EQ" width="70" height="60" executionOrderId="0">
-              <position x="560" y="1400"/>
+              <position x="560" y="1490"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="2">
-                      <position x="560" y="1430"/>
-                      <position x="470" y="1430"/>
-                      <position x="470" y="940"/>
-                      <position x="380" y="940"/>
+                      <position x="560" y="1520"/>
+                      <position x="470" y="1520"/>
+                      <position x="470" y="1030"/>
+                      <position x="380" y="1030"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1360,10 +1337,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="63">
-                      <position x="560" y="1450"/>
-                      <position x="545" y="1450"/>
-                      <position x="545" y="1460"/>
-                      <position x="530" y="1460"/>
+                      <position x="560" y="1540"/>
+                      <position x="545" y="1540"/>
+                      <position x="545" y="1550"/>
+                      <position x="530" y="1550"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1378,16 +1355,16 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <block localId="50" typeName="EQ" width="70" height="60" executionOrderId="0">
-              <position x="560" y="1470"/>
+              <position x="560" y="1560"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="2">
-                      <position x="560" y="1500"/>
-                      <position x="470" y="1500"/>
-                      <position x="470" y="940"/>
-                      <position x="380" y="940"/>
+                      <position x="560" y="1590"/>
+                      <position x="470" y="1590"/>
+                      <position x="470" y="1030"/>
+                      <position x="380" y="1030"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1395,10 +1372,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="64">
-                      <position x="560" y="1520"/>
-                      <position x="545" y="1520"/>
-                      <position x="545" y="1540"/>
-                      <position x="530" y="1540"/>
+                      <position x="560" y="1610"/>
+                      <position x="545" y="1610"/>
+                      <position x="545" y="1630"/>
+                      <position x="530" y="1630"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1413,16 +1390,16 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <block localId="51" typeName="EQ" width="70" height="60" executionOrderId="0">
-              <position x="560" y="1540"/>
+              <position x="560" y="1630"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="2">
-                      <position x="560" y="1570"/>
-                      <position x="470" y="1570"/>
-                      <position x="470" y="940"/>
-                      <position x="380" y="940"/>
+                      <position x="560" y="1660"/>
+                      <position x="470" y="1660"/>
+                      <position x="470" y="1030"/>
+                      <position x="380" y="1030"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1430,10 +1407,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="65">
-                      <position x="560" y="1590"/>
-                      <position x="545" y="1590"/>
-                      <position x="545" y="1600"/>
-                      <position x="530" y="1600"/>
+                      <position x="560" y="1680"/>
+                      <position x="545" y="1680"/>
+                      <position x="545" y="1690"/>
+                      <position x="530" y="1690"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1448,141 +1425,141 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <inVariable localId="61" width="40" height="30" negated="false" executionOrderId="0">
-              <position x="490" y="1310"/>
+              <position x="490" y="1400"/>
               <connectionPointOut>
                 <relPosition x="40" y="10"/>
               </connectionPointOut>
               <expression>140</expression>
             </inVariable>
             <inVariable localId="62" width="40" height="30" negated="false" executionOrderId="0">
-              <position x="490" y="1380"/>
+              <position x="490" y="1470"/>
               <connectionPointOut>
                 <relPosition x="40" y="20"/>
               </connectionPointOut>
               <expression>150</expression>
             </inVariable>
             <inVariable localId="63" width="40" height="30" negated="false" executionOrderId="0">
-              <position x="490" y="1450"/>
+              <position x="490" y="1540"/>
               <connectionPointOut>
                 <relPosition x="40" y="10"/>
               </connectionPointOut>
               <expression>160</expression>
             </inVariable>
             <inVariable localId="64" width="40" height="30" negated="false" executionOrderId="0">
-              <position x="490" y="1520"/>
+              <position x="490" y="1610"/>
               <connectionPointOut>
                 <relPosition x="40" y="20"/>
               </connectionPointOut>
               <expression>170</expression>
             </inVariable>
             <inVariable localId="65" width="40" height="30" negated="false" executionOrderId="0">
-              <position x="490" y="1590"/>
+              <position x="490" y="1680"/>
               <connectionPointOut>
                 <relPosition x="40" y="10"/>
               </connectionPointOut>
               <expression>180</expression>
             </inVariable>
             <outVariable localId="66" width="50" height="30" negated="false" executionOrderId="0">
-              <position x="690" y="1140"/>
+              <position x="690" y="1230"/>
               <connectionPointIn>
                 <relPosition x="0" y="20"/>
                 <connection refLocalId="31" formalParameter="OUT">
-                  <position x="690" y="1160"/>
-                  <position x="660" y="1160"/>
-                  <position x="660" y="1150"/>
-                  <position x="630" y="1150"/>
+                  <position x="690" y="1250"/>
+                  <position x="660" y="1250"/>
+                  <position x="660" y="1240"/>
+                  <position x="630" y="1240"/>
                 </connection>
                 <connection refLocalId="23" formalParameter="OUT">
-                  <position x="690" y="1160"/>
-                  <position x="660" y="1160"/>
-                  <position x="660" y="1080"/>
-                  <position x="630" y="1080"/>
+                  <position x="690" y="1250"/>
+                  <position x="660" y="1250"/>
+                  <position x="660" y="1170"/>
+                  <position x="630" y="1170"/>
                 </connection>
                 <connection refLocalId="33" formalParameter="OUT">
-                  <position x="690" y="1160"/>
-                  <position x="660" y="1160"/>
-                  <position x="660" y="1220"/>
-                  <position x="630" y="1220"/>
+                  <position x="690" y="1250"/>
+                  <position x="660" y="1250"/>
+                  <position x="660" y="1310"/>
+                  <position x="630" y="1310"/>
                 </connection>
               </connectionPointIn>
               <expression>LED2</expression>
             </outVariable>
             <outVariable localId="67" width="50" height="30" negated="false" executionOrderId="0">
-              <position x="690" y="1280"/>
+              <position x="690" y="1370"/>
               <connectionPointIn>
                 <relPosition x="0" y="20"/>
                 <connection refLocalId="41" formalParameter="OUT">
-                  <position x="690" y="1300"/>
-                  <position x="660" y="1300"/>
-                  <position x="660" y="1290"/>
-                  <position x="630" y="1290"/>
+                  <position x="690" y="1390"/>
+                  <position x="660" y="1390"/>
+                  <position x="660" y="1380"/>
+                  <position x="630" y="1380"/>
                 </connection>
                 <connection refLocalId="33" formalParameter="OUT">
-                  <position x="690" y="1300"/>
-                  <position x="660" y="1300"/>
-                  <position x="660" y="1220"/>
-                  <position x="630" y="1220"/>
+                  <position x="690" y="1390"/>
+                  <position x="660" y="1390"/>
+                  <position x="660" y="1310"/>
+                  <position x="630" y="1310"/>
                 </connection>
                 <connection refLocalId="42" formalParameter="OUT">
-                  <position x="690" y="1300"/>
-                  <position x="660" y="1300"/>
-                  <position x="660" y="1360"/>
-                  <position x="630" y="1360"/>
+                  <position x="690" y="1390"/>
+                  <position x="660" y="1390"/>
+                  <position x="660" y="1450"/>
+                  <position x="630" y="1450"/>
                 </connection>
               </connectionPointIn>
               <expression>LED3</expression>
             </outVariable>
             <outVariable localId="68" width="50" height="30" negated="false" executionOrderId="0">
-              <position x="690" y="1410"/>
+              <position x="690" y="1500"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="46" formalParameter="OUT">
-                  <position x="690" y="1420"/>
-                  <position x="660" y="1420"/>
-                  <position x="660" y="1430"/>
-                  <position x="630" y="1430"/>
+                  <position x="690" y="1510"/>
+                  <position x="660" y="1510"/>
+                  <position x="660" y="1520"/>
+                  <position x="630" y="1520"/>
                 </connection>
                 <connection refLocalId="42" formalParameter="OUT">
-                  <position x="690" y="1420"/>
-                  <position x="660" y="1420"/>
-                  <position x="660" y="1360"/>
-                  <position x="630" y="1360"/>
+                  <position x="690" y="1510"/>
+                  <position x="660" y="1510"/>
+                  <position x="660" y="1450"/>
+                  <position x="630" y="1450"/>
                 </connection>
                 <connection refLocalId="50" formalParameter="OUT">
-                  <position x="690" y="1420"/>
-                  <position x="660" y="1420"/>
-                  <position x="660" y="1500"/>
-                  <position x="630" y="1500"/>
+                  <position x="690" y="1510"/>
+                  <position x="660" y="1510"/>
+                  <position x="660" y="1590"/>
+                  <position x="630" y="1590"/>
                 </connection>
               </connectionPointIn>
               <expression>LED4</expression>
             </outVariable>
             <outVariable localId="69" width="50" height="30" negated="false" executionOrderId="0">
-              <position x="690" y="1560"/>
+              <position x="690" y="1650"/>
               <connectionPointIn>
                 <relPosition x="0" y="20"/>
                 <connection refLocalId="51" formalParameter="OUT">
-                  <position x="690" y="1580"/>
-                  <position x="660" y="1580"/>
-                  <position x="660" y="1570"/>
-                  <position x="630" y="1570"/>
+                  <position x="690" y="1670"/>
+                  <position x="660" y="1670"/>
+                  <position x="660" y="1660"/>
+                  <position x="630" y="1660"/>
                 </connection>
                 <connection refLocalId="50" formalParameter="OUT">
-                  <position x="690" y="1580"/>
-                  <position x="660" y="1580"/>
-                  <position x="660" y="1500"/>
-                  <position x="630" y="1500"/>
+                  <position x="690" y="1670"/>
+                  <position x="660" y="1670"/>
+                  <position x="660" y="1590"/>
+                  <position x="630" y="1590"/>
                 </connection>
               </connectionPointIn>
               <expression>LED5</expression>
             </outVariable>
             <coil localId="5" negated="false" width="21" height="20" executionOrderId="0" storage="reset">
-              <position x="850" y="530"/>
+              <position x="850" y="640"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="52">
-                  <position x="850" y="540"/>
-                  <position x="261" y="540"/>
+                  <position x="850" y="650"/>
+                  <position x="261" y="650"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -1591,12 +1568,12 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               <variable>LED0</variable>
             </coil>
             <coil localId="6" negated="false" width="21" height="20" executionOrderId="0" storage="reset">
-              <position x="890" y="530"/>
+              <position x="890" y="640"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="5">
-                  <position x="890" y="540"/>
-                  <position x="871" y="540"/>
+                  <position x="890" y="650"/>
+                  <position x="871" y="650"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -1605,12 +1582,12 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               <variable>LED1</variable>
             </coil>
             <coil localId="9" negated="false" width="21" height="20" executionOrderId="0" storage="reset">
-              <position x="930" y="530"/>
+              <position x="930" y="640"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="6">
-                  <position x="930" y="540"/>
-                  <position x="911" y="540"/>
+                  <position x="930" y="650"/>
+                  <position x="911" y="650"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -1619,12 +1596,12 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               <variable>LED2</variable>
             </coil>
             <coil localId="10" negated="false" width="21" height="20" executionOrderId="0" storage="reset">
-              <position x="970" y="530"/>
+              <position x="970" y="640"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="9">
-                  <position x="970" y="540"/>
-                  <position x="951" y="540"/>
+                  <position x="970" y="650"/>
+                  <position x="951" y="650"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -1633,12 +1610,12 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               <variable>LED3</variable>
             </coil>
             <coil localId="25" negated="false" width="21" height="20" executionOrderId="0" storage="reset">
-              <position x="1010" y="530"/>
+              <position x="1010" y="640"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="10">
-                  <position x="1010" y="540"/>
-                  <position x="991" y="540"/>
+                  <position x="1010" y="650"/>
+                  <position x="991" y="650"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -1647,12 +1624,12 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               <variable>LED4</variable>
             </coil>
             <coil localId="28" negated="false" width="21" height="20" executionOrderId="0" storage="reset">
-              <position x="1050" y="530"/>
+              <position x="1050" y="640"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="25">
-                  <position x="1050" y="540"/>
-                  <position x="1031" y="540"/>
+                  <position x="1050" y="650"/>
+                  <position x="1031" y="650"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -1660,57 +1637,66 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </connectionPointOut>
               <variable>LED5</variable>
             </coil>
-            <inVariable localId="119" width="100" height="30" negated="false">
-              <position x="270" y="1960"/>
-              <connectionPointOut>
-                <relPosition x="100" y="10"/>
-              </connectionPointOut>
-              <expression>DIAL_VALUE</expression>
-            </inVariable>
-            <block localId="120" typeName="DIV" width="70" height="60">
-              <position x="560" y="2000"/>
+            <block localId="120" typeName="DIV" width="70" height="80">
+              <position x="340" y="2060"/>
               <inputVariables>
-                <variable formalParameter="IN1">
+                <variable formalParameter="EN">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
+                    <connection refLocalId="219">
+                      <position x="340" y="2090"/>
+                      <position x="315" y="2090"/>
+                      <position x="315" y="2050"/>
+                      <position x="290" y="2050"/>
+                    </connection>
+                  </connectionPointIn>
+                </variable>
+                <variable formalParameter="IN1">
+                  <connectionPointIn>
+                    <relPosition x="0" y="50"/>
                     <connection refLocalId="77" formalParameter="OUT">
-                      <position x="560" y="2030"/>
-                      <position x="545" y="2030"/>
-                      <position x="545" y="2010"/>
-                      <position x="530" y="2010"/>
+                      <position x="340" y="2110"/>
+                      <position x="300" y="2110"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="IN2">
                   <connectionPointIn>
-                    <relPosition x="0" y="50"/>
+                    <relPosition x="0" y="70"/>
                     <connection refLocalId="122">
-                      <position x="560" y="2050"/>
-                      <position x="540" y="2050"/>
-                      <position x="540" y="2070"/>
-                      <position x="530" y="2070"/>
+                      <position x="340" y="2130"/>
+                      <position x="320" y="2130"/>
+                      <position x="320" y="2170"/>
+                      <position x="280" y="2170"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
               </inputVariables>
               <inOutVariables/>
               <outputVariables>
-                <variable formalParameter="OUT">
+                <variable formalParameter="ENO">
                   <connectionPointOut>
                     <relPosition x="70" y="30"/>
+                  </connectionPointOut>
+                </variable>
+                <variable formalParameter="OUT">
+                  <connectionPointOut>
+                    <relPosition x="70" y="50"/>
                   </connectionPointOut>
                 </variable>
               </outputVariables>
             </block>
             <block localId="121" typeName="MUL" width="70" height="60">
-              <position x="730" y="2000"/>
+              <position x="510" y="2060"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="120" formalParameter="OUT">
-                      <position x="730" y="2030"/>
-                      <position x="630" y="2030"/>
+                      <position x="510" y="2090"/>
+                      <position x="460" y="2090"/>
+                      <position x="460" y="2110"/>
+                      <position x="410" y="2110"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1718,10 +1704,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="123">
-                      <position x="730" y="2050"/>
-                      <position x="710" y="2050"/>
-                      <position x="710" y="2070"/>
-                      <position x="700" y="2070"/>
+                      <position x="510" y="2110"/>
+                      <position x="490" y="2110"/>
+                      <position x="490" y="2130"/>
+                      <position x="480" y="2130"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1736,30 +1722,28 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <inVariable localId="122" width="70" height="30" negated="false">
-              <position x="460" y="2050"/>
+              <position x="210" y="2150"/>
               <connectionPointOut>
                 <relPosition x="70" y="20"/>
               </connectionPointOut>
               <expression>65535.0</expression>
             </inVariable>
             <inVariable localId="123" width="50" height="30" negated="false">
-              <position x="650" y="2050"/>
+              <position x="430" y="2120"/>
               <connectionPointOut>
-                <relPosition x="50" y="20"/>
+                <relPosition x="50" y="10"/>
               </connectionPointOut>
               <expression>190.0</expression>
             </inVariable>
             <block localId="125" typeName="PWM_CONTROLLER" instanceName="PWM_CONTROLLER0" width="130" height="80">
-              <position x="460" y="2170"/>
+              <position x="310" y="2260"/>
               <inputVariables>
                 <variable formalParameter="CHANNEL">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="126">
-                      <position x="460" y="2200"/>
-                      <position x="450" y="2200"/>
-                      <position x="450" y="2190"/>
-                      <position x="440" y="2190"/>
+                      <position x="310" y="2290"/>
+                      <position x="290" y="2290"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1767,10 +1751,10 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="127">
-                      <position x="460" y="2220"/>
-                      <position x="400" y="2220"/>
-                      <position x="400" y="2190"/>
-                      <position x="390" y="2190"/>
+                      <position x="310" y="2310"/>
+                      <position x="250" y="2310"/>
+                      <position x="250" y="2290"/>
+                      <position x="240" y="2290"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1778,10 +1762,8 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                   <connectionPointIn>
                     <relPosition x="0" y="70"/>
                     <connection refLocalId="76">
-                      <position x="460" y="2240"/>
-                      <position x="380" y="2240"/>
-                      <position x="380" y="2250"/>
-                      <position x="300" y="2250"/>
+                      <position x="310" y="2330"/>
+                      <position x="150" y="2330"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1796,16 +1778,16 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </outputVariables>
             </block>
             <inVariable localId="126" width="20" height="30" negated="false">
-              <position x="420" y="2180"/>
+              <position x="270" y="2270"/>
               <connectionPointOut>
-                <relPosition x="20" y="10"/>
+                <relPosition x="20" y="20"/>
               </connectionPointOut>
               <expression>1</expression>
             </inVariable>
             <inVariable localId="127" width="50" height="30" negated="false">
-              <position x="340" y="2180"/>
+              <position x="190" y="2270"/>
               <connectionPointOut>
-                <relPosition x="50" y="10"/>
+                <relPosition x="50" y="20"/>
               </connectionPointOut>
               <expression>50.00</expression>
             </inVariable>
@@ -1819,35 +1801,22 @@ renamed to ACTUAL_TEMPERATURE
               </content>
             </comment>
             <comment localId="39" height="40" width="170">
-              <position x="60" y="1990"/>
+              <position x="990" y="2000"/>
               <content>
                 <xhtml:p><![CDATA[v / 65535 * 190]]></xhtml:p>
               </content>
             </comment>
-            <outVariable localId="153" width="90" height="30" negated="false">
-              <position x="1010" y="2000"/>
-              <connectionPointIn>
-                <relPosition x="0" y="10"/>
-                <connection refLocalId="182" formalParameter="OUT">
-                  <position x="1010" y="2010"/>
-                  <position x="985" y="2010"/>
-                  <position x="985" y="2020"/>
-                  <position x="960" y="2020"/>
-                </connection>
-              </connectionPointIn>
-              <expression>ANGLE</expression>
-            </outVariable>
             <block localId="70" typeName="R_TRIG" instanceName="R_TRIG2" width="60" height="40" executionOrderId="0">
-              <position x="330" y="570"/>
+              <position x="330" y="680"/>
               <inputVariables>
                 <variable formalParameter="CLK">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="52">
-                      <position x="330" y="600"/>
-                      <position x="281" y="600"/>
-                      <position x="281" y="540"/>
-                      <position x="261" y="540"/>
+                      <position x="330" y="710"/>
+                      <position x="281" y="710"/>
+                      <position x="281" y="650"/>
+                      <position x="261" y="650"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1862,23 +1831,23 @@ renamed to ACTUAL_TEMPERATURE
               </outputVariables>
             </block>
             <inVariable localId="76" width="50" height="30" negated="false">
-              <position x="250" y="2230"/>
+              <position x="100" y="2320"/>
               <connectionPointOut>
-                <relPosition x="50" y="20"/>
+                <relPosition x="50" y="10"/>
               </connectionPointOut>
               <expression>DUTY</expression>
             </inVariable>
             <block localId="77" typeName="INT_TO_REAL" width="100" height="40" executionOrderId="0">
-              <position x="430" y="1980"/>
+              <position x="200" y="2080"/>
               <inputVariables>
                 <variable formalParameter="IN">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="119">
-                      <position x="430" y="2010"/>
-                      <position x="390" y="2010"/>
-                      <position x="390" y="1970"/>
-                      <position x="370" y="1970"/>
+                      <position x="200" y="2110"/>
+                      <position x="170" y="2110"/>
+                      <position x="170" y="2030"/>
+                      <position x="150" y="2030"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1893,29 +1862,27 @@ renamed to ACTUAL_TEMPERATURE
               </outputVariables>
             </block>
             <outVariable localId="181" width="120" height="30" negated="false">
-              <position x="630" y="2180"/>
+              <position x="480" y="2270"/>
               <connectionPointIn>
-                <relPosition x="0" y="10"/>
+                <relPosition x="0" y="20"/>
                 <connection refLocalId="125" formalParameter="SUCCESS">
-                  <position x="630" y="2190"/>
-                  <position x="610" y="2190"/>
-                  <position x="610" y="2200"/>
-                  <position x="590" y="2200"/>
+                  <position x="480" y="2290"/>
+                  <position x="440" y="2290"/>
                 </connection>
               </connectionPointIn>
               <expression>SERVO_OK</expression>
             </outVariable>
             <block localId="182" typeName="REAL_TO_INT" width="100" height="40">
-              <position x="860" y="1990"/>
+              <position x="640" y="2050"/>
               <inputVariables>
                 <variable formalParameter="IN">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="121" formalParameter="OUT">
-                      <position x="860" y="2020"/>
-                      <position x="830" y="2020"/>
-                      <position x="830" y="2030"/>
-                      <position x="800" y="2030"/>
+                      <position x="640" y="2080"/>
+                      <position x="610" y="2080"/>
+                      <position x="610" y="2090"/>
+                      <position x="580" y="2090"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1930,34 +1897,40 @@ renamed to ACTUAL_TEMPERATURE
               </outputVariables>
             </block>
             <outVariable localId="71" width="50" height="30" negated="false">
-              <position x="990" y="2070"/>
+              <position x="770" y="2130"/>
               <connectionPointIn>
                 <relPosition x="0" y="20"/>
                 <connection refLocalId="121" formalParameter="OUT">
-                  <position x="990" y="2090"/>
-                  <position x="830" y="2090"/>
-                  <position x="830" y="2030"/>
-                  <position x="800" y="2030"/>
+                  <position x="770" y="2150"/>
+                  <position x="610" y="2150"/>
+                  <position x="610" y="2090"/>
+                  <position x="580" y="2090"/>
                 </connection>
               </connectionPointIn>
               <expression>DUTY</expression>
             </outVariable>
             <block localId="183" typeName="PID" instanceName="PID0" width="90" height="180">
-              <position x="580" y="2330"/>
+              <position x="380" y="2440"/>
               <inputVariables>
                 <variable formalParameter="AUTO">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
+                    <connection refLocalId="209">
+                      <position x="380" y="2470"/>
+                      <position x="360" y="2470"/>
+                      <position x="360" y="2430"/>
+                      <position x="290" y="2430"/>
+                    </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="PV">
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="73">
-                      <position x="580" y="2380"/>
-                      <position x="535" y="2380"/>
-                      <position x="535" y="2340"/>
-                      <position x="490" y="2340"/>
+                      <position x="380" y="2490"/>
+                      <position x="335" y="2490"/>
+                      <position x="335" y="2450"/>
+                      <position x="180" y="2450"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1965,26 +1938,28 @@ renamed to ACTUAL_TEMPERATURE
                   <connectionPointIn>
                     <relPosition x="0" y="70"/>
                     <connection refLocalId="72" formalParameter="OUT">
-                      <position x="580" y="2400"/>
-                      <position x="535" y="2400"/>
-                      <position x="535" y="2390"/>
-                      <position x="490" y="2390"/>
+                      <position x="380" y="2510"/>
+                      <position x="335" y="2510"/>
+                      <position x="335" y="2500"/>
+                      <position x="290" y="2500"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="X0">
                   <connectionPointIn>
                     <relPosition x="0" y="90"/>
+                    <connection refLocalId="227">
+                      <position x="380" y="2530"/>
+                      <position x="280" y="2530"/>
+                    </connection>
                   </connectionPointIn>
                 </variable>
                 <variable formalParameter="KP">
                   <connectionPointIn>
                     <relPosition x="0" y="110"/>
                     <connection refLocalId="75">
-                      <position x="580" y="2440"/>
-                      <position x="560" y="2440"/>
-                      <position x="560" y="2420"/>
-                      <position x="530" y="2420"/>
+                      <position x="380" y="2550"/>
+                      <position x="230" y="2550"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1992,8 +1967,10 @@ renamed to ACTUAL_TEMPERATURE
                   <connectionPointIn>
                     <relPosition x="0" y="130"/>
                     <connection refLocalId="78">
-                      <position x="580" y="2460"/>
-                      <position x="480" y="2460"/>
+                      <position x="380" y="2570"/>
+                      <position x="325" y="2570"/>
+                      <position x="325" y="2580"/>
+                      <position x="280" y="2580"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2001,8 +1978,10 @@ renamed to ACTUAL_TEMPERATURE
                   <connectionPointIn>
                     <relPosition x="0" y="150"/>
                     <connection refLocalId="79">
-                      <position x="580" y="2480"/>
-                      <position x="530" y="2480"/>
+                      <position x="380" y="2590"/>
+                      <position x="300" y="2590"/>
+                      <position x="300" y="2640"/>
+                      <position x="220" y="2640"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2010,10 +1989,10 @@ renamed to ACTUAL_TEMPERATURE
                   <connectionPointIn>
                     <relPosition x="0" y="170"/>
                     <connection refLocalId="80">
-                      <position x="580" y="2500"/>
-                      <position x="545" y="2500"/>
-                      <position x="545" y="2520"/>
-                      <position x="510" y="2520"/>
+                      <position x="380" y="2610"/>
+                      <position x="345" y="2610"/>
+                      <position x="345" y="2660"/>
+                      <position x="330" y="2660"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2028,21 +2007,23 @@ renamed to ACTUAL_TEMPERATURE
               </outputVariables>
             </block>
             <inVariable localId="184" width="80" height="30" negated="false">
-              <position x="280" y="2380"/>
+              <position x="80" y="2490"/>
               <connectionPointOut>
-                <relPosition x="80" y="10"/>
+                <relPosition x="80" y="20"/>
               </connectionPointOut>
               <expression>SETPOINT</expression>
             </inVariable>
             <block localId="72" typeName="INT_TO_REAL" width="100" height="40" executionOrderId="0">
-              <position x="390" y="2360"/>
+              <position x="190" y="2470"/>
               <inputVariables>
                 <variable formalParameter="IN">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="184">
-                      <position x="390" y="2390"/>
-                      <position x="360" y="2390"/>
+                      <position x="190" y="2500"/>
+                      <position x="175" y="2500"/>
+                      <position x="175" y="2510"/>
+                      <position x="160" y="2510"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2057,62 +2038,51 @@ renamed to ACTUAL_TEMPERATURE
               </outputVariables>
             </block>
             <inVariable localId="73" width="110" height="30" negated="false" executionOrderId="0">
-              <position x="380" y="2320"/>
+              <position x="70" y="2440"/>
               <connectionPointOut>
-                <relPosition x="110" y="20"/>
+                <relPosition x="110" y="10"/>
               </connectionPointOut>
               <expression>dial_voltage</expression>
             </inVariable>
             <inVariable localId="75" width="40" height="30" negated="false" executionOrderId="0">
-              <position x="490" y="2410"/>
+              <position x="190" y="2540"/>
               <connectionPointOut>
-                <relPosition x="40" y="20"/>
+                <relPosition x="40" y="10"/>
               </connectionPointOut>
               <expression>2.0</expression>
             </inVariable>
             <inVariable localId="78" width="40" height="30" negated="false" executionOrderId="0">
-              <position x="440" y="2440"/>
+              <position x="240" y="2560"/>
               <connectionPointOut>
-                <relPosition x="40" y="10"/>
+                <relPosition x="40" y="20"/>
               </connectionPointOut>
-              <expression>0.0</expression>
+              <expression>0.1</expression>
             </inVariable>
             <inVariable localId="79" width="40" height="30" negated="false" executionOrderId="0">
-              <position x="490" y="2460"/>
+              <position x="180" y="2630"/>
               <connectionPointOut>
                 <relPosition x="40" y="10"/>
               </connectionPointOut>
               <expression>0.0</expression>
             </inVariable>
-            <inVariable localId="80" width="50" height="30" negated="false" executionOrderId="0">
-              <position x="460" y="2500"/>
+            <inVariable localId="80" width="70" height="30" negated="false" executionOrderId="0">
+              <position x="260" y="2650"/>
               <connectionPointOut>
-                <relPosition x="50" y="10"/>
+                <relPosition x="70" y="10"/>
               </connectionPointOut>
-              <expression>T#5s</expression>
+              <expression>T#100ms</expression>
             </inVariable>
-            <outVariable localId="194" width="50" height="30" negated="false">
-              <position x="750" y="2280"/>
-              <connectionPointIn>
-                <relPosition x="0" y="20"/>
-                <connection refLocalId="183" formalParameter="XOUT">
-                  <position x="750" y="2300"/>
-                  <position x="710" y="2300"/>
-                  <position x="710" y="2360"/>
-                  <position x="670" y="2360"/>
-                </connection>
-              </connectionPointIn>
-              <expression>POWER</expression>
-            </outVariable>
             <block localId="198" typeName="LT" width="70" height="80">
-              <position x="710" y="290"/>
+              <position x="690" y="330"/>
               <inputVariables>
                 <variable formalParameter="EN">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="44">
-                      <position x="710" y="320"/>
-                      <position x="371" y="320"/>
+                      <position x="690" y="360"/>
+                      <position x="410" y="360"/>
+                      <position x="410" y="430"/>
+                      <position x="371" y="430"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2120,8 +2090,10 @@ renamed to ACTUAL_TEMPERATURE
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="199">
-                      <position x="710" y="340"/>
-                      <position x="650" y="340"/>
+                      <position x="690" y="380"/>
+                      <position x="530" y="380"/>
+                      <position x="530" y="460"/>
+                      <position x="510" y="460"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2129,10 +2101,10 @@ renamed to ACTUAL_TEMPERATURE
                   <connectionPointIn>
                     <relPosition x="0" y="70"/>
                     <connection refLocalId="200">
-                      <position x="710" y="360"/>
-                      <position x="690" y="360"/>
-                      <position x="690" y="380"/>
-                      <position x="680" y="380"/>
+                      <position x="690" y="400"/>
+                      <position x="680" y="400"/>
+                      <position x="680" y="430"/>
+                      <position x="670" y="430"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2152,35 +2124,35 @@ renamed to ACTUAL_TEMPERATURE
               </outputVariables>
             </block>
             <inVariable localId="199" width="160" height="30" negated="false">
-              <position x="490" y="330"/>
+              <position x="350" y="450"/>
               <connectionPointOut>
-                <relPosition x="160" y="20"/>
+                <relPosition x="160" y="10"/>
               </connectionPointOut>
               <expression>ACTUAL_TEMPERATURE</expression>
             </inVariable>
             <inVariable localId="200" width="80" height="30" negated="false">
-              <position x="600" y="360"/>
+              <position x="590" y="410"/>
               <connectionPointOut>
                 <relPosition x="80" y="20"/>
               </connectionPointOut>
               <expression>SETPOINT</expression>
             </inVariable>
             <inVariable localId="201" width="90" height="30" negated="false">
-              <position x="200" y="1750"/>
+              <position x="120" y="1750"/>
               <connectionPointOut>
-                <relPosition x="90" y="10"/>
+                <relPosition x="90" y="20"/>
               </connectionPointOut>
               <expression>DIAL_VALUE</expression>
             </inVariable>
             <block localId="81" typeName="DIV" width="70" height="60" executionOrderId="0">
-              <position x="520" y="1740"/>
+              <position x="480" y="1750"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="206" formalParameter="OUT">
-                      <position x="520" y="1770"/>
-                      <position x="430" y="1770"/>
+                      <position x="480" y="1780"/>
+                      <position x="390" y="1780"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2188,10 +2160,10 @@ renamed to ACTUAL_TEMPERATURE
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="202">
-                      <position x="520" y="1790"/>
-                      <position x="505" y="1790"/>
-                      <position x="505" y="1810"/>
-                      <position x="490" y="1810"/>
+                      <position x="480" y="1800"/>
+                      <position x="465" y="1800"/>
+                      <position x="465" y="1830"/>
+                      <position x="450" y="1830"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2206,21 +2178,23 @@ renamed to ACTUAL_TEMPERATURE
               </outputVariables>
             </block>
             <inVariable localId="202" width="60" height="30" negated="false">
-              <position x="430" y="1800"/>
+              <position x="390" y="1810"/>
               <connectionPointOut>
                 <relPosition x="60" y="20"/>
               </connectionPointOut>
-              <expression>3395.0</expression>
+              <expression>3419.0</expression>
             </inVariable>
             <block localId="82" typeName="MUL" width="70" height="60" executionOrderId="0">
-              <position x="640" y="1740"/>
+              <position x="580" y="1740"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="81" formalParameter="OUT">
-                      <position x="640" y="1770"/>
-                      <position x="590" y="1770"/>
+                      <position x="580" y="1770"/>
+                      <position x="565" y="1770"/>
+                      <position x="565" y="1780"/>
+                      <position x="550" y="1780"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2228,10 +2202,12 @@ renamed to ACTUAL_TEMPERATURE
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="83">
-                      <position x="640" y="1790"/>
-                      <position x="615" y="1790"/>
-                      <position x="615" y="1810"/>
-                      <position x="600" y="1810"/>
+                      <position x="580" y="1790"/>
+                      <position x="570" y="1790"/>
+                      <position x="570" y="1820"/>
+                      <position x="610" y="1820"/>
+                      <position x="610" y="1840"/>
+                      <position x="600" y="1840"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2246,32 +2222,32 @@ renamed to ACTUAL_TEMPERATURE
               </outputVariables>
             </block>
             <inVariable localId="83" width="50" height="30" negated="false" executionOrderId="0">
-              <position x="550" y="1800"/>
+              <position x="550" y="1830"/>
               <connectionPointOut>
                 <relPosition x="50" y="10"/>
               </connectionPointOut>
               <expression>190.0</expression>
             </inVariable>
             <outVariable localId="84" width="160" height="30" negated="false">
-              <position x="870" y="1760"/>
+              <position x="930" y="1770"/>
               <connectionPointIn>
-                <relPosition x="0" y="10"/>
+                <relPosition x="0" y="20"/>
                 <connection refLocalId="88" formalParameter="OUT">
-                  <position x="870" y="1770"/>
-                  <position x="840" y="1770"/>
+                  <position x="930" y="1790"/>
+                  <position x="900" y="1790"/>
                 </connection>
               </connectionPointIn>
               <expression>ACTUAL_TEMPERATURE</expression>
             </outVariable>
             <block localId="203" typeName="DIV" width="70" height="60">
-              <position x="740" y="2330"/>
+              <position x="540" y="2440"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="183" formalParameter="XOUT">
-                      <position x="740" y="2360"/>
-                      <position x="670" y="2360"/>
+                      <position x="540" y="2470"/>
+                      <position x="470" y="2470"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2279,10 +2255,12 @@ renamed to ACTUAL_TEMPERATURE
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="85">
-                      <position x="740" y="2380"/>
-                      <position x="730" y="2380"/>
-                      <position x="730" y="2400"/>
-                      <position x="720" y="2400"/>
+                      <position x="540" y="2490"/>
+                      <position x="530" y="2490"/>
+                      <position x="530" y="2510"/>
+                      <position x="560" y="2510"/>
+                      <position x="560" y="2530"/>
+                      <position x="550" y="2530"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2296,22 +2274,22 @@ renamed to ACTUAL_TEMPERATURE
                 </variable>
               </outputVariables>
             </block>
-            <inVariable localId="85" width="40" height="30" negated="false" executionOrderId="0">
-              <position x="680" y="2380"/>
+            <inVariable localId="85" width="70" height="30" negated="false" executionOrderId="0">
+              <position x="480" y="2520"/>
               <connectionPointOut>
-                <relPosition x="40" y="20"/>
+                <relPosition x="70" y="10"/>
               </connectionPointOut>
               <expression>3.3</expression>
             </inVariable>
             <block localId="204" typeName="MUL" width="70" height="60">
-              <position x="890" y="2330"/>
+              <position x="690" y="2440"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="203" formalParameter="OUT">
-                      <position x="890" y="2360"/>
-                      <position x="810" y="2360"/>
+                      <position x="690" y="2470"/>
+                      <position x="610" y="2470"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2319,10 +2297,10 @@ renamed to ACTUAL_TEMPERATURE
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="86">
-                      <position x="890" y="2380"/>
-                      <position x="860" y="2380"/>
-                      <position x="860" y="2420"/>
-                      <position x="830" y="2420"/>
+                      <position x="690" y="2490"/>
+                      <position x="660" y="2490"/>
+                      <position x="660" y="2520"/>
+                      <position x="630" y="2520"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2337,56 +2315,34 @@ renamed to ACTUAL_TEMPERATURE
               </outputVariables>
             </block>
             <inVariable localId="86" width="50" height="30" negated="false" executionOrderId="0">
-              <position x="780" y="2400"/>
+              <position x="580" y="2510"/>
               <connectionPointOut>
                 <relPosition x="50" y="20"/>
               </connectionPointOut>
               <expression>100.0</expression>
             </inVariable>
-            <outVariable localId="87" width="146" height="30" negated="false" executionOrderId="0">
-              <position x="1170" y="2340"/>
+            <outVariable localId="87" width="150" height="30" negated="false" executionOrderId="0">
+              <position x="810" y="2460"/>
               <connectionPointIn>
-                <relPosition x="0" y="20"/>
-                <connection refLocalId="205" formalParameter="OUT">
-                  <position x="1170" y="2360"/>
-                  <position x="1130" y="2360"/>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="204" formalParameter="OUT">
+                  <position x="810" y="2470"/>
+                  <position x="760" y="2470"/>
                 </connection>
               </connectionPointIn>
-              <expression>current_power_use</expression>
+              <expression>POWER</expression>
             </outVariable>
-            <block localId="205" typeName="REAL_TO_INT" width="130" height="40">
-              <position x="1000" y="2330"/>
-              <inputVariables>
-                <variable formalParameter="IN">
-                  <connectionPointIn>
-                    <relPosition x="0" y="30"/>
-                    <connection refLocalId="204" formalParameter="OUT">
-                      <position x="1000" y="2360"/>
-                      <position x="960" y="2360"/>
-                    </connection>
-                  </connectionPointIn>
-                </variable>
-              </inputVariables>
-              <inOutVariables/>
-              <outputVariables>
-                <variable formalParameter="OUT">
-                  <connectionPointOut>
-                    <relPosition x="130" y="30"/>
-                  </connectionPointOut>
-                </variable>
-              </outputVariables>
-            </block>
             <block localId="206" typeName="INT_TO_REAL" width="100" height="40">
-              <position x="330" y="1740"/>
+              <position x="290" y="1750"/>
               <inputVariables>
                 <variable formalParameter="IN">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="201">
-                      <position x="330" y="1770"/>
-                      <position x="310" y="1770"/>
-                      <position x="310" y="1760"/>
-                      <position x="290" y="1760"/>
+                      <position x="290" y="1780"/>
+                      <position x="270" y="1780"/>
+                      <position x="270" y="1770"/>
+                      <position x="210" y="1770"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2401,14 +2357,16 @@ renamed to ACTUAL_TEMPERATURE
               </outputVariables>
             </block>
             <block localId="88" typeName="REAL_TO_INT" width="100" height="40" executionOrderId="0">
-              <position x="740" y="1740"/>
+              <position x="800" y="1760"/>
               <inputVariables>
                 <variable formalParameter="IN">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="82" formalParameter="OUT">
-                      <position x="740" y="1770"/>
-                      <position x="710" y="1770"/>
+                      <position x="800" y="1790"/>
+                      <position x="725" y="1790"/>
+                      <position x="725" y="1770"/>
+                      <position x="650" y="1770"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2422,38 +2380,17 @@ renamed to ACTUAL_TEMPERATURE
                 </variable>
               </outputVariables>
             </block>
-            <outVariable localId="207" width="160" height="30" negated="false">
-              <position x="270" y="2030"/>
-              <connectionPointIn>
-                <relPosition x="0" y="20"/>
-                <connection refLocalId="119">
-                  <position x="270" y="2050"/>
-                  <position x="260" y="2050"/>
-                  <position x="260" y="2000"/>
-                  <position x="380" y="2000"/>
-                  <position x="380" y="1970"/>
-                  <position x="370" y="1970"/>
-                </connection>
-              </connectionPointIn>
-              <expression>current_dial_value</expression>
-            </outVariable>
-            <comment localId="99" height="40" width="160">
-              <position x="60" y="1880"/>
-              <content>
-                <xhtml:p><![CDATA[v / 3365 * 3.3]]></xhtml:p>
-              </content>
-            </comment>
             <block localId="100" typeName="DIV" width="70" height="60" executionOrderId="0">
-              <position x="560" y="1880"/>
+              <position x="500" y="1920"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
-                    <connection refLocalId="102" formalParameter="OUT">
-                      <position x="560" y="1910"/>
-                      <position x="545" y="1910"/>
-                      <position x="545" y="1900"/>
-                      <position x="530" y="1900"/>
+                    <connection refLocalId="104" formalParameter="OUT">
+                      <position x="500" y="1950"/>
+                      <position x="455" y="1950"/>
+                      <position x="455" y="1960"/>
+                      <position x="410" y="1960"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2461,10 +2398,10 @@ renamed to ACTUAL_TEMPERATURE
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="103">
-                      <position x="560" y="1930"/>
-                      <position x="540" y="1930"/>
-                      <position x="540" y="1950"/>
-                      <position x="530" y="1950"/>
+                      <position x="500" y="1970"/>
+                      <position x="470" y="1970"/>
+                      <position x="470" y="2010"/>
+                      <position x="460" y="2010"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2479,16 +2416,16 @@ renamed to ACTUAL_TEMPERATURE
               </outputVariables>
             </block>
             <block localId="102" typeName="INT_TO_REAL" width="100" height="40" executionOrderId="0">
-              <position x="430" y="1870"/>
+              <position x="190" y="1930"/>
               <inputVariables>
                 <variable formalParameter="IN">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="119">
-                      <position x="430" y="1900"/>
-                      <position x="390" y="1900"/>
-                      <position x="390" y="1970"/>
-                      <position x="370" y="1970"/>
+                      <position x="190" y="1960"/>
+                      <position x="170" y="1960"/>
+                      <position x="170" y="2030"/>
+                      <position x="150" y="2030"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2503,23 +2440,21 @@ renamed to ACTUAL_TEMPERATURE
               </outputVariables>
             </block>
             <inVariable localId="103" width="70" height="30" negated="false" executionOrderId="0">
-              <position x="460" y="1940"/>
+              <position x="390" y="2000"/>
               <connectionPointOut>
                 <relPosition x="70" y="10"/>
               </connectionPointOut>
-              <expression>3395.0</expression>
+              <expression>65535.0</expression>
             </inVariable>
             <block localId="104" typeName="MUL" width="70" height="60" executionOrderId="0">
-              <position x="690" y="1870"/>
+              <position x="340" y="1930"/>
               <inputVariables>
                 <variable formalParameter="IN1">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
-                    <connection refLocalId="100" formalParameter="OUT">
-                      <position x="690" y="1900"/>
-                      <position x="660" y="1900"/>
-                      <position x="660" y="1910"/>
-                      <position x="630" y="1910"/>
+                    <connection refLocalId="102" formalParameter="OUT">
+                      <position x="340" y="1960"/>
+                      <position x="290" y="1960"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2527,10 +2462,10 @@ renamed to ACTUAL_TEMPERATURE
                   <connectionPointIn>
                     <relPosition x="0" y="50"/>
                     <connection refLocalId="106">
-                      <position x="690" y="1920"/>
-                      <position x="670" y="1920"/>
-                      <position x="670" y="1970"/>
-                      <position x="650" y="1970"/>
+                      <position x="340" y="1980"/>
+                      <position x="325" y="1980"/>
+                      <position x="325" y="2010"/>
+                      <position x="310" y="2010"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2545,23 +2480,76 @@ renamed to ACTUAL_TEMPERATURE
               </outputVariables>
             </block>
             <inVariable localId="106" width="50" height="30" negated="false" executionOrderId="0">
-              <position x="600" y="1950"/>
+              <position x="260" y="1990"/>
               <connectionPointOut>
                 <relPosition x="50" y="20"/>
               </connectionPointOut>
               <expression>3.3</expression>
             </inVariable>
             <outVariable localId="108" width="110" height="30" negated="false" executionOrderId="0">
-              <position x="800" y="1880"/>
+              <position x="640" y="1940"/>
               <connectionPointIn>
-                <relPosition x="0" y="20"/>
-                <connection refLocalId="104" formalParameter="OUT">
-                  <position x="800" y="1900"/>
-                  <position x="760" y="1900"/>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="100" formalParameter="OUT">
+                  <position x="640" y="1950"/>
+                  <position x="570" y="1950"/>
                 </connection>
               </connectionPointIn>
               <expression>dial_voltage</expression>
             </outVariable>
+            <inVariable localId="209" width="60" height="30" negated="false">
+              <position x="230" y="2410"/>
+              <connectionPointOut>
+                <relPosition x="60" y="20"/>
+              </connectionPointOut>
+              <expression>HEATER</expression>
+            </inVariable>
+            <leftPowerRail localId="107" width="10" height="110" executionOrderId="0">
+              <position x="190" y="300"/>
+              <connectionPointOut formalParameter="">
+                <relPosition x="10" y="20"/>
+              </connectionPointOut>
+            </leftPowerRail>
+            <rightPowerRail localId="109" width="10" height="110" executionOrderId="0">
+              <position x="1170" y="300"/>
+              <connectionPointIn>
+                <relPosition x="0" y="20"/>
+              </connectionPointIn>
+            </rightPowerRail>
+            <inVariable localId="219" width="90" height="30" negated="false">
+              <position x="200" y="2040"/>
+              <connectionPointOut>
+                <relPosition x="90" y="10"/>
+              </connectionPointOut>
+              <expression>RUN_STATE</expression>
+            </inVariable>
+            <inVariable localId="119" width="100" height="30" negated="false">
+              <position x="50" y="2020"/>
+              <connectionPointOut>
+                <relPosition x="100" y="10"/>
+              </connectionPointOut>
+              <expression>DIAL_VALUE</expression>
+            </inVariable>
+            <outVariable localId="153" width="90" height="30" negated="false">
+              <position x="820" y="2040"/>
+              <connectionPointIn>
+                <relPosition x="0" y="10"/>
+                <connection refLocalId="182" formalParameter="OUT">
+                  <position x="820" y="2050"/>
+                  <position x="765" y="2050"/>
+                  <position x="765" y="2080"/>
+                  <position x="740" y="2080"/>
+                </connection>
+              </connectionPointIn>
+              <expression>ANGLE</expression>
+            </outVariable>
+            <inVariable localId="227" width="40" height="30" negated="false">
+              <position x="240" y="2510"/>
+              <connectionPointOut>
+                <relPosition x="40" y="20"/>
+              </connectionPointOut>
+              <expression>0.0</expression>
+            </inVariable>
           </LD>
         </body>
       </pou>

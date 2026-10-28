@@ -58,6 +58,21 @@ static inline BOOL __WATERBOILER_LT__BOOL__INT1(BOOL EN,
   return __res;
 }
 
+static inline REAL __WATERBOILER_DIV__REAL__REAL__REAL2(BOOL EN,
+  REAL IN1,
+  REAL IN2,
+  WATERBOILER *data__)
+{
+  REAL __res;
+  BOOL __TMP_ENO = __GET_VAR(data__->_TMP_DIV120_ENO,);
+  __res = DIV__REAL__REAL__REAL(EN,
+    &__TMP_ENO,
+    IN1,
+    IN2);
+  __SET_VAR(,data__->_TMP_DIV120_ENO,,__TMP_ENO);
+  return __res;
+}
+
 void WATERBOILER_init__(WATERBOILER *data__, BOOL retain) {
   __INIT_VAR(data__->STOPPED_STATE,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->RUN_STATE,__BOOL_LITERAL(FALSE),retain)
@@ -92,7 +107,8 @@ void WATERBOILER_init__(WATERBOILER *data__, BOOL retain) {
   __INIT_LOCATED_VALUE(data__->E_LED,__BOOL_LITERAL(FALSE))
   __INIT_LOCATED(INT,__MW0,data__->SETPOINT,retain)
   __INIT_LOCATED_VALUE(data__->SETPOINT,80)
-  __INIT_VAR(data__->POWER,0,retain)
+  __INIT_LOCATED(REAL,__MD0,data__->POWER,retain)
+  __INIT_LOCATED_VALUE(data__->POWER,0)
   __INIT_LOCATED(INT,__MW1,data__->ACTUAL_TEMPERATURE,retain)
   __INIT_LOCATED_VALUE(data__->ACTUAL_TEMPERATURE,0)
   __INIT_LOCATED(INT,__IW0,data__->DIAL_VALUE,retain)
@@ -106,10 +122,6 @@ void WATERBOILER_init__(WATERBOILER *data__, BOOL retain) {
   __INIT_LOCATED(INT,__QW0_1,data__->ANGLE,retain)
   __INIT_LOCATED_VALUE(data__->ANGLE,0)
   __INIT_VAR(data__->DUTY,0,retain)
-  __INIT_LOCATED(INT,__MW2,data__->CURRENT_POWER_USE,retain)
-  __INIT_LOCATED_VALUE(data__->CURRENT_POWER_USE,0)
-  __INIT_LOCATED(INT,__MW3,data__->CURRENT_DIAL_VALUE,retain)
-  __INIT_LOCATED_VALUE(data__->CURRENT_DIAL_VALUE,0)
   __INIT_VAR(data__->DIAL_VOLTAGE,0,retain)
   R_TRIG_init__(&data__->R_TRIG2,retain);
   PID_init__(&data__->PID0,retain);
@@ -132,20 +144,20 @@ void WATERBOILER_init__(WATERBOILER *data__, BOOL retain) {
   __INIT_VAR(data__->_TMP_EQ50_OUT,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->_TMP_EQ51_OUT,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->_TMP_INT_TO_REAL77_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_DIV120_ENO,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->_TMP_DIV120_OUT,0,retain)
   __INIT_VAR(data__->_TMP_MUL121_OUT,0,retain)
-  __INIT_VAR(data__->_TMP_REAL_TO_INT182_OUT,0,retain)
-  __INIT_VAR(data__->_TMP_INT_TO_REAL72_OUT,0,retain)
   __INIT_VAR(data__->_TMP_INT_TO_REAL206_OUT,0,retain)
   __INIT_VAR(data__->_TMP_DIV81_OUT,0,retain)
   __INIT_VAR(data__->_TMP_MUL82_OUT,0,retain)
   __INIT_VAR(data__->_TMP_REAL_TO_INT88_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_INT_TO_REAL72_OUT,0,retain)
   __INIT_VAR(data__->_TMP_DIV203_OUT,0,retain)
   __INIT_VAR(data__->_TMP_MUL204_OUT,0,retain)
-  __INIT_VAR(data__->_TMP_REAL_TO_INT205_OUT,0,retain)
   __INIT_VAR(data__->_TMP_INT_TO_REAL102_OUT,0,retain)
-  __INIT_VAR(data__->_TMP_DIV100_OUT,0,retain)
   __INIT_VAR(data__->_TMP_MUL104_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_DIV100_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_REAL_TO_INT182_OUT,0,retain)
 }
 
 // Code part
@@ -290,44 +302,27 @@ void WATERBOILER_body__(WATERBOILER *data__) {
   if (__GET_VAR(data__->E_STATE,)) {
     __SET_LOCATED(data__->,LED5,,__BOOL_LITERAL(FALSE));
   };
+  __SET_VAR(data__->PWM_CONTROLLER0.,CHANNEL,,1);
+  __SET_VAR(data__->PWM_CONTROLLER0.,FREQ,,50.00);
+  __SET_VAR(data__->PWM_CONTROLLER0.,DUTY,,__GET_VAR(data__->DUTY,));
+  PWM_CONTROLLER_body__(&data__->PWM_CONTROLLER0);
+  __SET_VAR(data__->,SERVO_OK,,__GET_VAR(data__->PWM_CONTROLLER0.SUCCESS,));
   __SET_VAR(data__->,_TMP_INT_TO_REAL77_OUT,,INT_TO_REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
     (INT)__GET_LOCATED(data__->DIAL_VALUE,)));
-  __SET_VAR(data__->,_TMP_DIV120_OUT,,DIV__REAL__REAL__REAL(
-    (BOOL)__BOOL_LITERAL(TRUE),
-    NULL,
+  __SET_VAR(data__->,_TMP_DIV120_OUT,,__WATERBOILER_DIV__REAL__REAL__REAL2(
+    (BOOL)__GET_VAR(data__->RUN_STATE,),
     (REAL)__GET_VAR(data__->_TMP_INT_TO_REAL77_OUT,),
-    (REAL)65535.0));
+    (REAL)65535.0,
+    data__));
   __SET_VAR(data__->,_TMP_MUL121_OUT,,MUL__REAL__REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
     (UINT)2,
     (REAL)__GET_VAR(data__->_TMP_DIV120_OUT,),
     (REAL)190.0));
-  __SET_VAR(data__->,_TMP_REAL_TO_INT182_OUT,,REAL_TO_INT(
-    (BOOL)__BOOL_LITERAL(TRUE),
-    NULL,
-    (REAL)__GET_VAR(data__->_TMP_MUL121_OUT,)));
-  __SET_LOCATED(data__->,ANGLE,,__GET_VAR(data__->_TMP_REAL_TO_INT182_OUT,));
-  __SET_VAR(data__->PWM_CONTROLLER0.,CHANNEL,,1);
-  __SET_VAR(data__->PWM_CONTROLLER0.,FREQ,,50.00);
-  __SET_VAR(data__->PWM_CONTROLLER0.,DUTY,,__GET_VAR(data__->DUTY,));
-  PWM_CONTROLLER_body__(&data__->PWM_CONTROLLER0);
-  __SET_VAR(data__->,SERVO_OK,,__GET_VAR(data__->PWM_CONTROLLER0.SUCCESS,));
   __SET_VAR(data__->,DUTY,,__GET_VAR(data__->_TMP_MUL121_OUT,));
-  __SET_VAR(data__->,_TMP_INT_TO_REAL72_OUT,,INT_TO_REAL(
-    (BOOL)__BOOL_LITERAL(TRUE),
-    NULL,
-    (INT)__GET_LOCATED(data__->SETPOINT,)));
-  __SET_VAR(data__->PID0.,PV,,__GET_VAR(data__->DIAL_VOLTAGE,));
-  __SET_VAR(data__->PID0.,SP,,__GET_VAR(data__->_TMP_INT_TO_REAL72_OUT,));
-  __SET_VAR(data__->PID0.,KP,,2.0);
-  __SET_VAR(data__->PID0.,TR,,0.0);
-  __SET_VAR(data__->PID0.,TD,,0.0);
-  __SET_VAR(data__->PID0.,CYCLE,,__time_to_timespec(1, 0, 5, 0, 0, 0));
-  PID_body__(&data__->PID0);
-  __SET_VAR(data__->,POWER,,__GET_VAR(data__->PID0.XOUT,));
   __SET_VAR(data__->,_TMP_INT_TO_REAL206_OUT,,INT_TO_REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
@@ -336,7 +331,7 @@ void WATERBOILER_body__(WATERBOILER *data__) {
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
     (REAL)__GET_VAR(data__->_TMP_INT_TO_REAL206_OUT,),
-    (REAL)3395.0));
+    (REAL)3419.0));
   __SET_VAR(data__->,_TMP_MUL82_OUT,,MUL__REAL__REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
@@ -348,6 +343,19 @@ void WATERBOILER_body__(WATERBOILER *data__) {
     NULL,
     (REAL)__GET_VAR(data__->_TMP_MUL82_OUT,)));
   __SET_LOCATED(data__->,ACTUAL_TEMPERATURE,,__GET_VAR(data__->_TMP_REAL_TO_INT88_OUT,));
+  __SET_VAR(data__->,_TMP_INT_TO_REAL72_OUT,,INT_TO_REAL(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (INT)__GET_LOCATED(data__->SETPOINT,)));
+  __SET_VAR(data__->PID0.,AUTO,,__GET_LOCATED(data__->HEATER,));
+  __SET_VAR(data__->PID0.,PV,,__GET_VAR(data__->DIAL_VOLTAGE,));
+  __SET_VAR(data__->PID0.,SP,,__GET_VAR(data__->_TMP_INT_TO_REAL72_OUT,));
+  __SET_VAR(data__->PID0.,X0,,0.0);
+  __SET_VAR(data__->PID0.,KP,,2.0);
+  __SET_VAR(data__->PID0.,TR,,0.1);
+  __SET_VAR(data__->PID0.,TD,,0.0);
+  __SET_VAR(data__->PID0.,CYCLE,,__time_to_timespec(1, 100, 0, 0, 0, 0));
+  PID_body__(&data__->PID0);
   __SET_VAR(data__->,_TMP_DIV203_OUT,,DIV__REAL__REAL__REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
@@ -359,28 +367,28 @@ void WATERBOILER_body__(WATERBOILER *data__) {
     (UINT)2,
     (REAL)__GET_VAR(data__->_TMP_DIV203_OUT,),
     (REAL)100.0));
-  __SET_VAR(data__->,_TMP_REAL_TO_INT205_OUT,,REAL_TO_INT(
-    (BOOL)__BOOL_LITERAL(TRUE),
-    NULL,
-    (REAL)__GET_VAR(data__->_TMP_MUL204_OUT,)));
-  __SET_LOCATED(data__->,CURRENT_POWER_USE,,__GET_VAR(data__->_TMP_REAL_TO_INT205_OUT,));
-  __SET_LOCATED(data__->,CURRENT_DIAL_VALUE,,__GET_LOCATED(data__->DIAL_VALUE,));
+  __SET_LOCATED(data__->,POWER,,__GET_VAR(data__->_TMP_MUL204_OUT,));
   __SET_VAR(data__->,_TMP_INT_TO_REAL102_OUT,,INT_TO_REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
     (INT)__GET_LOCATED(data__->DIAL_VALUE,)));
-  __SET_VAR(data__->,_TMP_DIV100_OUT,,DIV__REAL__REAL__REAL(
-    (BOOL)__BOOL_LITERAL(TRUE),
-    NULL,
-    (REAL)__GET_VAR(data__->_TMP_INT_TO_REAL102_OUT,),
-    (REAL)3395.0));
   __SET_VAR(data__->,_TMP_MUL104_OUT,,MUL__REAL__REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
     (UINT)2,
-    (REAL)__GET_VAR(data__->_TMP_DIV100_OUT,),
+    (REAL)__GET_VAR(data__->_TMP_INT_TO_REAL102_OUT,),
     (REAL)3.3));
-  __SET_VAR(data__->,DIAL_VOLTAGE,,__GET_VAR(data__->_TMP_MUL104_OUT,));
+  __SET_VAR(data__->,_TMP_DIV100_OUT,,DIV__REAL__REAL__REAL(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (REAL)__GET_VAR(data__->_TMP_MUL104_OUT,),
+    (REAL)65535.0));
+  __SET_VAR(data__->,DIAL_VOLTAGE,,__GET_VAR(data__->_TMP_DIV100_OUT,));
+  __SET_VAR(data__->,_TMP_REAL_TO_INT182_OUT,,REAL_TO_INT(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (REAL)__GET_VAR(data__->_TMP_MUL121_OUT,)));
+  __SET_LOCATED(data__->,ANGLE,,__GET_VAR(data__->_TMP_REAL_TO_INT182_OUT,));
 
   goto __end;
 
