@@ -171,5 +171,8 @@ The following table contains evidence that each operation works as intended. Mod
 notes:
 connected by SERIAL COM11
 
+OpenPLC logic
+
+
 
 >
