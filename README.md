@@ -28,7 +28,7 @@ The system contains 7 inputs to control the associating 9 outputs.<br>
 4. Temperature Down
 5. Emergency Stop
 6. Pressure Switch
-7. Thermister(Temperature simulated with dial)
+7. Potentiometer(Temperature simulated with dial)
 
 ##### Outputs include:
 
@@ -187,36 +187,34 @@ Can you please convert these screenshots of a table into markdown format? they M
 
 | # | Name | Class | Type | Location | Initial Value | Implementation | Documentation |
 |---|---|---|---|---|---|---|---|
-| 1 | STOPPED_STATE | Local | BOOL | | | [STOPPED_STATE Screenshot](#511---stopped-state) | specifies if the device is currently stopped. |
-| 2 | RUN_STATE | Local | BOOL | | | [RUN_STATE Screenshot](#512---run-state) | specifies if device is currently running |
-| 3 | E_STATE | Local | BOOL | | | [E_STATE Screenshot](#513---e-state) | emergency stop state |
-| 4 | START_BTN | Local | BOOL | %IX0.0 | | [START_BTN Screenshot](#514---start-btn) | activates run_state |
-| 5 | STOP_BTN | Local | BOOL | %IX0.1 | | [STOP_BTN Screenshot](#515---stop-btn) | deactivates run_state and activates stopped state. |
-| 6 | E_STOP | Local | BOOL | %IX0.2 | | [E_STOP Screenshot](#516---e-stop) | activates emergency_stop which totally deactivates all functionality |
-| 7 | TEMP_UP | Local | BOOL | %IX0.3 | | [TEMP_UP Screenshot](#517---temp-up) | increases temperature setpoint |
-| 8 | TEMP_DWN | Local | BOOL | %IX0.4 | | [TEMP_DWN Screenshot](#518---temp-dwn) | decreases temperature setpoint |
-| 9 | P_SWITCH | Local | BOOL | %IX0.5 | | [P_SWITCH Screenshot](#519---p-switch) | enables or disables power output control |
-| 10 | HEATER | Local | BOOL | %QX0.0 | | [HEATER Screenshot](#5110---heater) | controlstus indicator LED |
-| 14 | LED3 | Local | BOOL | %QX0.4 | | [LED](#5114---led3) | status indicator LED |
-| 15 | LED4 | Local | BOOL | %QX0.5 | | #5115---led4 | status indicator LED |
-| 16 | LED5 | Local | BOOL | %QX0.6 | | #5116---led5 | status indicator LED |
-| 17 | E_LED | Local | BOOL | %QX0.7 | | #5117---e-led | emergency stop indicator LED |
-| 18 | SETPOINT | Local | INT | %MW0 | 80 | #5118---setpoint | Default temperature. Min = 80C. Address 32 |
-| 19 | POWER | Local | REAL | %MD0 | | #5119---power | Represents heating power output |
-| 20 | ACTUAL_TEMPERATURE | Local | INT | %MW1 | | #5120---actual-temperature | current measured temperature |
-| 21 | DIAL_VALUE | Local | INT | %IW0 | | #5121---dial-value | Temp dial = simulates actual temperature |
-| 22 | SR0 | Local | SR | | | #5122---sr0 | set-reset flip-flop |
-| 23 | R_TRIG0 | Local | R_TRIG | | | #5123---r-trig0 | rising edge detector |
-| 24 | R_TRIG1 | Local | R_TRIG | | | #5124---r-trig1 | rising edge detector |
-| 25 | CTUD0 | Local | CTUD | | | #5125---ctud0 | up/down counter |
-| 26 | PWM_CONTROLLER0 | Local | PWM_CONTROLLER | | | #5126---pwm-controller0 | generates PWM output signal |
-| 27 | SERVO_OK | Local | BOOL | | | #5127---servo-ok | indicates servo position has been reached |
-| 28 | ANGLE | Local | INT | %QW0.1 | 0 | #5128---angle | to test update the servo angle 37 |
-| 29 | DUTY | Local | REAL | | | #5129---duty | detects when wave has passed |
-| 30 | DIAL_VOLTAGE | Local | REAL | | | #5130---dial-voltage | actual power usage value |
-| 31 | R_TRIG2 | Local | R_TRIG | | | #5131---r-trig2 | rising edge detector |
-| 32 | PID0 | Local | PID | | | #5132---pid0 | PID control block |
-
+| 1 | STOPPED_STATE | Local | BOOL | | | [STOPPED_STATE Screenshot](#511---line-1-stop-btn) | specifies if the device is currently stopped. |
+| 2 | RUN_STATE | Local | BOOL | | | [RUN_STATE Screenshot](#512---line-2-start-btn-or-run-state) | specifies if device is currently running |
+| 3 | E_STATE | Local | BOOL | | | [E_STATE Screenshot](#513---line-3-e-stop) | emergency stop state |
+| 4 | START_BTN | Local | BOOL | %IX0.0 | | [START_BTN Screenshot](#512---line-2-start-btn-or-run-state) | activates run_state |
+| 5 | STOP_BTN | Local | BOOL | %IX0.1 | | [STOP_BTN Screenshot](#511---line-1-stop-btn) | deactivates run_state and activates stopped state. |
+| 6 | E_STOP | Local | BOOL | %IX0.2 | | [E_STOP Screenshot](#513---line-3-e-stop) | activates emergency_stop which totally deactivates all functionality |
+| 7 | TEMP_UP | Local | BOOL | %IX0.3 | | [TEMP_UP Screenshot](#5111---line-5-tempup-and-tempdown) | increases temperature setpoint |
+| 8 | TEMP_DWN | Local | BOOL | %IX0.4 | | [TEMP_DWN Screenshot](#5111---line-5-tempup-and-tempdown) | decreases temperature setpoint |
+| 9 | P_SWITCH | Local | BOOL | %IX0.5 | | [P_SWITCH Screenshot](#5110---line-4-heater) | enables or disables power output control |
+| 10 | HEATER | Local | BOOL | %QX0.0 | | [HEATER Screenshot](#5110---line-4-heater) | controls simulated heating |
+| 11 | LED0 | Local | BOOL | %QX0.1 | | [LED0 Screenshot](#5112---line-6-led0---led5) | turns on if setpoint is 80 or 90 |
+| 12 | LED1 | Local | BOOL | %QX0.2 | | [LED1 Screenshot](#5112---line-6-led0---led5) | turns on if setpoint is 90, 100, 110|
+| 13 | LED2 | Local | BOOL | %QX0.3 | | [LED2 Screenshot](#5112---line-6-led0---led5) | turns on if setpoint is 110, 120 or 130 |
+| 14 | LED3 | Local | BOOL | %QX0.4 | | [LED3 Screenshot](#5112---line-6-led0---led5) | turns on if setpoint is 130, 140, 150 |
+| 15 | LED4 | Local | BOOL | %QX0.5 | | [LED4 Screenshot](#5112---line-6-led0---led5) | turns on if setpoint is 150 160 |
+| 16 | LED5 | Local | BOOL | %QX0.6 | | [LED5 Screenshot](#5112---line-6-led0---led5) | turns on if setpoint is 170 or 180|
+| 17 | E_LED | Local | BOOL | %QX0.7 | | [E_LED Screenshot](#5112---line-6-led0---led5) | emergency stop indicator LED |
+| 18 | SETPOINT | Local | INT | %MW0 | 80 | [SETPOINT Screenshot](#5111---line-5-tempup-and-tempdown) | Default temperature. Min = 80C. Address 32 |
+| 19 | POWER | Local | REAL | %MD0 | | [POWER Screenshot](#5130---line-10-dial_voltage) | Represents heating power output |
+| 20 | ACTUAL_TEMPERATURE | Local | INT | %MW1 | | [ACTUAL_TEMPERATURE Screenshot](#5120---line-7-actual_temperature) | current measured temperature |
+| 21 | DIAL_VALUE | Local | INT | %IW0 | | [DIAL_VALUE Screenshot](#5120---line-7-actual_temperature) | Temp dial = simulates actual temperature |
+| 22 | SR0 | Local | SR | | [SR latch Screenshot](#513---line-3-e-stop) | Set and Reset latch for setting the emergency state and then resetting |
+| 27 | SERVO_OK | Local | BOOL | | | [SERVO_OK Screenshot](#5126---line-8-pwm-controller) | Outputs a signal if the PWM is successfully connected to the servo |
+| 28 | ANGLE | Local | INT | %QW0.1 | 0 | [PWM Controller Screenshot](#5126---line-8-pwm-controller) | Controls the servo |
+| 29 | DUTY | Local | REAL | | | [DUTY Screenshot](#5129---line-9-duty) | Moves the servo |
+| 30 | DIAL_VOLTAGE | Local | REAL | | | [Dial Voltage Screenshot](#5130---line-10-dial_voltage) | actual power usage value |
+| 31 | R_TRIG2 | Local | R_TRIG | | | [R_TRIG2 Screenshot](#5111---line-5-tempup-and-tempdown) | rising edge detector |
+| 32 | PID0 | Local | PID | | | [PID Screenshot](#5132---line-11-pid0) | PID control block |
 
 #### OpenPLC code screenshots
 
