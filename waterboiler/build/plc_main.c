@@ -128,14 +128,12 @@ IEC_BOOL var13;
 IEC_BOOL *__QX0_7 = &var13;
 IEC_INT var14;
 IEC_INT *__MW0 = &var14;
-IEC_REAL var15;
-IEC_REAL *__MD0 = &var15;
+IEC_INT var15;
+IEC_INT *__MW1 = &var15;
 IEC_INT var16;
-IEC_INT *__MW1 = &var16;
+IEC_INT *__IW0 = &var16;
 IEC_INT var17;
-IEC_INT *__IW0 = &var17;
-IEC_INT var18;
-IEC_INT *__QW0_1 = &var18;
+IEC_INT *__QW0_1 = &var17;
 /**
  * Win32 specific code
  **/

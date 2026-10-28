@@ -124,8 +124,7 @@ void WATERBOILER_init__(WATERBOILER *data__, BOOL retain) {
   __INIT_LOCATED_VALUE(data__->E_LED,__BOOL_LITERAL(FALSE))
   __INIT_LOCATED(INT,__MW0,data__->SETPOINT,retain)
   __INIT_LOCATED_VALUE(data__->SETPOINT,80)
-  __INIT_LOCATED(REAL,__MD0,data__->POWER,retain)
-  __INIT_LOCATED_VALUE(data__->POWER,0)
+  __INIT_VAR(data__->POWER,0,retain)
   __INIT_LOCATED(INT,__MW1,data__->ACTUAL_TEMPERATURE,retain)
   __INIT_LOCATED_VALUE(data__->ACTUAL_TEMPERATURE,0)
   __INIT_LOCATED(INT,__IW0,data__->DIAL_VALUE,retain)
@@ -173,8 +172,6 @@ void WATERBOILER_init__(WATERBOILER *data__, BOOL retain) {
   __INIT_VAR(data__->_TMP_REAL_TO_INT88_OUT,0,retain)
   __INIT_VAR(data__->_TMP_INT_TO_REAL74_OUT,0,retain)
   __INIT_VAR(data__->_TMP_INT_TO_REAL72_OUT,0,retain)
-  __INIT_VAR(data__->_TMP_DIV203_OUT,0,retain)
-  __INIT_VAR(data__->_TMP_MUL204_OUT,0,retain)
   __INIT_VAR(data__->_TMP_INT_TO_REAL102_OUT,0,retain)
   __INIT_VAR(data__->_TMP_MUL104_OUT,0,retain)
   __INIT_VAR(data__->_TMP_DIV100_OUT,0,retain)
@@ -402,18 +399,7 @@ void WATERBOILER_body__(WATERBOILER *data__) {
   __SET_VAR(data__->PID0.,TD,,0.0);
   __SET_VAR(data__->PID0.,CYCLE,,__time_to_timespec(1, 100, 0, 0, 0, 0));
   PID_body__(&data__->PID0);
-  __SET_VAR(data__->,_TMP_DIV203_OUT,,DIV__REAL__REAL__REAL(
-    (BOOL)__BOOL_LITERAL(TRUE),
-    NULL,
-    (REAL)__GET_VAR(data__->PID0.XOUT,),
-    (REAL)3.3));
-  __SET_VAR(data__->,_TMP_MUL204_OUT,,MUL__REAL__REAL(
-    (BOOL)__BOOL_LITERAL(TRUE),
-    NULL,
-    (UINT)2,
-    (REAL)__GET_VAR(data__->_TMP_DIV203_OUT,),
-    (REAL)100.0));
-  __SET_LOCATED(data__->,POWER,,__GET_VAR(data__->_TMP_MUL204_OUT,));
+  __SET_VAR(data__->,POWER,,__GET_VAR(data__->PID0.XOUT,));
   __SET_VAR(data__->,_TMP_INT_TO_REAL102_OUT,,INT_TO_REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
