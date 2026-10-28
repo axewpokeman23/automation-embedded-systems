@@ -39,7 +39,7 @@ The system contains 7 inputs to control the associating 9 outputs.<br>
 
 picture of board and inputs 
 
-Jump to [Variable documentation](#variables)
+Jump to [OpenPLC Code Explanations](#50-openplc-explanations) for screenshots of the LD and FBD code.
 
 ### 2.1 I/O Mapping
 
