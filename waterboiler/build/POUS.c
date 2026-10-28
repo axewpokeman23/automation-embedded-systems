@@ -73,6 +73,23 @@ static inline REAL __WATERBOILER_DIV__REAL__REAL__REAL2(BOOL EN,
   return __res;
 }
 
+static inline BOOL __WATERBOILER_GT__BOOL__INT3(BOOL EN,
+  UINT __PARAM_COUNT,
+  INT IN1,
+  INT IN2,
+  WATERBOILER *data__)
+{
+  BOOL __res;
+  BOOL __TMP_ENO = __GET_VAR(data__->_TMP_GT259_ENO,);
+  __res = GT__BOOL__INT(EN,
+    &__TMP_ENO,
+    __PARAM_COUNT,
+    IN1,
+    IN2);
+  __SET_VAR(,data__->_TMP_GT259_ENO,,__TMP_ENO);
+  return __res;
+}
+
 void WATERBOILER_init__(WATERBOILER *data__, BOOL retain) {
   __INIT_VAR(data__->STOPPED_STATE,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->RUN_STATE,__BOOL_LITERAL(FALSE),retain)
@@ -125,6 +142,7 @@ void WATERBOILER_init__(WATERBOILER *data__, BOOL retain) {
   __INIT_VAR(data__->DIAL_VOLTAGE,0,retain)
   R_TRIG_init__(&data__->R_TRIG2,retain);
   PID_init__(&data__->PID0,retain);
+  __INIT_VAR(data__->_TMP_SUB257_OUT,0,retain)
   __INIT_VAR(data__->_TMP_LT198_ENO,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->_TMP_LT198_OUT,__BOOL_LITERAL(FALSE),retain)
   R_TRIG_init__(&data__->R_TRIG3,retain);
@@ -148,9 +166,12 @@ void WATERBOILER_init__(WATERBOILER *data__, BOOL retain) {
   __INIT_VAR(data__->_TMP_DIV120_OUT,0,retain)
   __INIT_VAR(data__->_TMP_MUL121_OUT,0,retain)
   __INIT_VAR(data__->_TMP_INT_TO_REAL206_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_SUB242_OUT,0,retain)
   __INIT_VAR(data__->_TMP_DIV81_OUT,0,retain)
   __INIT_VAR(data__->_TMP_MUL82_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_ADD240_OUT,0,retain)
   __INIT_VAR(data__->_TMP_REAL_TO_INT88_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_INT_TO_REAL74_OUT,0,retain)
   __INIT_VAR(data__->_TMP_INT_TO_REAL72_OUT,0,retain)
   __INIT_VAR(data__->_TMP_DIV203_OUT,0,retain)
   __INIT_VAR(data__->_TMP_MUL204_OUT,0,retain)
@@ -158,6 +179,9 @@ void WATERBOILER_init__(WATERBOILER *data__, BOOL retain) {
   __INIT_VAR(data__->_TMP_MUL104_OUT,0,retain)
   __INIT_VAR(data__->_TMP_DIV100_OUT,0,retain)
   __INIT_VAR(data__->_TMP_REAL_TO_INT182_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_ADD256_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_GT259_ENO,__BOOL_LITERAL(FALSE),retain)
+  __INIT_VAR(data__->_TMP_GT259_OUT,__BOOL_LITERAL(FALSE),retain)
 }
 
 // Code part
@@ -166,13 +190,20 @@ void WATERBOILER_body__(WATERBOILER *data__) {
 
   __SET_VAR(data__->,RUN_STATE,,((__GET_VAR(data__->RUN_STATE,) || __GET_LOCATED(data__->START_BTN,)) && !(__GET_LOCATED(data__->STOP_BTN,))));
   __SET_VAR(data__->,STOPPED_STATE,,(!(__GET_VAR(data__->E_STATE,)) && !(__GET_VAR(data__->RUN_STATE,))));
+  __SET_VAR(data__->,_TMP_SUB257_OUT,,SUB__INT__INT__INT(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (INT)__GET_LOCATED(data__->SETPOINT,),
+    (INT)2));
   __SET_VAR(data__->,_TMP_LT198_OUT,,__WATERBOILER_LT__BOOL__INT1(
     (BOOL)(!(__GET_VAR(data__->E_STATE,)) && __GET_VAR(data__->RUN_STATE,)),
     (UINT)2,
     (INT)__GET_LOCATED(data__->ACTUAL_TEMPERATURE,),
-    (INT)__GET_LOCATED(data__->SETPOINT,),
+    (INT)__GET_VAR(data__->_TMP_SUB257_OUT,),
     data__));
-  __SET_LOCATED(data__->,HEATER,,__GET_VAR(data__->_TMP_LT198_OUT,));
+  if (__GET_VAR(data__->_TMP_LT198_OUT,)) {
+    __SET_LOCATED(data__->,HEATER,,__BOOL_LITERAL(TRUE));
+  };
   __SET_VAR(data__->SR0.,S1,,(__GET_LOCATED(data__->E_STOP,) && __GET_VAR(data__->RUN_STATE,)));
   __SET_VAR(data__->SR0.,R,,((__GET_LOCATED(data__->STOP_BTN,) && __GET_LOCATED(data__->E_STOP,)) && __GET_VAR(data__->E_STATE,)));
   SR_body__(&data__->SR0);
@@ -327,28 +358,43 @@ void WATERBOILER_body__(WATERBOILER *data__) {
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
     (INT)__GET_LOCATED(data__->DIAL_VALUE,)));
-  __SET_VAR(data__->,_TMP_DIV81_OUT,,DIV__REAL__REAL__REAL(
+  __SET_VAR(data__->,_TMP_SUB242_OUT,,SUB__REAL__REAL__REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
     (REAL)__GET_VAR(data__->_TMP_INT_TO_REAL206_OUT,),
-    (REAL)3419.0));
+    (REAL)355.0));
+  __SET_VAR(data__->,_TMP_DIV81_OUT,,DIV__REAL__REAL__REAL(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (REAL)__GET_VAR(data__->_TMP_SUB242_OUT,),
+    (REAL)3062.0));
   __SET_VAR(data__->,_TMP_MUL82_OUT,,MUL__REAL__REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
     (UINT)2,
     (REAL)__GET_VAR(data__->_TMP_DIV81_OUT,),
-    (REAL)190.0));
+    (REAL)170.0));
+  __SET_VAR(data__->,_TMP_ADD240_OUT,,ADD__REAL__REAL(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (UINT)2,
+    (REAL)__GET_VAR(data__->_TMP_MUL82_OUT,),
+    (REAL)20.0));
   __SET_VAR(data__->,_TMP_REAL_TO_INT88_OUT,,REAL_TO_INT(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
-    (REAL)__GET_VAR(data__->_TMP_MUL82_OUT,)));
+    (REAL)__GET_VAR(data__->_TMP_ADD240_OUT,)));
   __SET_LOCATED(data__->,ACTUAL_TEMPERATURE,,__GET_VAR(data__->_TMP_REAL_TO_INT88_OUT,));
+  __SET_VAR(data__->,_TMP_INT_TO_REAL74_OUT,,INT_TO_REAL(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (INT)__GET_LOCATED(data__->ACTUAL_TEMPERATURE,)));
   __SET_VAR(data__->,_TMP_INT_TO_REAL72_OUT,,INT_TO_REAL(
     (BOOL)__BOOL_LITERAL(TRUE),
     NULL,
     (INT)__GET_LOCATED(data__->SETPOINT,)));
-  __SET_VAR(data__->PID0.,AUTO,,__GET_LOCATED(data__->HEATER,));
-  __SET_VAR(data__->PID0.,PV,,__GET_VAR(data__->DIAL_VOLTAGE,));
+  __SET_VAR(data__->PID0.,AUTO,,__GET_VAR(data__->RUN_STATE,));
+  __SET_VAR(data__->PID0.,PV,,__GET_VAR(data__->_TMP_INT_TO_REAL74_OUT,));
   __SET_VAR(data__->PID0.,SP,,__GET_VAR(data__->_TMP_INT_TO_REAL72_OUT,));
   __SET_VAR(data__->PID0.,X0,,0.0);
   __SET_VAR(data__->PID0.,KP,,2.0);
@@ -389,6 +435,27 @@ void WATERBOILER_body__(WATERBOILER *data__) {
     NULL,
     (REAL)__GET_VAR(data__->_TMP_MUL121_OUT,)));
   __SET_LOCATED(data__->,ANGLE,,__GET_VAR(data__->_TMP_REAL_TO_INT182_OUT,));
+  __SET_VAR(data__->,_TMP_ADD256_OUT,,ADD__INT__INT(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (UINT)2,
+    (INT)__GET_LOCATED(data__->SETPOINT,),
+    (INT)2));
+  __SET_VAR(data__->,_TMP_GT259_OUT,,__WATERBOILER_GT__BOOL__INT3(
+    (BOOL)(!(__GET_VAR(data__->E_STATE,)) && __GET_VAR(data__->RUN_STATE,)),
+    (UINT)2,
+    (INT)__GET_LOCATED(data__->ACTUAL_TEMPERATURE,),
+    (INT)__GET_VAR(data__->_TMP_ADD256_OUT,),
+    data__));
+  if (__GET_VAR(data__->_TMP_GT259_OUT,)) {
+    __SET_LOCATED(data__->,HEATER,,__BOOL_LITERAL(FALSE));
+  };
+  if (__GET_VAR(data__->E_STATE,)) {
+    __SET_LOCATED(data__->,HEATER,,__BOOL_LITERAL(FALSE));
+  };
+  if (__GET_VAR(data__->STOPPED_STATE,)) {
+    __SET_LOCATED(data__->,HEATER,,__BOOL_LITERAL(FALSE));
+  };
 
   goto __end;
 
