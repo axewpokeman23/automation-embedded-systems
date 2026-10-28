@@ -1,3 +1,8 @@
+> need to update the screenshots with updated code
+> modbus screenshots
+> runtime screenshots
+> videos of the plc at work
+
 <i><p style="font-size:8">ITAE6.100 Automation and Embedded Systems<br>Assignment - Part 3: Programming with a PLC<br>By Maraea and Sara</i></p>
 
 # Simple Boiler Controller
