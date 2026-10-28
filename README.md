@@ -208,7 +208,7 @@ Can you please convert these screenshots of a table into markdown format? they M
 | 19 | POWER | Local | REAL | %MD0 | | [POWER Screenshot](#5130---line-10-dial_voltage) | Represents heating power output |
 | 20 | ACTUAL_TEMPERATURE | Local | INT | %MW1 | | [ACTUAL_TEMPERATURE Screenshot](#5120---line-7-actual_temperature) | current measured temperature |
 | 21 | DIAL_VALUE | Local | INT | %IW0 | | [DIAL_VALUE Screenshot](#5120---line-7-actual_temperature) | Temp dial = simulates actual temperature |
-| 22 | SR0 | Local | SR | | [SR latch Screenshot](#513---line-3-e-stop) | Set and Reset latch for setting the emergency state and then resetting |
+| 22 | SR0 | Local | SR | | | [SR latch Screenshot](#513---line-3-e-stop) | Set and Reset latch for setting the emergency state and then resetting |
 | 27 | SERVO_OK | Local | BOOL | | | [SERVO_OK Screenshot](#5126---line-8-pwm-controller) | Outputs a signal if the PWM is successfully connected to the servo |
 | 28 | ANGLE | Local | INT | %QW0.1 | 0 | [PWM Controller Screenshot](#5126---line-8-pwm-controller) | Controls the servo |
 | 29 | DUTY | Local | REAL | | | [DUTY Screenshot](#5129---line-9-duty) | Moves the servo |
