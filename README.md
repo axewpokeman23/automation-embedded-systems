@@ -184,19 +184,19 @@ STOPPED_STATE is enabled when not in RUN_STATE and not in E_STATE.
 
 ##### 4.1.3 - Line 3: STOPPED_STATE ENABLED
 
-![alt text](image.png)
+![alt text](images/image.png)
 
 While in a STOPPED_STATE the HEATER coil is reset.
 
 ##### 4.1.4 - Line 4: RUN_STATE ENABLED
 
-![alt text](image-1.png)
+![alt text](images/image-1.png)
 
 While RUN_STATE is TRUE and not E_STATE, the heater coil responds. If the ACTUAL_TEMPERATURE is less than the SETPOINT the heater will set (ON). If the ACTUAL_TEMPERATURE is greater than the SETPOINT the heater will reset (OFF). By adding SUB and ADD -+2 to each associated comparison SETPOINT, this gives a range surrounding the SETPOINT to help stabilise the ON/OFF logic of the heater LED creating a BANG BANG. This helps to minimise the LED from blinking fast when the ACTUAL_TEMPERATURE nears the SETPOINT.
 
 ##### 4.1.5 - Line 5: E_STOP
 
-![alt text](image-2.png)
+![alt text](images/image-2.png)
 
 Uses a SR latch so that while in a RUN_STATE and E_STOP is pressed, the coil outputs the EMERGENCY_STATE which latches. Pressing E_STOP (Black button) and STOP_BTN (Red button) will release the latch, stopping the EMERGENCY_STATE.
 
