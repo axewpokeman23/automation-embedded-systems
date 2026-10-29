@@ -16,8 +16,8 @@
 [2.1 - I/O Mapping](#21-io-mapping)<br>
 [3.0 - System Operations](#30-system-operations)<br>
 [4.0 - PLC Explanations](#40-plc-explanations)<br>
-[5.0 - Testing](#50-testing)<br>
-[5.1 - Known Bugs](#41-known-bugs)<br>
+[5.0 - Testing / Evidence](50#testing--evidence)<br>
+[5.1 - Issues / Known Bugs](#51-issues--known-bugs)<br>
 [6.0 - Group Contributions](#60-group-contributions)<br>
 
 ## 1.0 Introduction
@@ -81,7 +81,6 @@ The following displays the input and output mapping used.
 
 > [!NOTE]  
 > The following information in this section iterates the logic from the previous tasks and case study for the intended system operations.<br>
-> Click toggle below to expand this information, or skip to [Testing](#40-testing).<br>
 
 <details>
    <summary>Click to view System Operations information</summary>
@@ -160,7 +159,6 @@ If the temperature is above the SETPOINT, the heater relay / LED will turn off a
 
 ### 4.0 OpenPLC Explanations
 
-
 #### 4.1 Variables
 
 Below are the variables we specified on OpenPLC:
@@ -169,9 +167,15 @@ Below are the variables we specified on OpenPLC:
 ![alt text](media/openplc-variables2.png)
 
 
-#### OpenPLC code screenshots
+##### 4.1.1 - Line 1: START-BTN or RUN-STATE
 
-##### 4.1.1 - Line 1: STOP-BTN
+![run state](media/openplc-code-runstate.png)
+
+`not STOP-BTN and  START-BTN or RUN-STATE`
+
+STOP_BTN negated to become TRUE when pressed, stopping/breaking the RUN_STATE logic.
+
+##### 4.1.2 - Line 2: STOP-BTN
 
 STOPPED-STATE
 
@@ -179,13 +183,6 @@ STOPPED-STATE
 
 `not RUN_STATE and not E_STATE = STOPPED_STATE`
 
-##### 4.1.2 - Line 2: START-BTN or RUN-STATE
-
-![run state](media/openplc-code-runstate.png)
-
-`not STOP-BTN and  START-BTN or RUN-STATE`
-
-STOP_BTN negated to become TRUE when pressed, stopping/breaking the RUN_STATE logic.
 
 ##### 4.1.3 - updated code
 
@@ -216,9 +213,9 @@ Code for heater toggling, which dictates what conditions the heater will be allo
 2. Emergency state must be off
 3. Actual temperature is within 10 degrees of the setpoint
 
-##### 4.1.11 - Line 5: TEMPUP and TEMPDOWN
+##### 4.1.11 - Line 5: TEMP_UP and TEMP_DWN
 
-Code for setpoint increase and decrease via the TEMPUP and TEMPDWN buttons.
+Code for setpoint increase and decrease via the TEMP_UP and TEMP_DWN buttons.
 
 ![setpoint control](media/openplc-code-tempup-tempdown.png)
 
@@ -232,11 +229,12 @@ Code for LEDs that evaluates the setpoint to activate an LED, where every even n
 
 ##### 4.1.20 - Line 7: ACTUAL_TEMPERATURE
 
-Code for calculating the actual temperature from normalizing the values output from the potentiometer into the 0-190 range.
+Code for calculating the simulated temperature from normalizing the values output from the potentiometer into the 0-190 range.
+Takes the current dial value and subtracts the minimum reading (355) from the Analogue Input Modbus, divided by the maximum reading (3416 - 355 = 3061), times 170, plus 20 = ACTUAL_TEMPERATURE. Which gives a reading memory reading on Modbus (address 32) as approximately 20c - 190c range for ACTUAL_TEMPERATURE.
 
 ![actual temperature](media/openplc-code-actualtemperature.png)
 
-Jump to [Modbus](#52---modbus) to see proof that the temperature conversion works.
+Jump to [Testing / Evidence](#50-testing--evidence) to see proof that the temperature conversion works.
 
 
 ##### 4.1.26 - Line 8: PWM-CONTROLLER
@@ -265,7 +263,7 @@ PID implemented with similar PID variables to our previous assignment. Uses the 
 
 ![pid0](media/openplc-code-pid0.png)
 
-## 5.0 Testing
+## 5.0 Testing / Evidence
 
 The following table contains evidence that each operation works as intended. Modbus and Runtime were also used to confirm that the inputs, coils, input registers and holding registers were working correctly.
 
