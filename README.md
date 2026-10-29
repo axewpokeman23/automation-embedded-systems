@@ -185,11 +185,13 @@ STOPPED_STATE is enabled when not in RUN_STATE and not in E_STATE.
 ##### 4.1.3 - Line 3: STOPPED_STATE ENABLED
 
 ![alt text](image.png)
+
 While in a STOPPED_STATE the HEATER coil is reset.
 
 ##### 4.1.4 - Line 4: RUN_STATE ENABLED
 
 ![alt text](image-1.png)
+
 While RUN_STATE is TRUE and not E_STATE, the heater coil responds. If the ACTUAL_TEMPERATURE is less than the SETPOINT the heater will set (ON). If the ACTUAL_TEMPERATURE is greater than the SETPOINT the heater will reset (OFF). By adding SUB and ADD -+2 to each associated comparison SETPOINT, this gives a range surrounding the SETPOINT to help stabilise the ON/OFF logic of the heater LED creating a BANG BANG. This helps to minimise the LED from blinking fast when the ACTUAL_TEMPERATURE nears the SETPOINT.
 
 ##### 4.1.5 - Line 5: E_STOP
@@ -198,11 +200,11 @@ While RUN_STATE is TRUE and not E_STATE, the heater coil responds. If the ACTUAL
 
 Uses a SR latch so that while in a RUN_STATE and E_STOP is pressed, the coil outputs the EMERGENCY_STATE which latches. Pressing E_STOP (Black button) and STOP_BTN (Red button) will release the latch, stopping the EMERGENCY_STATE.
 
-
 ##### 4.1.6 - Line 6: E_STATE ENABLED - Line 7: TEMP_UP and TEMP_DWN
 
 ![setpoint control](media/openplc-code-tempup-tempdown.png)
-Line 6: While E_STATE is enabled it turns the E LED ON and all SETPOINT LEDs OFF. It is also connected to the CTUD R to reset the counter.
+
+Line 6: While E_STATE is enabled it turns the E LED ON and all SETPOINT LEDs and HEATER OFF. It is also connected to the CTUD R to reset the counter.
 
 Line 7: Setpoint increase and decrease via the TEMP_UP and TEMP_DWN buttons. Uses TRIGs to send a pulse when buttons are pressed to prevent multiple button registers. A CTUD block is used to count up and down from 0-9 range. 
 Count Value is then calculated to add 1 (moving range from 1-10), multiple by 10 and add 70, giving the SETPOINT range from 80-180c. E.g. PV = 1 + 1 = 2 * 10 = 20 + 70 = 90, PV 2 = 90 etc.
@@ -210,43 +212,42 @@ Count Value is then calculated to add 1 (moving range from 1-10), multiple by 10
 ##### 4.1.7 - Line 8: LED0 ->  LED5
 
 ![led code](media/openplc-code-led.png)
+
 Code for LEDs that evaluates the setpoint to activate an LED, where every even number will only activate one LED and every odd number will activate BOTH the previous LED and the next... and so forth. Implemented using EQ blocks and wires as OR gates for odd number logic.
 
 ##### 4.1.8 - Line 9: ACTUAL_TEMPERATURE
 
+![actual temperature](media/openplc-code-actualtemperature.png)
+
 Code for calculating the simulated temperature from normalizing the values output from the potentiometer into the 0-190 range.
 Takes the current dial value and subtracts the minimum reading (355) from the Analogue Input Modbus, divided by the maximum reading (3416 - 355 = 3061), times 170, plus 20 = ACTUAL_TEMPERATURE. Which gives a reading memory reading on Modbus (address 32) as approximately 20c - 190c range for ACTUAL_TEMPERATURE.
-
-![actual temperature](media/openplc-code-actualtemperature.png)
 
 Jump to [Testing / Evidence](#50-testing--evidence) to see proof that the temperature conversion works.
 
 
 ##### 4.1.9 - Line 10: PWM-CONTROLLER
 
-Automatically controls the servo, where `CHANNEL` tells the controller where the servo is, and `DUTY` the angle the servo should currently sit at.
-
 ![pwm controller0](media/openplc-code-pwmcontroller0.png)
 
+Automatically controls the servo, where `CHANNEL` tells the controller where the servo is, and `DUTY` the angle the servo should currently sit at.
 
-##### 4.1.10 - Line 11: DUTY
-
-Calculates which width/direction to push the servo/pressure valve according to the temperature. 
-
-![duty](media/openplc-code-duty.png)
-
-##### 4.1.11 - Line 12: dial_voltage
-
-Calculates the power usage by multiplying dial value by the max power value, and then dividing by the max memory address storage size for INT type values. Previously for CircuitPython this calculation was used to calculate the ACTUAL_TEMPERATURE, which in this assignment used a more simple calculation.
+##### 4.1.10 - Line 11: dial_voltage
 
 ![dial voltage](media/openplc-code-dialvoltage.png)
 
+Calculates the power usage by multiplying dial value by the max power value, and then dividing by the max memory address storage size for INT type values. Previously for CircuitPython this calculation was used to calculate the ACTUAL_TEMPERATURE, which in this assignment used a more simple calculation.
+
+##### 4.1.11 - Line 12: DUTY
+
+![duty](media/openplc-code-duty.png)
+
+Calculates which width/direction to push the servo/pressure valve according to the temperature. 
 
 ##### 4.1.12 - Line 13: PID0
 
-PID implemented with similar PID variables to our previous assignment. Uses the ACTUAL_TEMPERATURE calculation and target SETPOINT, as well as the PID variables to output a POWER variable. 
-
 ![pid0](media/openplc-code-pid0.png)
+
+PID implemented with similar PID variables to our previous assignment. Uses the ACTUAL_TEMPERATURE calculation and target SETPOINT, as well as the PID variables to output a POWER variable. 
 
 ## 5.0 Testing / Evidence
 
