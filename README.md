@@ -157,7 +157,7 @@ If the temperature is above the SETPOINT, the heater relay / LED will turn off a
 
 </details>
 
-### 4.0 OpenPLC Explanations
+## 4.0 OpenPLC Explanations
 
 #### 4.1 Variables
 
