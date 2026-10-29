@@ -2,6 +2,8 @@
 > modbus screenshots
 > runtime screenshots
 > videos of the plc at work
+> move the stuff at 5 under system operations
+> the variables screenshot and the variables table duplicated data (so remove one)
 
 <i><p style="font-size:8">ITAE6.100 Automation and Embedded Systems<br>Assignment - Part 3: Programming with a PLC<br>By Maraea and Sara</i></p>
 
@@ -13,6 +15,8 @@
 [2.0 - Hardware and I/O Mapping](#20-hardware-and-io-mapping)<br>
 [2.1 - I/O Mapping](#21-io-mapping)<br>
 [3.0 - System Operations](#30-system-operations)<br>
+[4.0 - Testing](#40-testing)<br>
+[4.0 - Testing](#40-testing)<br>
 [4.0 - Testing](#40-testing)<br>
 
 ## 1.0 Introduction
@@ -175,8 +179,6 @@ The following table contains evidence that each operation works as intended. Mod
 
 ### 5.0 OpenPLC explanations:
 
-For this assignment, as explained in the [introduction](#10-introduction), we had to replicate our circuitpython code of the previous assignment using the tool OpenPLC in any one of the languages LD or FBD on the pico PLC.
-
 #### 5.1 Variables
 
 Below are the variables we specified on OpenPLC:
@@ -189,41 +191,6 @@ Below are the variables we specified on OpenPLC:
 Can you please convert these screenshots of a table into markdown format? they MUST be 1:1 in the data that they contain.
 
 -->
-
-| # | Name | Class | Type | Location | Initial Value | Implementation | Documentation |
-|---|---|---|---|---|---|---|---|
-| 1 | STOPPED_STATE | Local | BOOL | | | [STOPPED_STATE Screenshot](#511---line-1-stop-btn) | specifies if the device is currently stopped. |
-| 2 | RUN_STATE | Local | BOOL | | | [RUN_STATE Screenshot](#512---line-2-start-btn-or-run-state) | specifies if device is currently running |
-| 3 | E_STATE | Local | BOOL | | | [E_STATE Screenshot](#513---line-3-e-stop) | emergency stop state |
-| 4 | START_BTN | Local | BOOL | %IX0.0 | | [START_BTN Screenshot](#512---line-2-start-btn-or-run-state) | activates run_state |
-| 5 | STOP_BTN | Local | BOOL | %IX0.1 | | [STOP_BTN Screenshot](#511---line-1-stop-btn) | deactivates run_state and activates stopped state. |
-| 6 | E_STOP | Local | BOOL | %IX0.2 | | [E_STOP Screenshot](#513---line-3-e-stop) | activates emergency_stop which totally deactivates all functionality |
-| 7 | TEMP_UP | Local | BOOL | %IX0.3 | | [TEMP_UP Screenshot](#5111---line-5-tempup-and-tempdown) | increases temperature setpoint |
-| 8 | TEMP_DWN | Local | BOOL | %IX0.4 | | [TEMP_DWN Screenshot](#5111---line-5-tempup-and-tempdown) | decreases temperature setpoint |
-| 9 | P_SWITCH | Local | BOOL | %IX0.5 | | | du pont wire on board which force enables or disables power output control manually. |
-| 10 | HEATER | Local | BOOL | %QX0.0 | | [HEATER Screenshot](#5110---line-4-heater) | controls simulated heating |
-| 11 | LED0 | Local | BOOL | %QX0.1 | | [LED0 Screenshot](#5112---line-6-led0---led5) | turns on if setpoint is 80 or 90 |
-| 12 | LED1 | Local | BOOL | %QX0.2 | | [LED1 Screenshot](#5112---line-6-led0---led5) | turns on if setpoint is 90, 100, 110|
-| 13 | LED2 | Local | BOOL | %QX0.3 | | [LED2 Screenshot](#5112---line-6-led0---led5) | turns on if setpoint is 110, 120 or 130 |
-| 14 | LED3 | Local | BOOL | %QX0.4 | | [LED3 Screenshot](#5112---line-6-led0---led5) | turns on if setpoint is 130, 140, 150 |
-| 15 | LED4 | Local | BOOL | %QX0.5 | | [LED4 Screenshot](#5112---line-6-led0---led5) | turns on if setpoint is 150 160 |
-| 16 | LED5 | Local | BOOL | %QX0.6 | | [LED5 Screenshot](#5112---line-6-led0---led5) | turns on if setpoint is 170 or 180|
-| 17 | E_LED | Local | BOOL | %QX0.7 | | [E_LED Screenshot](#5112---line-6-led0---led5) | emergency stop indicator LED |
-| 18 | SETPOINT | Local | INT | %MW0 | 80 | [SETPOINT Screenshot](#5111---line-5-tempup-and-tempdown) | Default temperature. Min = 80C. Address 32 |
-| 19 | POWER | Local | REAL | %MD0 | | [POWER Screenshot](#5130---line-10-dial_voltage) | Represents heating power output |
-| 20 | ACTUAL_TEMPERATURE | Local | INT | %MW1 | | [ACTUAL_TEMPERATURE Screenshot](#5120---line-7-actual_temperature) | current measured temperature |
-| 21 | DIAL_VALUE | Local | INT | %IW0 | | [DIAL_VALUE Screenshot](#5120---line-7-actual_temperature) | Temp dial = simulates actual temperature |
-| 22 | SR0 | Local | SR | | | [SR latch Screenshot](#513---line-3-e-stop) | Set and Reset latch for setting the emergency state and then resetting |
-| 23 | R_TRIG0 | Local | R_TRIG | | | | Rising trigger |
-| 24 | R_TRIG1 | Local | R_TRIG | | | | Rising trigger |
-| 25 | CTUD0 | Local | CTUD | | | | Increments and decrements the setpoint via temp up/down buttons |
-| 26 | PWM_CONTROLLER0 | Local | PWM_CONTROLLER | | | [PWM Screenshot](#5126---line-8-pwm-controller) | Controls the servo/pressure valve |
-| 27 | SERVO_OK | Local | BOOL | | | [SERVO_OK Screenshot](#5126---line-8-pwm-controller) | Outputs a signal if the PWM is successfully connected to the servo |
-| 28 | ANGLE | Local | INT | %QW0.1 | 0 | [PWM Controller Screenshot](#5126---line-8-pwm-controller) | Controls the servo |
-| 29 | DUTY | Local | REAL | | | [DUTY Screenshot](#5129---line-9-duty) | Moves the servo |
-| 30 | DIAL_VOLTAGE | Local | REAL | | | [Dial Voltage Screenshot](#5130---line-10-dial_voltage) | actual power usage value |
-| 31 | R_TRIG2 | Local | R_TRIG | | | [R_TRIG2 Screenshot](#5111---line-5-tempup-and-tempdown) | rising edge detector |
-| 32 | PID0 | Local | PID | | | [PID Screenshot](#5132---line-11-pid0) | PID control block |
 
 #### OpenPLC code screenshots
 
@@ -247,6 +214,7 @@ STOP_BTN negated to become TRUE when pressed, stopping/breaking the RUN_STATE lo
 
 
 > update the rest of the readme with the below:
+
 line 3:
 ![alt text](image.png)
 
