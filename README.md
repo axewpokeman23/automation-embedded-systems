@@ -167,7 +167,6 @@ Below are the variables we specified on OpenPLC:
 
 ![run state](media/openplc-code-runstate.png)
 
-`not STOP-BTN and  START-BTN or RUN-STATE`
 When START_BTN is pressed it triggers the RUN_STATE to be TRUE and because of the `or RUN_STATE`, it latches.
 STOP_BTN negated to become TRUE when pressed, stopping/breaking the RUN_STATE logic.
 
@@ -175,7 +174,6 @@ STOP_BTN negated to become TRUE when pressed, stopping/breaking the RUN_STATE lo
 
 ![stopped state](media/openplc-code-stoppedstate.png)
 
-`not RUN_STATE and not E_STATE = STOPPED_STATE`
 STOPPED_STATE is enabled when not in RUN_STATE and not in E_STATE.
 
 ##### 4.1.3 - Line 3: STOPPED_STATE ENABLED
