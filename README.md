@@ -159,8 +159,9 @@ If the temperature is above the SETPOINT, the heater relay / LED will turn off a
 
 Below are the variables we specified on OpenPLC:
 
-![alt text](media/openplc-variables1.png)
-![alt text](media/openplc-variables2.png)
+![vars](media/openplc-variables1.png)
+![vars 2nd ](media/openplc-variables2.png)
+![vars 3rd ](media/openplc-variables3.png)
 
 
 ##### 4.1.1 - Line 1: START/STOP LATCH
@@ -169,6 +170,7 @@ Below are the variables we specified on OpenPLC:
 
 When START_BTN is pressed it triggers the RUN_STATE to be TRUE and because of the `or RUN_STATE`, it latches.
 STOP_BTN negated to become TRUE when pressed, stopping/breaking the RUN_STATE logic.
+
 
 ##### 4.1.2 - Line 2: STOPPED_STATE
 
@@ -198,9 +200,13 @@ Uses a SR latch so that while in a RUN_STATE and E_STOP is pressed, the coil out
 
 ![setpoint control](media/openplc-code-tempup-tempdown.png)
 
-Line 6: While E_STATE is enabled it turns the E LED ON and all SETPOINT LEDs and HEATER OFF. It is also connected to the CTUD R to reset the counter.
+While E_STATE is enabled it turns the E LED ON and all SETPOINT LEDs and HEATER OFF. It is also connected to the CTUD R to reset the counter.
 
-Line 7: Setpoint increase and decrease via the TEMP_UP and TEMP_DWN buttons. Uses TRIGs to send a pulse when buttons are pressed to prevent multiple button registers. A CTUD block is used to count up and down from 0-9 range. 
+Updated screenshot to include "ext_e_Stop", which functions as an external method (through the runtime) of activating the emergency stop state:
+![external emergency stop button tied to memory](media\openplc-code-extestop.png)
+
+##### Line 7: Setpoint increase and decrease via the TEMP_UP and TEMP_DWN buttons. 
+Uses TRIGs to send a pulse when buttons are pressed to prevent multiple button registers. A CTUD block is used to count up and down from 0-9 range. 
 Count Value is then calculated to add 1 (moving range from 1-10), multiple by 10 and add 70, giving the SETPOINT range from 80-180c. E.g. PV = 1 + 1 = 2 * 10 = 20 + 70 = 90, PV 2 = 90 etc.
 
 ##### 4.1.7 - Line 8: LED0 ->  LED5
