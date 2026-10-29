@@ -268,8 +268,8 @@ The following table contains evidence that each operation works as intended. Mod
 
 3. Also attempted to disable servo from moving while in STOPPED_STATE, which lazily worked by adding RUN_STATE to the DIV EN for DIAL to ANGLE calculation. However, the servo still moves while the system is operating in E_STATE.
 
-4. Data analysis in general. It was difficult to visualise and understand what was actually happening with the PWM Controller and PID even with Modbus Simulation and Runtime compared to the previous CircuitPython task. <br> We attempted to use Modbus to analyze data to see if our maths were working correctly and frequently ran into mathematical issues that didn't make sense, where variables we used to record how much power was being used (similar to our code in Python) such as POWER would try to display numbers in the negatives / shoot up from 0 to 25565, and/or only show zero. A solution we used to try and solve this (before utilizing the %MD addresses) was to convert the current value into a percentage out of 100, which also didn't work.
+4. Data analysis in general. It was difficult to visualise and understand what was actually happening with the PWM Controller and PID even with Modbus Simulation and Runtime compared to the previous CircuitPython task. <br> We attempted to use Modbus to analyze data to see if our maths were working correctly and frequently ran into mathematical issues that didn't make sense, where variables we used to record how much power was being used (similar to our code in Python) such as POWER would try to display numbers in the negatives / shoot up from 0 to 25565, and/or only show zero. A solution we used to try and solve this (before utilizing the %MD addresses) was to convert the current value into a percentage out of 100, which also didn't work. We later removed this from our code.
 
 ## 6.0 Group Contributions
 
-We both worked on our own separate OpenPLC code over the holidays (due to each having our own individual PLCs the initial code that we would later build on
+Sara provided the initial OpenPLC code.
