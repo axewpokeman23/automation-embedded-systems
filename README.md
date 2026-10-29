@@ -264,7 +264,7 @@ The following table contains evidence that each operation works as intended. Mod
 |Temperature dial|Simulate temperature changes|Pass|![dial](./images/servo2.MOV)|
 |Servo|Opens/closes correctly|Half Pass|![servo](./images/servo.MOV)|
 |PID Control|Controls/stabilises the temperature|Half Pass|N/A|
-|Modbus|Displays inputs, coils, holding registers and input registers|Pass| |
+|Modbus|Displays inputs, coils, holding registers and input registers|Pass|![modbus demo](./media/modbus-demo.mp4) |
 |Runtime|Displays status of inputs, coils etc through application via Modbus|Pass|![runtime](./images/runtime.mp4)|
 
 ### 5.1 Issues / Known Bugs
@@ -274,8 +274,11 @@ The following table contains evidence that each operation works as intended. Mod
 
 3. Also attempted to disable servo from moving while in STOPPED_STATE, which lazily worked by adding RUN_STATE to the DIV EN for DIAL to ANGLE calculation. However, the servo still moves while the system is operating in E_STATE.
 
-4. Data analysis in general. It was difficult to visualise and understand what was actually happening with the PWM Controller and PID even with Modbus Simulation and Runtime compared to the previous CircuitPython task. <br> We attempted to use Modbus to analyze data to see if our maths were working correctly and frequently ran into mathematical issues that didn't make sense, where variables we used to record how much power was being used (similar to our code in Python) such as POWER would try to display numbers in the negatives / shoot up from 0 to 25565, and/or only show zero. A solution we used to try and solve this (before utilizing the %MD addresses) was to convert the current value into a percentage out of 100, which also didn't work. We later removed this from our code.
+4. Data analysis in general (recording the power output in a similar way to our previous assignment). It was difficult to visualise and understand what was actually happening with the PWM Controller and PID even with Modbus Simulation and Runtime compared to the previous CircuitPython task. <br> We attempted to use Modbus to analyze data to see if our maths were working correctly and frequently ran into mathematical issues that didn't make sense, where variables we used to record how much power was being used (similar to our code in Python) such as POWER would try to display numbers in the negatives / shoot up from 0 to 25565, and/or only show zero. A solution we used to try and solve this (before utilizing the %MD addresses) was to convert the current value into a percentage out of 100, which also didn't work. We later removed this from our code.
+
+5. Debugging was especially difficult in this assignment, as we had issues that would seemingly arise out of nowhere and then resolve itself out of nowhere.
 
 ## 6.0 Group Contributions
 
-Sara provided the initial OpenPLC code.
+Sara provided the initial OpenPLC code with all states, buttons, LED functionality working, and also fixed the servo as it was not working for a while, did the runtime part of the assignment and also helped explain aspects of the assignment that were hard to understand, kept the code tidy, did the documentation and also helped resolve a lot of issues. <br>
+Maraea worked on the initial calculations required in the assignment like PID, temperature normalization, dial to dictate servo angle, modbus to analyze data (and check if the calculations were correct), and also helped on the documentation.
