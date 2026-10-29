@@ -15,9 +15,10 @@
 [2.0 - Hardware and I/O Mapping](#20-hardware-and-io-mapping)<br>
 [2.1 - I/O Mapping](#21-io-mapping)<br>
 [3.0 - System Operations](#30-system-operations)<br>
-[4.0 - Testing](#40-testing)<br>
-[4.0 - Testing](#40-testing)<br>
-[4.0 - Testing](#40-testing)<br>
+[4.0 - PLC Explanations](#40-plc-explanations)<br>
+[5.0 - Testing](#50-testing)<br>
+[5.1 - Known Bugs](#41-known-bugs)<br>
+[6.0 - Group Contributions](#60-group-contributions)<br>
 
 ## 1.0 Introduction
 
@@ -47,8 +48,6 @@ The system contains 7 inputs to control the associating 9 outputs.<br>
 4. Servo(Water valve)
 
 picture of board and inputs 
-
-Jump to [OpenPLC Code Explanations](#50-openplc-explanations) for screenshots of the LD and FBD code.
 
 ### 2.1 I/O Mapping
 
@@ -81,7 +80,7 @@ The following displays the input and output mapping used.
 ## 3.0 System Operations
 
 > [!NOTE]  
-> The following information in this section iterates the logic from the previous tasks and case study.<br>
+> The following information in this section iterates the logic from the previous tasks and case study for the intended system operations.<br>
 > Click toggle below to expand this information, or skip to [Testing](#40-testing).<br>
 
 <details>
@@ -159,27 +158,10 @@ If the temperature is above the SETPOINT, the heater relay / LED will turn off a
 
 </details>
 
-## 4.0 Testing
+### 4.0 OpenPLC Explanations
 
-The following table contains evidence that each operation works as intended. Modbus and Runtime were also used to confirm that the inputs, coils, input registers and holding registers were working correctly.
 
-|Test|Expected Result|Pass/Fail|Evidence|
-|-|-|-|-|
-|Blue button|Setpoint increases| Works! | |
-|Yellow button|Setpoint decreases| Works! | |
-|Green button|Activates RUN_STATE| Works! | |
-|Red button|Activates STOPPED_STATE| Works! | |
-|Black button|Activates EMERGENCY_STATE<br>Black and Red button to disable EMERGENCY_STATE| Works! | |
-|DuPont (Pressure Switch)|Activates EMERGENCY_STATE| Works!| |
-|Temperature dial|Simulate temperature changes| Works! | |
-|Servo|Opens/closes correctly| Works! | |
-|PID Control|Controls/stabilises the temperature| Works! | |
-|Modbus|Displays inputs, coils, holding registers and input registers| Works! | |
-|Runtime|Displays | Works! | |
-
-### 5.0 OpenPLC explanations:
-
-#### 5.1 Variables
+#### 4.1 Variables
 
 Below are the variables we specified on OpenPLC:
 
@@ -189,7 +171,7 @@ Below are the variables we specified on OpenPLC:
 
 #### OpenPLC code screenshots
 
-##### 5.1.1 - Line 1: STOP-BTN
+##### 4.1.1 - Line 1: STOP-BTN
 
 STOPPED-STATE
 
@@ -197,7 +179,7 @@ STOPPED-STATE
 
 `not RUN_STATE and not E_STATE = STOPPED_STATE`
 
-##### 5.1.2 - Line 2: START-BTN or RUN-STATE
+##### 4.1.2 - Line 2: START-BTN or RUN-STATE
 
 ![run state](media/openplc-code-runstate.png)
 
@@ -205,7 +187,7 @@ STOPPED-STATE
 
 STOP_BTN negated to become TRUE when pressed, stopping/breaking the RUN_STATE logic.
 
-##### 5.1.3 - updated code
+##### 4.1.3 - updated code
 
 
 > update the rest of the readme with the below:
@@ -220,11 +202,11 @@ line 5:
 ![alt text](image-2.png)
 
 
-##### 5.1.4 - Line 3: E-STOP
+##### 4.1.4 - Line 3: E-STOP
 
 ![e state](media/openplc-code-estate.png)
 
-##### 5.1.10 - Line 4: HEATER
+##### 4.1.10 - Line 4: HEATER
 
 Code for heater toggling, which dictates what conditions the heater will be allowed to start in:
 
@@ -234,7 +216,7 @@ Code for heater toggling, which dictates what conditions the heater will be allo
 2. Emergency state must be off
 3. Actual temperature is within 10 degrees of the setpoint
 
-##### 5.1.11 - Line 5: TEMPUP and TEMPDOWN
+##### 4.1.11 - Line 5: TEMPUP and TEMPDOWN
 
 Code for setpoint increase and decrease via the TEMPUP and TEMPDWN buttons.
 
@@ -242,13 +224,13 @@ Code for setpoint increase and decrease via the TEMPUP and TEMPDWN buttons.
 
 > included is code for disabling both the LEDs and temperature control if emergency state is currently active
 
-##### 5.1.12 - Line 6: LED0 ->  LED5
+##### 4.1.12 - Line 6: LED0 ->  LED5
 
 Code for LEDs that evaluates the setpoint to activate an LED, where every even number will only activate one LED and every odd number will activate BOTH the previous LED and the next... and so forth.
 
 ![led code](media/openplc-code-led.png)
 
-##### 5.1.20 - Line 7: ACTUAL_TEMPERATURE
+##### 4.1.20 - Line 7: ACTUAL_TEMPERATURE
 
 Code for calculating the actual temperature from normalizing the values output from the potentiometer into the 0-190 range.
 
@@ -257,40 +239,62 @@ Code for calculating the actual temperature from normalizing the values output f
 Jump to [Modbus](#52---modbus) to see proof that the temperature conversion works.
 
 
-##### 5.1.26 - Line 8: PWM-CONTROLLER
+##### 4.1.26 - Line 8: PWM-CONTROLLER
 
 Automatically controls the servo, where `CHANNEL` tells the controller where the servo is, and `DUTY` the angle the servo should currently sit at.
 
 ![pwm controller0](media/openplc-code-pwmcontroller0.png)
 
 
-##### 5.1.29 - Line 9: DUTY
+##### 4.1.29 - Line 9: DUTY
 
-Calculates which direction to push the servo/pressure valve according to the temperature. 
+Calculates which width/direction to push the servo/pressure valve according to the temperature. 
 
 ![duty](media/openplc-code-duty.png)
 
-##### 5.1.30 - Line 10: dial_voltage
+##### 4.1.30 - Line 10: dial_voltage
 
-Calculates the power usage by multiplying dial value by the max power value, and then dividing by the max memory address storage size for INT type values.
+Calculates the power usage by multiplying dial value by the max power value, and then dividing by the max memory address storage size for INT type values. Previously for CircuitPython this calculation was used to calculate the ACTUAL_TEMPERATURE, which in this assignment used a more simple calculation.
 
 ![dial voltage](media/openplc-code-dialvoltage.png)
 
 
-##### 5.1.32 - Line 11: PID0
+##### 4.1.32 - Line 11: PID0
 
-PID implemented similar to our previous assignment.
+PID implemented with similar PID variables to our previous assignment. Uses the ACTUAL_TEMPERATURE calculation and target SETPOINT, as well as the PID variables to output a POWER variable. 
 
 ![pid0](media/openplc-code-pid0.png)
 
-#### 5.2 - MODBUS
+## 5.0 Testing
+
+The following table contains evidence that each operation works as intended. Modbus and Runtime were also used to confirm that the inputs, coils, input registers and holding registers were working correctly.
+
+|Test|Expected Result|Pass/Fail|Evidence|
+|-|-|-|-|
+|Blue button|Setpoint increases|Pass|![tempup](./images/temp_up.mp4)|
+|Yellow button|Setpoint decreases|Pass|![tempdown](./images/temp_down.mp4)|
+|Green button|Activates RUN_STATE|Pass|![start](./images/start.mp4)|
+|Red button|Activates STOPPED_STATE|Pass|![stop](./images/stop.mp4)|
+|Black button|Activates EMERGENCY_STATE<br>Black and Red button to disable EMERGENCY_STATE|Pass|![estop](./images/estop.mp4)|
+|DuPont (Pressure Switch)|Activates EMERGENCY_STATE|N/A|Same logic as Black Button / Emergency Stop|
+|Temperature dial|Simulate temperature changes|Pass|![dial](./images/dial.mp4)|
+|Servo|Opens/closes correctly|Half Pass|![servo](./images/servo.mp4)|
+|PID Control|Controls/stabilises the temperature|Half Pass||
+|Modbus|Displays inputs, coils, holding registers and input registers|Pass| |
+|Runtime|Displays status of inputs, coils etc through application via Modbus|Pass|![runtime](./images/runtime.mp4)|
+
+### 5.1 Issues / Known Bugs
+Struggled to get the PWM Controller working as intended with the duty cycle. Tried several calculations to get the duty percentage based on the ANGLE calculation. Currently the TEMP_DIAL calculates the ANGLE as the output variable as well as the DUTY variable which are the same except DUTY is a float, ANGLE is an INT.
+
+Tried using SEL and MV blocks to control the servo to reset to a 0degree angle when pressed stop or emergency stop but the logic would only apply on RUN_STATE rising edge.
+
+Also attempted to disable servo from moving while in STOPPED_STATE, which lazily worked by adding RUN_STATE to the DIV EN for DIAL to ANGLE calculation. However, the servo still moves while the system is operating in E_STATE.
+
+It was also difficult to visualise and understand what was actually happening with the PWM Controller and PID even with Modbus Simulation and Runtime compared to the previous CircuitPython task. 
+
+## 6.0 Group Contributions
 
 
-
-#### 5.3 - Runtime
-
-
-### 6 - Troubles we face 
 <!--
 notes:
 connected by SERIAL COM11
