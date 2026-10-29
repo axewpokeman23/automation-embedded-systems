@@ -214,6 +214,10 @@ Can you please convert these screenshots of a table into markdown format? they M
 | 20 | ACTUAL_TEMPERATURE | Local | INT | %MW1 | | [ACTUAL_TEMPERATURE Screenshot](#5120---line-7-actual_temperature) | current measured temperature |
 | 21 | DIAL_VALUE | Local | INT | %IW0 | | [DIAL_VALUE Screenshot](#5120---line-7-actual_temperature) | Temp dial = simulates actual temperature |
 | 22 | SR0 | Local | SR | | | [SR latch Screenshot](#513---line-3-e-stop) | Set and Reset latch for setting the emergency state and then resetting |
+| 23 | R_TRIG0 | Local | R_TRIG | | | | Rising trigger |
+| 24 | R_TRIG1 | Local | R_TRIG | | | | Rising trigger |
+| 25 | CTUD0 | Local | CTUD | | | | Increments and decrements the setpoint via temp up/down buttons |
+| 26 | PWM_CONTROLLER0 | Local | PWM_CONTROLLER | | | [PWM Screenshot](#5126---line-8-pwm-controller) | Controls the servo/pressure valve |
 | 27 | SERVO_OK | Local | BOOL | | | [SERVO_OK Screenshot](#5126---line-8-pwm-controller) | Outputs a signal if the PWM is successfully connected to the servo |
 | 28 | ANGLE | Local | INT | %QW0.1 | 0 | [PWM Controller Screenshot](#5126---line-8-pwm-controller) | Controls the servo |
 | 29 | DUTY | Local | REAL | | | [DUTY Screenshot](#5129---line-9-duty) | Moves the servo |
@@ -239,7 +243,21 @@ STOPPED-STATE
 
 STOP_BTN negated to become TRUE when pressed, stopping/breaking the RUN_STATE logic.
 
-##### 5.1.3 - Line 3: E-STOP
+##### 5.1.3 - updated code
+
+
+> update the rest of the readme with the below:
+line 3:
+![alt text](image.png)
+
+line 4: 
+![alt text](image-1.png)
+
+line 5:
+![alt text](image-2.png)
+
+
+##### 5.1.4 - Line 3: E-STOP
 
 ![e state](media/openplc-code-estate.png)
 
