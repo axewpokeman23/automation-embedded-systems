@@ -269,14 +269,14 @@ The following table contains evidence that each operation works as intended. Mod
 
 |Test|Expected Result|Pass/Fail|Evidence|
 |-|-|-|-|
-|Blue button|Setpoint increases|Pass|![tempup](./images/temp_up.mp4)|
-|Yellow button|Setpoint decreases|Pass|![tempdown](./images/temp_down.mp4)|
-|Green button|Activates RUN_STATE|Pass|![start](./images/start.mp4)|
-|Red button|Activates STOPPED_STATE|Pass|![stop](./images/stop.mp4)|
-|Black button|Activates EMERGENCY_STATE<br>Black and Red button to disable EMERGENCY_STATE|Pass|![estop](./images/estop.mp4)|
+|Blue button|Setpoint increases|Pass|![tempup](./images/temp_up.MOV)|
+|Yellow button|Setpoint decreases|Pass|![tempdown](./images/temp_dwn.MOV)|
+|Green button|Activates RUN_STATE|Pass|![start](./images/start.MOV)|
+|Red button|Activates STOPPED_STATE|Pass|![stop](./images/stop.MOV)|
+|Black button|Activates EMERGENCY_STATE<br>Black and Red button to disable EMERGENCY_STATE|Pass|![estop](./images/estop.MOV)|
 |DuPont (Pressure Switch)|Activates EMERGENCY_STATE|N/A|Same logic as Black Button / Emergency Stop|
-|Temperature dial|Simulate temperature changes|Pass|![dial](./images/dial.mp4)|
-|Servo|Opens/closes correctly|Half Pass|![servo](./images/servo.mp4)|
+|Temperature dial|Simulate temperature changes|Pass|![dial](./images/servo2.MOV)|
+|Servo|Opens/closes correctly|Half Pass|![servo](./images/servo.MOV)|
 |PID Control|Controls/stabilises the temperature|Half Pass|N/A|
 |Modbus|Displays inputs, coils, holding registers and input registers|Pass| |
 |Runtime|Displays status of inputs, coils etc through application via Modbus|Pass|![runtime](./images/runtime.mp4)|
