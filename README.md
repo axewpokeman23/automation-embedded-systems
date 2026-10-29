@@ -20,7 +20,7 @@ Part 3 aims to implement the case study logic using a combination of ladder diag
 
 We will be using the Raspberry Pico W to test the connected hardware (digital, and analogue inputs, and outputs) and to demonstrate that the PLC is functioning as intended.
 
-The OpenPLC code can be found here: [waterboiler](waterboiler/)
+The OpenPLC code can be found here: [waterboiler](waterboiler/)<br>
 Structured Text file used for Runtime can be found here: [waterboiler_runtime.st](waterboiler/waterboiler_runtime.st)
 
 ## 2.0 Hardware and I/O Mapping
