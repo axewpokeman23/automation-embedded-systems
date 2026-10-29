@@ -279,7 +279,7 @@ The following table contains evidence that each operation works as intended. Mod
 |DuPont (Pressure Switch)|Activates EMERGENCY_STATE|N/A|Same logic as Black Button / Emergency Stop|
 |Temperature dial|Simulate temperature changes|Pass|![dial](./images/dial.mp4)|
 |Servo|Opens/closes correctly|Half Pass|![servo](./images/servo.mp4)|
-|PID Control|Controls/stabilises the temperature|Half Pass||
+|PID Control|Controls/stabilises the temperature|Half Pass|N/A|
 |Modbus|Displays inputs, coils, holding registers and input registers|Pass| |
 |Runtime|Displays status of inputs, coils etc through application via Modbus|Pass|![runtime](./images/runtime.mp4)|
 
