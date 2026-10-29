@@ -25,7 +25,9 @@ Structured Text file used for Runtime can be found here: [waterboiler_runtime.st
 
 ## 2.0 Hardware and I/O Mapping
 
-The system contains 7 inputs to control the associating 9 outputs.<br> ##### Inputs include:
+The system contains 7 inputs to control the associating 9 outputs.<br> 
+
+##### Inputs include:
 
 1. Start / Heating ON / Setpoint
 2. Stop / Heating OFF
