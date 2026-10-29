@@ -262,24 +262,14 @@ The following table contains evidence that each operation works as intended. Mod
 |Runtime|Displays status of inputs, coils etc through application via Modbus|Pass|![runtime](./images/runtime.mp4)|
 
 ### 5.1 Issues / Known Bugs
-Struggled to get the PWM Controller working as intended with the duty cycle. Tried several calculations to get the duty percentage based on the ANGLE calculation. Currently the TEMP_DIAL calculates the ANGLE as the output variable as well as the DUTY variable which are the same except DUTY is a float, ANGLE is an INT.
+1. Struggled to get the PWM Controller working as intended with the duty cycle. Tried several calculations to get the duty percentage based on the ANGLE calculation. Currently the TEMP_DIAL calculates the ANGLE as the output variable as well as the DUTY variable which are the same except DUTY is a float, ANGLE is an INT.
 
-Tried using SEL and MV blocks to control the servo to reset to a 0degree angle when pressed stop or emergency stop but the logic would only apply on RUN_STATE rising edge.
+2. Tried using SEL and MV blocks to control the servo to reset to a 0degree angle when pressed stop or emergency stop but the logic would only apply on RUN_STATE rising edge.
 
-Also attempted to disable servo from moving while in STOPPED_STATE, which lazily worked by adding RUN_STATE to the DIV EN for DIAL to ANGLE calculation. However, the servo still moves while the system is operating in E_STATE.
+3. Also attempted to disable servo from moving while in STOPPED_STATE, which lazily worked by adding RUN_STATE to the DIV EN for DIAL to ANGLE calculation. However, the servo still moves while the system is operating in E_STATE.
 
-It was also difficult to visualise and understand what was actually happening with the PWM Controller and PID even with Modbus Simulation and Runtime compared to the previous CircuitPython task. 
+4. Data analysis in general. It was difficult to visualise and understand what was actually happening with the PWM Controller and PID even with Modbus Simulation and Runtime compared to the previous CircuitPython task. <br> We attempted to use Modbus to analyze data to see if our maths were working correctly and frequently ran into mathematical issues that didn't make sense, where variables we used to record how much power was being used (similar to our code in Python) such as POWER would try to display numbers in the negatives / shoot up from 0 to 25565, and/or only show zero. A solution we used to try and solve this (before utilizing the %MD addresses) was to convert the current value into a percentage out of 100, which also didn't work.
 
 ## 6.0 Group Contributions
 
-
-<!--
-notes:
-connected by SERIAL COM11
-
-OpenPLC logic and code explanations:
-
-
-
-
--->
+We both worked on our own separate OpenPLC code over the holidays (due to each having our own individual PLCs the initial code that we would later build on
