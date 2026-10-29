@@ -167,43 +167,38 @@ Below are the variables we specified on OpenPLC:
 ![alt text](media/openplc-variables2.png)
 
 
-##### 4.1.1 - Line 1: START-BTN or RUN-STATE
+##### 4.1.1 - Line 1: START/STOP LATCH
 
 ![run state](media/openplc-code-runstate.png)
 
 `not STOP-BTN and  START-BTN or RUN-STATE`
-
+When START_BTN is pressed it triggers the RUN_STATE to be TRUE and because of the `or RUN_STATE`, it latches.
 STOP_BTN negated to become TRUE when pressed, stopping/breaking the RUN_STATE logic.
 
-##### 4.1.2 - Line 2: STOP-BTN
-
-STOPPED-STATE
+##### 4.1.2 - Line 2: STOPPED_STATE
 
 ![stopped state](media/openplc-code-stoppedstate.png)
 
 `not RUN_STATE and not E_STATE = STOPPED_STATE`
+STOPPED_STATE is enabled when not in RUN_STATE and not in E_STATE.
 
+##### 4.1.3 - Line 3: STOPPED_STATE ENABLED
 
-##### 4.1.3 - updated code
-
-
-> update the rest of the readme with the below:
-
-line 3:
 ![alt text](image.png)
+While in a STOPPED_STATE the HEATER coil is reset.
 
-line 4: 
+##### 4.1.4 - Line 4: RUN_STATE ENABLED
+
 ![alt text](image-1.png)
+While RUN_STATE is TRUE and not E_STATE, the heater coil responds. If the ACTUAL_TEMPERATURE is less than the SETPOINT the heater will set (ON). If the ACTUAL_TEMPERATURE is greater than the SETPOINT the heater will reset (OFF). By adding SUB and ADD -+2 to each associated comparison SETPOINT, this gives a range surrounding the SETPOINT to help stabilise the ON/OFF logic of the heater LED creating a BANG BANG. This helps to minimise the LED from blinking fast when the ACTUAL_TEMPERATURE nears the SETPOINT.
 
-line 5:
+##### 4.1.5 - Line 5: E_STOP
+
 ![alt text](image-2.png)
 
+Uses a SR latch so that while in a RUN_STATE and E_STOP is pressed, the coil outputs the EMERGENCY_STATE which latches. Pressing E_STOP (Black button) and STOP_BTN (Red button) will release the latch, stopping the EMERGENCY_STATE.
 
-##### 4.1.4 - Line 3: E-STOP
-
-![e state](media/openplc-code-estate.png)
-
-##### 4.1.10 - Line 4: HEATER
+##### 4.1.6 - Line 6: HEATER
 
 Code for heater toggling, which dictates what conditions the heater will be allowed to start in:
 
@@ -213,7 +208,7 @@ Code for heater toggling, which dictates what conditions the heater will be allo
 2. Emergency state must be off
 3. Actual temperature is within 10 degrees of the setpoint
 
-##### 4.1.11 - Line 5: TEMP_UP and TEMP_DWN
+##### 4.1.7 - Line 7: TEMP_UP and TEMP_DWN
 
 Code for setpoint increase and decrease via the TEMP_UP and TEMP_DWN buttons.
 
@@ -221,13 +216,13 @@ Code for setpoint increase and decrease via the TEMP_UP and TEMP_DWN buttons.
 
 > included is code for disabling both the LEDs and temperature control if emergency state is currently active
 
-##### 4.1.12 - Line 6: LED0 ->  LED5
+##### 4.1.8 - Line 8: LED0 ->  LED5
 
 Code for LEDs that evaluates the setpoint to activate an LED, where every even number will only activate one LED and every odd number will activate BOTH the previous LED and the next... and so forth.
 
 ![led code](media/openplc-code-led.png)
 
-##### 4.1.20 - Line 7: ACTUAL_TEMPERATURE
+##### 4.1.9 - Line 9: ACTUAL_TEMPERATURE
 
 Code for calculating the simulated temperature from normalizing the values output from the potentiometer into the 0-190 range.
 Takes the current dial value and subtracts the minimum reading (355) from the Analogue Input Modbus, divided by the maximum reading (3416 - 355 = 3061), times 170, plus 20 = ACTUAL_TEMPERATURE. Which gives a reading memory reading on Modbus (address 32) as approximately 20c - 190c range for ACTUAL_TEMPERATURE.
@@ -237,27 +232,27 @@ Takes the current dial value and subtracts the minimum reading (355) from the An
 Jump to [Testing / Evidence](#50-testing--evidence) to see proof that the temperature conversion works.
 
 
-##### 4.1.26 - Line 8: PWM-CONTROLLER
+##### 4.1.10 - Line 10: PWM-CONTROLLER
 
 Automatically controls the servo, where `CHANNEL` tells the controller where the servo is, and `DUTY` the angle the servo should currently sit at.
 
 ![pwm controller0](media/openplc-code-pwmcontroller0.png)
 
 
-##### 4.1.29 - Line 9: DUTY
+##### 4.1.11 - Line 11: DUTY
 
 Calculates which width/direction to push the servo/pressure valve according to the temperature. 
 
 ![duty](media/openplc-code-duty.png)
 
-##### 4.1.30 - Line 10: dial_voltage
+##### 4.1.12 - Line 12: dial_voltage
 
 Calculates the power usage by multiplying dial value by the max power value, and then dividing by the max memory address storage size for INT type values. Previously for CircuitPython this calculation was used to calculate the ACTUAL_TEMPERATURE, which in this assignment used a more simple calculation.
 
 ![dial voltage](media/openplc-code-dialvoltage.png)
 
 
-##### 4.1.32 - Line 11: PID0
+##### 4.1.13 - Line 13: PID0
 
 PID implemented with similar PID variables to our previous assignment. Uses the ACTUAL_TEMPERATURE calculation and target SETPOINT, as well as the PID variables to output a POWER variable. 
 
