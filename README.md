@@ -285,5 +285,6 @@ The following table contains evidence that each operation works as intended. Mod
 
 ## 6.0 Group Contributions
 
-Sara provided the initial OpenPLC code with all states, buttons, LED functionality working, and also fixed the servo as it was not working for a while, did the runtime part of the assignment and also helped explain aspects of the assignment that were hard to understand, kept the code tidy, did the documentation and also helped resolve a lot of issues. <br>
-Maraea worked on the initial calculations required in the assignment like PID, temperature normalization, dial to dictate servo angle, modbus to analyze data (and check if the calculations were correct), and also helped on the documentation.
+Sara provided the initial OpenPLC code with all states, buttons, LED functionality working, fixed the servo as it was not working for a while, did the runtime part of the assignment in it's entirety by herself, helped explain aspects of the assignment that were hard to understand, kept the code tidy, did the documentation and also helped resolve a lot of other issues. Helped a lot when troubleshooting as well. <br>
+
+Maraea worked on the initial calculations required in the assignment like PID, temperature normalization, dial to dictate servo angle, modbus to analyze data (and check if the calculations were correct), helped on the documentation, and also helped explain aspects of the code.
