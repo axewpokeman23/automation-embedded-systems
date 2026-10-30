@@ -169,11 +169,14 @@ Below are the variables we specified on OpenPLC:
 
 ![run state](media/openplc-code-runstate.png)
 
+`not STOP-BTN and  START-BTN or RUN-STATE`
+
 When START_BTN is pressed it triggers the RUN_STATE to be TRUE and because of the `or RUN_STATE`, it latches.
 STOP_BTN negated to become TRUE when pressed, stopping/breaking the RUN_STATE logic.
 
-
 ##### 4.1.2 - Line 2: STOPPED_STATE
+
+`not RUN_STATE and not E_STATE = STOPPED_STATE`
 
 ![stopped state](media/openplc-code-stoppedstate.png)
 
@@ -183,28 +186,27 @@ STOPPED_STATE is enabled when not in RUN_STATE and not in E_STATE.
 
 ![alt text](images/image.png)
 
-While in a STOPPED_STATE the HEATER coil is reset.
+`E_STATE = HEATER -> 0`
+
+If STOPPED_STATE is true, the HEATER coil is reset.
 
 ##### 4.1.4 - Line 4: RUN_STATE ENABLED
 
 ![alt text](images/image-1.png)
 
-While RUN_STATE is TRUE and not E_STATE, the heater coil responds. If the ACTUAL_TEMPERATURE is less than the SETPOINT the heater will set (ON). If the ACTUAL_TEMPERATURE is greater than the SETPOINT the heater will reset (OFF). By adding SUB and ADD -+2 to each associated comparison SETPOINT, this gives a range surrounding the SETPOINT to help stabilise the ON/OFF logic of the heater LED creating a BANG BANG. This helps to minimise the LED from blinking fast when the ACTUAL_TEMPERATURE nears the SETPOINT.
+While RUN_STATE is TRUE and not E_STATE, the heater coil is toggled. If the ACTUAL_TEMPERATURE is less than the SETPOINT the heater will set (ON). If the ACTUAL_TEMPERATURE is greater than the SETPOINT the heater will reset (OFF). By adding SUB and ADD -+2 to each associated comparison SETPOINT, this gives a range surrounding the SETPOINT to help stabilise the ON/OFF logic of the heater LED creating a BANG BANG. This helps to minimise the LED from blinking fast when the ACTUAL_TEMPERATURE nears the SETPOINT.
 
 ##### 4.1.5 - Line 5: E_STOP
 
 ![alt text](images/image-2.png)
 
-Uses a SR latch so that while in a RUN_STATE and E_STOP is pressed, the coil outputs the EMERGENCY_STATE which latches. Pressing E_STOP (Black button) and STOP_BTN (Red button) will release the latch, stopping the EMERGENCY_STATE.
+Uses a SR latch so that while in a RUN_STATE and E_STOP is pressed, the coil toggles EMERGENCY_STATE which latches. Pressing E_STOP (Black button) and STOP_BTN (Red button) will release the latch, stopping the EMERGENCY_STATE.
 
 ##### 4.1.6 - Line 6: E_STATE ENABLED - Line 7: TEMP_UP and TEMP_DWN
 
 ![setpoint control](media/openplc-code-tempup-tempdown.png)
 
-While E_STATE is enabled it turns the E LED ON and all SETPOINT LEDs and HEATER OFF. It is also connected to the CTUD R to reset the counter.
-
-Updated screenshot to include "ext_e_Stop", which functions as an external method (through the runtime) of activating the emergency stop state:
-![external emergency stop button tied to memory](media\openplc-code-extestop.png)
+While E_STATE is enabled it turns the E LED ON and all SETPOINT LEDs and toggles HEATER off. It is also connected to the CTUD R to reset the counter to default 80.
 
 ##### Line 7: Setpoint increase and decrease via the TEMP_UP and TEMP_DWN buttons. 
 Uses TRIGs to send a pulse when buttons are pressed to prevent multiple button registers. A CTUD block is used to count up and down from 0-9 range. 
