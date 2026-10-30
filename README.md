@@ -206,7 +206,8 @@ Uses a SR latch so that while in a RUN_STATE and E_STOP is pressed, the coil tog
 
 While E_STATE is enabled it turns the E LED ON and all SETPOINT LEDs and toggles HEATER off. It is also connected to the CTUD R to reset the counter to default 80.
 
-##### Line 7: Setpoint increase and decrease via the TEMP_UP and TEMP_DWN buttons. 
+Also depicted in the above image is the *setpoint adjustment logic* via the TEMP_UP and TEMP_DWN buttons.
+
 Uses TRIGs to send a pulse when buttons are pressed to prevent multiple button registers. A CTUD block is used to count up and down from 0-9 range. 
 Count Value is then calculated to add 1 (moving range from 1-10), multiple by 10 and add 70, giving the SETPOINT range from 80-180c. E.g. PV = 1 + 1 = 2 * 10 = 20 + 70 = 90, PV 2 = 90 etc.
 
