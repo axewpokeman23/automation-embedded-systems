@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2026-09-21T13:51:32"/>
-  <contentHeader name="Unnamed" modificationDateTime="2026-10-30T10:26:32">
+  <contentHeader name="Unnamed" modificationDateTime="2026-10-29T18:21:46">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -24,25 +24,16 @@
               <type>
                 <BOOL/>
               </type>
-              <documentation>
-                <xhtml:p><![CDATA[if run_state is not active]]></xhtml:p>
-              </documentation>
             </variable>
             <variable name="RUN_STATE">
               <type>
                 <BOOL/>
               </type>
-              <documentation>
-                <xhtml:p><![CDATA[if stopped_state and e_state are not active]]></xhtml:p>
-              </documentation>
             </variable>
             <variable name="E_STATE">
               <type>
                 <BOOL/>
               </type>
-              <documentation>
-                <xhtml:p><![CDATA[disables all interactivity]]></xhtml:p>
-              </documentation>
             </variable>
           </localVars>
           <localVars>
@@ -127,7 +118,9 @@
                 <xhtml:p><![CDATA[Default temperature. Min = 80C. Address 32]]></xhtml:p>
               </documentation>
             </variable>
-            <variable name="POWER" address="%MD0">
+          </localVars>
+          <localVars>
+            <variable name="POWER">
               <type>
                 <REAL/>
               </type>
@@ -135,6 +128,8 @@
                 <xhtml:p><![CDATA[Represents heating power output]]></xhtml:p>
               </documentation>
             </variable>
+          </localVars>
+          <localVars>
             <variable name="ACTUAL_TEMPERATURE" address="%MW1">
               <type>
                 <INT/>
@@ -216,24 +211,6 @@
               </type>
             </variable>
           </localVars>
-          <localVars>
-            <variable name="ext_e_stop" address="%MW2">
-              <type>
-                <INT/>
-              </type>
-              <documentation>
-                <xhtml:p><![CDATA[external e_stop button]]></xhtml:p>
-              </documentation>
-            </variable>
-            <variable name="ext_start" address="%MW3">
-              <type>
-                <INT/>
-              </type>
-              <documentation>
-                <xhtml:p><![CDATA[external start]]></xhtml:p>
-              </documentation>
-            </variable>
-          </localVars>
         </interface>
         <body>
           <LD>
@@ -296,12 +273,6 @@
                   <position x="230" y="260"/>
                   <position x="230" y="310"/>
                   <position x="191" y="310"/>
-                </connection>
-                <connection refLocalId="85" formalParameter="OUT">
-                  <position x="930" y="260"/>
-                  <position x="260" y="260"/>
-                  <position x="260" y="190"/>
-                  <position x="230" y="190"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -553,11 +524,11 @@
               </connectionPointIn>
             </rightPowerRail>
             <contact localId="52" negated="false" width="21" height="20">
-              <position x="110" y="910"/>
+              <position x="60" y="910"/>
               <connectionPointIn>
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="18">
-                  <position x="110" y="920"/>
+                  <position x="60" y="920"/>
                   <position x="20" y="920"/>
                 </connection>
               </connectionPointIn>
@@ -604,14 +575,6 @@
                   <position x="170" y="850"/>
                   <position x="81" y="850"/>
                 </connection>
-                <connection refLocalId="263" formalParameter="OUT">
-                  <position x="170" y="850"/>
-                  <position x="160" y="850"/>
-                  <position x="160" y="900"/>
-                  <position x="260" y="900"/>
-                  <position x="260" y="980"/>
-                  <position x="250" y="980"/>
-                </connection>
               </connectionPointIn>
               <connectionPointOut>
                 <relPosition x="21" y="10"/>
@@ -624,10 +587,10 @@
                 <xhtml:p><![CDATA[STOP_BTN negated to become TRUE when pressed, stopping/breaking the RUN_STATE logic.]]></xhtml:p>
               </content>
             </comment>
-            <comment localId="57" height="40" width="620">
+            <comment localId="57" height="40" width="490">
               <position x="20" y="60"/>
               <content>
-                <xhtml:p><![CDATA[START_BTN is pressed, closing the connection to STATUS_RUN RUN_STATE.]]></xhtml:p>
+                <xhtml:p><![CDATA[START_BTN is pressed, closing the connection to RUN_STATE.]]></xhtml:p>
               </content>
             </comment>
             <comment localId="58" height="40" width="650">
@@ -746,9 +709,9 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                     <relPosition x="0" y="70"/>
                     <connection refLocalId="70" formalParameter="Q">
                       <position x="450" y="1090"/>
-                      <position x="430" y="1090"/>
-                      <position x="430" y="980"/>
-                      <position x="420" y="980"/>
+                      <position x="380" y="1090"/>
+                      <position x="380" y="980"/>
+                      <position x="210" y="980"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -763,8 +726,8 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                     <connection refLocalId="101">
                       <position x="450" y="1130"/>
                       <position x="435" y="1130"/>
-                      <position x="435" y="1140"/>
-                      <position x="420" y="1140"/>
+                      <position x="435" y="1150"/>
+                      <position x="420" y="1150"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -1832,20 +1795,16 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </content>
             </comment>
             <block localId="70" typeName="R_TRIG" instanceName="R_TRIG2" width="60" height="40" executionOrderId="0">
-              <position x="360" y="950"/>
+              <position x="150" y="950"/>
               <inputVariables>
                 <variable formalParameter="CLK">
                   <connectionPointIn>
                     <relPosition x="0" y="30"/>
                     <connection refLocalId="52">
-                      <position x="360" y="980"/>
-                      <position x="330" y="980"/>
-                      <position x="330" y="920"/>
-                      <position x="131" y="920"/>
-                    </connection>
-                    <connection refLocalId="263" formalParameter="OUT">
-                      <position x="360" y="980"/>
-                      <position x="250" y="980"/>
+                      <position x="150" y="980"/>
+                      <position x="101" y="980"/>
+                      <position x="101" y="920"/>
+                      <position x="81" y="920"/>
                     </connection>
                   </connectionPointIn>
                 </variable>
@@ -2585,7 +2544,7 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               <expression>355.0</expression>
             </inVariable>
             <comment localId="244" height="40" width="600">
-              <position x="30" y="2010"/>
+              <position x="30" y="2030"/>
               <content>
                 <xhtml:p><![CDATA[dial - min reading / max reading x 170 + 20 (190c) = actual_temperature]]></xhtml:p>
               </content>
@@ -2766,13 +2725,7 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                 <relPosition x="0" y="10"/>
                 <connection refLocalId="52">
                   <position x="610" y="920"/>
-                  <position x="131" y="920"/>
-                </connection>
-                <connection refLocalId="263" formalParameter="OUT">
-                  <position x="610" y="920"/>
-                  <position x="300" y="920"/>
-                  <position x="300" y="980"/>
-                  <position x="250" y="980"/>
+                  <position x="81" y="920"/>
                 </connection>
               </connectionPointIn>
               <connectionPointOut>
@@ -2837,64 +2790,6 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
                 <relPosition x="90" y="20"/>
               </connectionPointOut>
               <expression>RUN_STATE</expression>
-            </inVariable>
-            <inVariable localId="262" width="90" height="30" negated="false">
-              <position x="30" y="960"/>
-              <connectionPointOut>
-                <relPosition x="90" y="20"/>
-              </connectionPointOut>
-              <expression>ext_e_stop</expression>
-            </inVariable>
-            <block localId="263" typeName="INT_TO_BOOL" width="100" height="40">
-              <position x="150" y="950"/>
-              <inputVariables>
-                <variable formalParameter="IN">
-                  <connectionPointIn>
-                    <relPosition x="0" y="30"/>
-                    <connection refLocalId="262">
-                      <position x="150" y="980"/>
-                      <position x="120" y="980"/>
-                    </connection>
-                  </connectionPointIn>
-                </variable>
-              </inputVariables>
-              <inOutVariables/>
-              <outputVariables>
-                <variable formalParameter="OUT">
-                  <connectionPointOut>
-                    <relPosition x="100" y="30"/>
-                  </connectionPointOut>
-                </variable>
-              </outputVariables>
-            </block>
-            <block localId="85" typeName="INT_TO_BOOL" width="100" height="40" executionOrderId="0">
-              <position x="130" y="160"/>
-              <inputVariables>
-                <variable formalParameter="IN">
-                  <connectionPointIn>
-                    <relPosition x="0" y="30"/>
-                    <connection refLocalId="86">
-                      <position x="130" y="190"/>
-                      <position x="110" y="190"/>
-                    </connection>
-                  </connectionPointIn>
-                </variable>
-              </inputVariables>
-              <inOutVariables/>
-              <outputVariables>
-                <variable formalParameter="OUT">
-                  <connectionPointOut>
-                    <relPosition x="100" y="30"/>
-                  </connectionPointOut>
-                </variable>
-              </outputVariables>
-            </block>
-            <inVariable localId="86" width="90" height="30" negated="false" executionOrderId="0">
-              <position x="20" y="180"/>
-              <connectionPointOut>
-                <relPosition x="90" y="10"/>
-              </connectionPointOut>
-              <expression>ext_start</expression>
             </inVariable>
           </LD>
         </body>
