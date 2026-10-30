@@ -165,7 +165,7 @@ Below are the variables we specified on OpenPLC:
 
 #### 4.1 Code Explanations
 
-Explained in order as seen on the [waterboiler](waterboiler/) OpenPLC diagram. <br>
+Explained in order as seen on [waterboiler](waterboiler/).<br>
 
 ##### 4.1.1 - Line 1: START/STOP LATCH
 
@@ -232,7 +232,7 @@ Test outcomes and video proof can be found under [5.0 - Testing / Evidence.](#50
 Code for calculating the simulated temperature from normalizing the values output from the potentiometer into the 0-190 range.
 Takes the current dial value and subtracts the minimum reading (355) from the Analogue Input Modbus, divided by the maximum reading (3416 - 355 = 3061), times 170, plus 20 = ACTUAL_TEMPERATURE. Which gives a reading memory reading on Modbus (address 32) as approximately 20c - 190c range for ACTUAL_TEMPERATURE.
 
-In our ![Modbus demonstration](./media/modbus-demo.mp4) video, we record evidence that the temperature conversion works as required.
+In our [Modbus demonstration](./media/modbus-demo.mp4) video, we record evidence that the temperature conversion works as required.
 
 ##### 4.1.9 - Line 10: PWM-CONTROLLER
 
