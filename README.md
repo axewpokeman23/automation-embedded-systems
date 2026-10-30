@@ -156,12 +156,16 @@ If the temperature is above the SETPOINT, the heater relay / LED will turn off a
 
 ## 4.0 OpenPLC Explanations
 
-#### 4.1 Variables
+#### 4.0.1 Variables
 
 Below are the variables we specified on OpenPLC:
 
 ![vars](media/openplc-variables1.png)
 ![vars 2nd ](media/openplc-variables2.png)
+
+#### 4.1 Code Explanations
+
+Explained in order of execution on the [waterboiler](waterboiler/) code. <br>
 
 ##### 4.1.1 - Line 1: START/STOP LATCH
 
@@ -210,6 +214,8 @@ Also depicted in the above image is the *setpoint adjustment logic* via the TEMP
 
 Uses TRIGs to send a pulse when buttons are pressed to prevent multiple button registers. A CTUD block is used to count up and down from 0-9 range. 
 Count Value is then calculated to add 1 (moving range from 1-10), multiple by 10 and add 70, giving the SETPOINT range from 80-180c. E.g. PV = 1 + 1 = 2 * 10 = 20 + 70 = 90, PV 2 = 90 etc.
+
+In our ![Modbus demonstration](./media/modbus-demo.mp4) video, we record evidence that the setpoint adjustment works as required.
 
 ##### 4.1.7 - Line 8: LED0 ->  LED5
 
