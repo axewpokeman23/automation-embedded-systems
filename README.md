@@ -162,8 +162,6 @@ Below are the variables we specified on OpenPLC:
 
 ![vars](media/openplc-variables1.png)
 ![vars 2nd ](media/openplc-variables2.png)
-![vars 3rd ](media/openplc-variables3.png)
-
 
 ##### 4.1.1 - Line 1: START/STOP LATCH
 
