@@ -223,7 +223,7 @@ In our [Modbus demonstration](./media/modbus-demo.mp4) video, we record evidence
 
 Code for LEDs that evaluates the setpoint to activate an LED, where every even number will only activate one LED and every odd number will activate BOTH the previous LED and the next... and so forth. Implemented using EQ blocks and wires as OR gates for odd number logic.
 
-Test outcomes and video proof can be found under ![5.0 - Testing / Evidence.](#50-testing-evidence)
+Test outcomes and video proof can be found under [5.0 - Testing / Evidence.](#50-testing--evidence)
 
 ##### 4.1.8 - Line 9: ACTUAL_TEMPERATURE
 
