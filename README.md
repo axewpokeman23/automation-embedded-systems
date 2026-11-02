@@ -179,9 +179,9 @@ STOP_BTN negated to become TRUE when pressed, stopping/breaking the RUN_STATE lo
 
 ##### 4.1.2 - Line 2: STOPPED_STATE
 
-`not RUN_STATE and not E_STATE = STOPPED_STATE`
-
 ![stopped state](media/openplc-code-stoppedstate.png)
+
+`not RUN_STATE and not E_STATE = STOPPED_STATE`
 
 STOPPED_STATE is enabled when not in RUN_STATE and not in E_STATE.
 
@@ -197,19 +197,19 @@ If STOPPED_STATE is true, the HEATER coil is reset.
 
 ![alt text](images/image-1.png)
 
-While RUN_STATE is TRUE and not E_STATE, the heater coil is toggled. If the ACTUAL_TEMPERATURE is less than the SETPOINT the heater will set (ON). If the ACTUAL_TEMPERATURE is greater than the SETPOINT the heater will reset (OFF). By adding SUB and ADD -+2 to each associated comparison SETPOINT, this gives a range surrounding the SETPOINT to help stabilise the ON/OFF logic of the heater LED creating a BANG BANG. This helps to minimise the LED from blinking fast when the ACTUAL_TEMPERATURE nears the SETPOINT.
+While RUN_STATE is TRUE and not E_STATE, the heater coil is toggled. If the ACTUAL_TEMPERATURE is less than the SETPOINT the heater will set (ON - HEATER(S)). If the ACTUAL_TEMPERATURE is greater than the SETPOINT the heater will reset (OFF - HEATER(R)). By adding SUB and ADD -+2 to each associated comparison SETPOINT, this gives a range surrounding the SETPOINT to help stabilise the ON/OFF logic of the heater LED creating a BANG BANG. This helps to minimise the LED from blinking fast when the ACTUAL_TEMPERATURE nears the SETPOINT.
 
 ##### 4.1.5 - Line 5: E_STOP
 
 ![alt text](images/image-2.png)
 
-Uses a SR latch so that while in a RUN_STATE and E_STOP is pressed, the coil toggles EMERGENCY_STATE which latches. Pressing E_STOP (Black button) and STOP_BTN (Red button) will release the latch, stopping the EMERGENCY_STATE.
+Uses a SR latch so that while in a RUN_STATE and E_STOP is pressed, the pulse goes through the S1 (set) to the E_STATE coil which latches ON. Pressing E_STOP (Black button) and STOP_BTN (Red button) will release the latch while in the E_STATE, stopping the E_STATE, returning back to default state (STOPPED).
 
 ##### 4.1.6 - Line 6: E_STATE ENABLED - Line 7: TEMP_UP and TEMP_DWN
 
 ![setpoint control](media/openplc-code-tempup-tempdown.png)
 
-While E_STATE is enabled it turns the E LED ON and all SETPOINT LEDs and toggles HEATER off. It is also connected to the CTUD R to reset the counter to default 80.
+While E_STATE is enabled it turns the E LED ON, while all SETPOINT LEDs and HEATER are turned OFF by the R(reset) coils. It is also connected to the CTUD R to reset the counter to default 0 (= default temperature 80).
 
 Also depicted in the above image is the *setpoint adjustment logic* via the TEMP_UP and TEMP_DWN buttons.
 
@@ -222,7 +222,7 @@ In our [Modbus demonstration](./media/modbus-demo.mp4) video, we record evidence
 
 ![led code](media/openplc-code-led.png)
 
-Code for LEDs that evaluates the setpoint to activate an LED, where every even number will only activate one LED and every odd number will activate BOTH the previous LED and the next... and so forth. Implemented using EQ blocks and wires as OR gates for odd number logic.
+Code for LEDs that evaluates the setpoint to activate an LED, where every even number will only activate one LED and every odd number will activate BOTH the previous LED and the next... and so forth. Implemented using EQ blocks and wires as OR gates for odd number logic. E.g. when SETPOINT is 80, it uses EQ(equal) block to turn the LED0 ON.
 
 Test outcomes and video proof can be found under [5.0 - Testing / Evidence.](#50-testing--evidence)
 
@@ -231,7 +231,7 @@ Test outcomes and video proof can be found under [5.0 - Testing / Evidence.](#50
 ![actual temperature](media/openplc-code-actualtemperature.png)
 
 Code for calculating the simulated temperature from normalizing the values output from the potentiometer into the 0-190 range.
-Takes the current dial value and subtracts the minimum reading (355) from the Analogue Input Modbus, divided by the maximum reading (3416 - 355 = 3061), times 170, plus 20 = ACTUAL_TEMPERATURE. Which gives a reading memory reading on Modbus (address 32) as approximately 20c - 190c range for ACTUAL_TEMPERATURE.
+Takes the current dial value and subtracts the minimum reading (355) from the Analogue Input Modbus, divided by the maximum reading (3416 - 355 = 3061), times 170, plus 20 = ACTUAL_TEMPERATURE. Which gives a reading memory reading on Modbus (address 32) as approximately 1c - 190c range for ACTUAL_TEMPERATURE.
 
 In our [Modbus demonstration](./media/modbus-demo.mp4) video, we record evidence that the temperature conversion works as required.
 
@@ -274,7 +274,7 @@ The following table contains evidence that each operation works as intended. Mod
 |Temperature dial|Simulate temperature changes|Pass|![dial](./images/servo2.MOV)|
 |Servo|Opens/closes correctly|Half Pass|![servo](./images/servo.MOV)|
 |PID Control|Controls/stabilises the temperature|Half Pass|N/A|
-|Modbus|Displays inputs, coils, holding registers and input registers|Pass|![modbus demo](./media/modbus-demo.mp4) |
+|Modbus|Displays inputs, coils, holding registers and input registers|Pass|![modbus demo](./media/modbus-demo.mp4)<br>![modbus ss](./images/modbus.png)|
 |Runtime|Displays status of inputs, coils etc through application via Modbus|Pass|![runtime](./images/runtime.mp4)|
 
 ### 5.1 Issues / Known Bugs
