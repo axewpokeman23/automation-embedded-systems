@@ -274,7 +274,7 @@ The following table contains evidence that each operation works as intended. Mod
 |Temperature dial|Simulate temperature changes|Pass|![dial](./images/servo2.MOV)|
 |Servo|Opens/closes correctly|Half Pass|![servo](./images/servo.MOV)|
 |PID Control|Controls/stabilises the temperature|Half Pass|N/A|
-|Modbus|Displays inputs, coils, holding registers and input registers|Pass|![modbus demo](./media/modbus-demo.mp4)![modbus ss](./images/modbus.png)|
+|Modbus|Displays inputs, coils, holding registers and input registers|Pass|![modbus demo](./media/modbus-demo.mp4)<br>[modbus ss](./images/modbus.png)|
 |Runtime|Displays status of inputs, coils etc through application via Modbus|Pass|![runtime](./images/runtime.mp4)|
 
 ### 5.1 Issues / Known Bugs
