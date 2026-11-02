@@ -265,17 +265,17 @@ The following table contains evidence that each operation works as intended. Mod
 
 |Test|Expected Result|Pass/Fail|Evidence|
 |-|-|-|-|
-|Blue button|Setpoint increases|Pass|![tempup](./images/temp_up.MOV)|
-|Yellow button|Setpoint decreases|Pass|![tempdown](./images/temp_dwn.MOV)|
-|Green button|Activates RUN_STATE|Pass|![start](./images/start.MOV)|
-|Red button|Activates STOPPED_STATE|Pass|![stop](./images/stop.MOV)|
-|Black button|Activates EMERGENCY_STATE<br>Black and Red button to disable EMERGENCY_STATE|Pass|![estop](./images/estop.MOV)|
+|Blue button|Setpoint increases|Pass|[tempup](./images/temp_up.MOV)|
+|Yellow button|Setpoint decreases|Pass|[tempdown](./images/temp_dwn.MOV)|
+|Green button|Activates RUN_STATE|Pass|[start](./images/start.MOV)|
+|Red button|Activates STOPPED_STATE|Pass|[stop](./images/stop.MOV)|
+|Black button|Activates EMERGENCY_STATE<br>Black and Red button to disable EMERGENCY_STATE|Pass|[estop](./images/estop.MOV)|
 |DuPont (Pressure Switch)|Activates EMERGENCY_STATE|N/A|Same logic as Black Button / Emergency Stop|
-|Temperature dial|Simulate temperature changes|Pass|![dial](./images/servo2.MOV)|
-|Servo|Opens/closes correctly|Half Pass|![servo](./images/servo.MOV)|
+|Temperature dial|Simulate temperature changes|Pass|[dial](./images/servo2.MOV)|
+|Servo|Opens/closes correctly|Half Pass|[servo](./images/servo.MOV)|
 |PID Control|Controls/stabilises the temperature|Half Pass|N/A|
-|Modbus|Displays inputs, coils, holding registers and input registers|Pass|![modbus demo](./media/modbus-demo.mp4)<br>[modbus ss](./images/modbus.png)|
-|Runtime|Displays status of inputs, coils etc through application via Modbus|Pass|![runtime](./images/runtime.mp4)|
+|Modbus|Displays inputs, coils, holding registers and input registers|Pass|[modbus demo](./media/modbus-demo.mp4)<br>[modbus ss](./images/modbus.png)|
+|Runtime|Displays status of inputs, coils etc through application via Modbus|Pass|[runtime](./images/runtime.mp4)|
 
 ### 5.1 Issues / Known Bugs
 1. Struggled to get the PWM Controller working as intended with the duty cycle. Tried several calculations to get the duty percentage based on the ANGLE calculation. Currently the TEMP_DIAL calculates the ANGLE as the output variable as well as the DUTY variable which are the same except DUTY is a float, ANGLE is an INT.
