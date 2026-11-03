@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2026-09-21T13:51:32"/>
-  <contentHeader name="Unnamed" modificationDateTime="2026-10-29T18:21:46">
+  <contentHeader name="Unnamed" modificationDateTime="2026-11-03T16:54:12">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -2543,10 +2543,11 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </connectionPointOut>
               <expression>355.0</expression>
             </inVariable>
-            <comment localId="244" height="40" width="600">
-              <position x="30" y="2030"/>
+            <comment localId="244" height="60" width="600">
+              <position x="30" y="2010"/>
               <content>
-                <xhtml:p><![CDATA[dial - min reading / max reading x 170 + 20 (190c) = actual_temperature]]></xhtml:p>
+                <xhtml:p><![CDATA[converts the dial value into an approximate temperature (190 being max)
+dial - min reading / max reading x 170 + 20 (190c) = actual_temperature]]></xhtml:p>
               </content>
             </comment>
             <inVariable localId="112" width="50" height="30" negated="false">
@@ -2791,6 +2792,13 @@ Therefore, to disable the E_STATE, both the E_STOP(That enables the E_STATE) AND
               </connectionPointOut>
               <expression>RUN_STATE</expression>
             </inVariable>
+            <comment localId="85" height="170" width="510">
+              <position x="600" y="2730"/>
+              <content>
+                <xhtml:p><![CDATA[power represents the percentage of heating power outputted. ideally it would connect to the PWM controller, to control the angle/width of the servo based on the percentage of power needed for the actual_temperature to stabilise near the setpoint.
+e.g. if the temp is 87 and setpoint is 90, then the heating power would be minimal, not at 100%]]></xhtml:p>
+              </content>
+            </comment>
           </LD>
         </body>
       </pou>
